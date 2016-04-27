@@ -1,0 +1,29 @@
+// This is default, but it's nice to be explicit
+option optimize_for = SPEED;
+
+//option java_generic_services = true;
+
+option java_package = "com.lj.kernel.gpb.generated";
+
+option java_outer_classname = "Chat";
+
+import "GpbD.proto";
+
+// 响应
+message ReqChat {
+    optional string name = 1;   //  发言者名称
+    optional int64 uid = 2;     //  发言者uid
+    optional string content = 3;    //  内容
+    optional int64 rid = 4;    //  房间ID
+    optional int64 target = 5;      //  目标
+}
+
+message PushChat {
+    extend Push {
+        optional PushChat pushChat = 2;
+    }
+    optional string name = 1;
+    optional int64 uid = 2;
+    optional string content = 3;
+    optional int64 target = 4;
+}

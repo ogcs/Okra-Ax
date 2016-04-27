@@ -1,0 +1,62 @@
+option optimize_for = SPEED;
+option java_package = "com.lj.kernel.gpb.generated.message";
+option java_outer_classname = "GpbChess";
+
+import "GpbD.proto";
+
+// [api:1000] - 请求加入棋局
+message ReqChessJoin {
+    required string name = 1; //  昵称
+    required int32 room = 2; //  房间
+}
+// 响应加入棋局
+message ResChessJoin {
+    optional int32 side = 1;    //  阵营
+}
+// [api:1001] - 请求棋子移动
+message ReqChessMove {
+    required int32 fromX = 1;
+    required int32 fromY = 2;
+    required int32 toX = 3;
+    required int32 toY = 4;
+}
+// 响应棋子移动
+message ResChessMove {
+    required bool movable = 1;  //  是否可以移动
+}
+// [api:1002] - 获取房间信息
+message ReqChessRoomInfo {
+}
+// 响应获取房间列表
+message ResChessRoomInfo {
+    repeated RoomInfo infos = 1;
+
+    message RoomInfo {
+        optional int32 id = 1;      //  房间ID
+        repeated string players = 2;     //
+    }
+}
+
+// [push:101] - 推送棋子移动
+message PushChessMove {
+    extend Push{
+        optional PushChessMove chessMove = 101;
+    }
+    optional int32 fromX = 1;
+    optional int32 fromY = 2;
+    optional int32 toX = 3;
+    optional int32 toY = 4;
+}
+// [push:102] - 推送胜负
+message PushReport {
+    extend Push{
+        optional PushReport report = 102;
+    }
+    optional int32 side = 1;    //  胜利方
+}
+// [push:103] - 推送房间初始化
+message PushChessInit {
+    extend Push{
+        optional PushChessInit init = 103;
+    }
+}

@@ -1,0 +1,57 @@
+// This is default, but it's nice to be explicit
+option optimize_for = SPEED;
+
+//option java_generic_services = true;
+
+option java_package = "com.lj.kernel.gpb";
+// Gpb分布式
+option java_outer_classname = "GpbD";
+// 请求
+message Request {
+    required int32 id = 1; //  The unique request id (client)
+    optional int32 api = 2; //  The service
+    optional int32 method = 3; //  invoked method
+    optional bytes data = 4; //  The binary request data
+}
+// 响应
+message Response {
+    required int32 id = 1; //  The unique request id (client)
+    optional Error error = 2;
+    optional bytes data = 3; //  The binary response data
+    extensions 10 to 127;
+}
+// 错误
+message Error {
+    required int32 state = 1;// error code
+    optional string msg = 2;// response special error message. [Nullable].
+}
+// 服务器推送
+message Push {
+    optional int32 id = 1;
+    extensions 2 to max;    //  推送消息扩展于Push
+}
+// 客户端通知
+message Notify {
+    optional int32 id = 1;
+    extensions 2 to max;    //  通知消息扩展于Notify
+}
+
+// 向内的请求
+message Inbound {
+    optional int64 uid = 1;     //  用户在系统中的唯一ID
+    required int32 id = 2;  //  The unique request id (client)  {Request#id}
+    optional int32 method = 3;    //    调用的接口
+    optional bytes data = 4;    //  协议参数
+}
+// 向外的响应
+message Outbound {
+    repeated int64 uids = 1;    //  发送目标
+    optional bytes data = 2;    //  内部响应[Gpb.Response]
+}
+
+
+
+
+// 分布式通信流程
+// client -> [Gpb.Inbound] -> server[Gate -> [Gpb.Request] -> Remote]
+// client <- [Gpb.Response] <- server[Gate <- [Gpb.Outbound] <- Remote]

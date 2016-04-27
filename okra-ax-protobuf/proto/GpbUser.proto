@@ -1,0 +1,16 @@
+option optimize_for = SPEED;
+
+option java_package = "com.lj.kernel.gpb.generated.message";
+
+option java_outer_classname = "GpbUser";
+
+message ReqLogin {
+    required string account = 1; //  账号
+    required string psw = 2; //  密码
+}
+
+message ReqRegister {
+    required string account = 1; //  账号
+    required string psw = 2; //  密码
+    required string name = 3; //  昵称
+}
