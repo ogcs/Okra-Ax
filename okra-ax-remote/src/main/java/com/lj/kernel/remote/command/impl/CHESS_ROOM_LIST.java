@@ -1,6 +1,6 @@
 package com.lj.kernel.remote.command.impl;
 
-import com.lj.kernel.ax.AxReplys;
+import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.gpb.generated.GpbD.Inbound;
 import com.lj.kernel.gpb.generated.message.GpbChess.ResChessRoomInfo;
 import com.lj.kernel.module.Room;
@@ -29,6 +29,6 @@ public class CHESS_ROOM_LIST extends RemoteCommand {
             }
             builder.addInfos(roomInfo);
         }
-        session.writeAndFlush(AxReplys.outbound(AxReplys.response(request.getId(), builder), request.getUid()));
+        session.writeAndFlush(GpbReplys.outbound(GpbReplys.response(request.getId(), builder), request.getUid()));
     }
 }

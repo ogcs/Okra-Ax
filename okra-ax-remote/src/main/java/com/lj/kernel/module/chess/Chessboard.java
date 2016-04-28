@@ -3,7 +3,7 @@ package com.lj.kernel.module.chess;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.Message;
 import com.lj.kernel.ax.SpringContext;
-import com.lj.kernel.ax.AxReplys;
+import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.ax.core.ConnectorManager;
 import com.lj.kernel.gpb.generated.GpbD.Push;
 import com.lj.kernel.gpb.generated.message.GpbChess.PushChessInit;
@@ -194,7 +194,7 @@ public class Chessboard implements Room {
     }
 
     public void push(int id, GeneratedMessage.GeneratedExtension extension, Message message) {
-        connectorManager.pushById(AxReplys.outbound(Push.newBuilder()
+        connectorManager.pushById(GpbReplys.outbound(Push.newBuilder()
                         .setId(id)
                         .setExtension(extension, message)
                         .build(), uids),

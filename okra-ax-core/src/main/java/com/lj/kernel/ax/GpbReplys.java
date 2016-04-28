@@ -14,7 +14,7 @@ import com.lj.kernel.gpb.generated.GpbD.Error;
  * @email : ogcs_tinyz@outlook.com
  * @date : 2016/4/25
  */
-public final class AxReplys {
+public final class GpbReplys {
 
 
     public static Inbound inbound(long uid, int id, int method, MessageLite data) {

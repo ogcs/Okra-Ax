@@ -1,6 +1,6 @@
 package com.lj.kernel.remote.command.impl;
 
-import com.lj.kernel.ax.AxReplys;
+import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.gpb.generated.GpbD.Inbound;
 import com.lj.kernel.gpb.generated.message.GpbChess.ReqChessMove;
 import com.lj.kernel.gpb.generated.message.GpbChess.ResChessMove;
@@ -21,8 +21,8 @@ public class CHESS_MOVE extends RemoteCommand {
         Room room = roomManager.getByUid(inbound.getUid());
         if (room == null || !(room instanceof Chessboard)) {
             session.writeAndFlush(
-                    AxReplys.outbound(
-                            AxReplys.error(inbound.getId(), -1), inbound.getUid()
+                    GpbReplys.outbound(
+                            GpbReplys.error(inbound.getId(), -1), inbound.getUid()
                     )
             );
             return;
@@ -35,6 +35,6 @@ public class CHESS_MOVE extends RemoteCommand {
         } else {
             builder.setMovable(false);
         }
-        session.writeAndFlush(AxReplys.outbound(AxReplys.response(inbound.getId(), builder)));
+        session.writeAndFlush(GpbReplys.outbound(GpbReplys.response(inbound.getId(), builder)));
     }
 }

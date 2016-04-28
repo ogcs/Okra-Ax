@@ -1,6 +1,6 @@
 package com.lj.kernel.remote.command.impl;
 
-import com.lj.kernel.ax.AxReplys;
+import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.ax.remote.GateNode;
 import com.lj.kernel.gpb.generated.GpbD.Inbound;
 import com.lj.kernel.gpb.generated.message.GpbChess;
@@ -29,8 +29,8 @@ public class CHESS_JOIN extends RemoteCommand {
         room.enter(gateNode.getGateId(), inbound.getUid());
 
         session.writeAndFlush(
-                AxReplys.outbound(
-                        AxReplys.response(inbound.getId(), GpbChess.ResChessJoin.newBuilder()
+                GpbReplys.outbound(
+                        GpbReplys.response(inbound.getId(), GpbChess.ResChessJoin.newBuilder()
                                 .setSide(room.index(inbound.getUid()))
                                 .build()),
                         inbound.getUid()

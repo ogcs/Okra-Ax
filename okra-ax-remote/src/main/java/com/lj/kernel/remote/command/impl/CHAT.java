@@ -1,7 +1,7 @@
 package com.lj.kernel.remote.command.impl;
 
 import com.lj.kernel.ax.SpringContext;
-import com.lj.kernel.ax.AxReplys;
+import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.ax.core.ConnectorManager;
 import com.lj.kernel.gpb.generated.Chat;
 import com.lj.kernel.gpb.generated.GpbD.Inbound;
@@ -29,11 +29,11 @@ public class CHAT extends RemoteCommand {
                 .setContent(reqChat.getContent()).build();
         // TODO: 无目标 - 全频道发言
         if (reqChat.getTarget() < 0) {
-            connectorManager.pushAll(AxReplys.outbound(AxReplys.response(inbound.getId(), pushChat), reqChat.getUid(), reqChat.getTarget()));
+            connectorManager.pushAll(GpbReplys.outbound(GpbReplys.response(inbound.getId(), pushChat), reqChat.getUid(), reqChat.getTarget()));
         } else {
             // TODO: 获取指定的session
             long index = reqChat.getTarget() % 2;
-            connectorManager.pushById(AxReplys.outbound(AxReplys.response(inbound.getId(), pushChat), reqChat.getUid(), reqChat.getTarget()), "Gate" + index);
+            connectorManager.pushById(GpbReplys.outbound(GpbReplys.response(inbound.getId(), pushChat), reqChat.getUid(), reqChat.getTarget()), "Gate" + index);
         }
     }
 }

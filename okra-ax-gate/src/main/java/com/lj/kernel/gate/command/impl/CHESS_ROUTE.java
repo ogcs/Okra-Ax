@@ -1,7 +1,7 @@
 package com.lj.kernel.gate.command.impl;
 
 import com.lj.kernel.ax.Modules;
-import com.lj.kernel.ax.AxReplys;
+import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.ax.gate.G2RClient;
 import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
@@ -22,11 +22,11 @@ public class CHESS_ROUTE extends AgentCommand {
         User user = (User) session.getConnector();
         G2RClient g2RClient = remoteManager.get(Modules.MODULE_CHESS, String.valueOf(user.getRid()));
         if (g2RClient == null) {
-            session.writeAndFlush(AxReplys.error(request.getId(), -1));
+            session.writeAndFlush(GpbReplys.error(request.getId(), -1));
             return;
         }
         g2RClient.session().writeAndFlush(
-                AxReplys.inbound(user.id(), request.getId(), request.getMethod() + 10000, request.getData())    //  转发接口为:cmd + 10000
+                GpbReplys.inbound(user.id(), request.getId(), request.getMethod() + 10000, request.getData())    //  转发接口为:cmd + 10000
         );
     }
 }

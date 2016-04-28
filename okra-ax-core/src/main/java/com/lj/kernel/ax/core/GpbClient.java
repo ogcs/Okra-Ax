@@ -1,7 +1,6 @@
 package com.lj.kernel.ax.core;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.lj.kernel.ax.HandlerConst;
 import io.netty.channel.*;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
@@ -14,6 +13,9 @@ import org.ogcs.netty.impl.TcpProtocolClient;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.lj.kernel.ax.HandlerConst.FRAME_PREPENDER;
+import static com.lj.kernel.ax.HandlerConst.GPB_ENCODER;
 
 /**
  * @author : TinyZ.
@@ -45,10 +47,10 @@ public abstract class GpbClient<O> extends TcpProtocolClient {
             protected void initChannel(SocketChannel ch) throws Exception {
                 ChannelPipeline cp = ch.pipeline();
                 cp.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
-                cp.addLast("frameEncoder", HandlerConst.FRAME_PREPENDER);
+                cp.addLast("frameEncoder", FRAME_PREPENDER);
 
                 addGpbDecoder(cp);
-                cp.addLast("gpbEncoder", HandlerConst.GPB_ENCODER);
+                cp.addLast("gpbEncoder", GPB_ENCODER);
 
                 cp.addLast("handler", new SimpleChannelInboundHandler<O>() {
 

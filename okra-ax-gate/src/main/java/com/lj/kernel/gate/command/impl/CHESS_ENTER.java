@@ -31,7 +31,7 @@
 //            if (g2RClient != null) {
 //                Session session1 = g2RClient.session();
 //                if (session1.isOnline()) {
-//                    session1.writeAndFlush(AxReplys.inbound(user.id(), request.getId(), request.getMethod(), ));
+//                    session1.writeAndFlush(AxReplys.axInbound(user.id(), request.getId(), request.getMethod(), ));
 //                }
 //            }
 //        }

@@ -1,0 +1,33 @@
+// This is default, but it's nice to be explicit
+option optimize_for = SPEED;
+
+//option java_generic_services = true;
+
+option java_package = "com.lj.kernel.gpb";
+// Okra-Ax
+option java_outer_classname = "OkraAx";
+
+// 向内的请求
+message AxInbound {
+    required int32 rid = 1;  //  The unique request id (client)  {Request#id}
+    optional int64 source = 2;     //  请求源的标识ID
+    optional int32 cmd = 3;    //    请求调用的服务接口
+    optional bytes data = 4;    //  请求参数
+}
+// 向外的响应
+message AxOutbound {
+    required int32 rid = 1;  //  The unique request id (client)
+    repeated int64 target = 2;    //  发送目标
+    optional bytes data = 3;    //  响应返回
+    optional AxError error = 4;     //  错误
+}
+// 错误
+message AxError {
+    required int32 state = 1;// error code
+    optional string msg = 2;// response special error message. [Nullable].
+}
+// 授权
+message AxReqAuth {
+    optional int64 source = 1;  //  请求源
+    optional string key = 2;    //  授权密钥
+}

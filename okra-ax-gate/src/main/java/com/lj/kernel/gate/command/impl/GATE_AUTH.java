@@ -1,6 +1,6 @@
 package com.lj.kernel.gate.command.impl;
 
-import com.lj.kernel.ax.AxReplys;
+import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
 import com.lj.kernel.gpb.generated.Gate.ReqGateAuth;
@@ -23,7 +23,7 @@ public class GATE_AUTH extends AgentCommand {
     public void execute(Session session, Request request) throws Exception {
         ReqGateAuth reqGateAuth = ReqGateAuth.parseFrom(request.getData());
         if (!reqGateAuth.getAuth().equals("ABCD")) {
-            session.writeAndFlush(AxReplys.error(request.getId(), STATE_2_AUTH_ERROR), ChannelFutureListener.CLOSE);
+            session.writeAndFlush(GpbReplys.error(request.getId(), STATE_2_AUTH_ERROR), ChannelFutureListener.CLOSE);
             return;
         }
         // 用户登录等

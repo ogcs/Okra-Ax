@@ -6,4 +6,9 @@ package com.lj.kernel;
  * @date : 2016/4/26
  */
 public class Main {
+
+    public static void main(String[] args) {
+
+    }
+
 }

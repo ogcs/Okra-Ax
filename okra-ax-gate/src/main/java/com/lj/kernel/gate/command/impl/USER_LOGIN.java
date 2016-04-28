@@ -17,8 +17,8 @@
 //    private UserManager userManager = (UserManager) AppContext.getBean(SpringContext.MODULE_USER_MANAGER);
 //
 //    @Override
-//    public void execute(Session session, Request inbound) throws Exception {
-//        Request request = Request.parseFrom(inbound.getData());
+//    public void execute(Session session, Request axInbound) throws Exception {
+//        Request request = Request.parseFrom(axInbound.getData());
 //        //
 //        ReqLogin reqLogin = ReqLogin.parseFrom(request.getData());
 //        User user = userManager.getByEmail(reqLogin.getAccount());

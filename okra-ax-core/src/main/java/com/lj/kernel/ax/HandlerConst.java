@@ -1,5 +1,8 @@
 package com.lj.kernel.ax;
 
+import com.lj.kernel.gpb.OkraAx;
+import com.lj.kernel.gpb.OkraAx.AxInbound;
+import com.lj.kernel.gpb.OkraAx.AxOutbound;
 import com.lj.kernel.gpb.generated.GpbD.Inbound;
 import com.lj.kernel.gpb.generated.GpbD.Outbound;
 import com.lj.kernel.gpb.generated.GpbD.Request;
@@ -20,11 +23,14 @@ public interface HandlerConst {
 
     ChannelHandler GPB_ENCODER = new ProtobufEncoder();
 
-    ProtobufDecoder GPB_INBOUND_DECODER = new ProtobufDecoder(Inbound.getDefaultInstance());
+
 
     ProtobufDecoder GPB_REQUEST_DECODER = new ProtobufDecoder(Request.getDefaultInstance());
-
     ProtobufDecoder GPB_RESPONSE_DECODER = new ProtobufDecoder(Response.getDefaultInstance());
 
+    ProtobufDecoder GPB_INBOUND_DECODER = new ProtobufDecoder(Inbound.getDefaultInstance());
     ProtobufDecoder GPB_OUTBOUND_DECODER = new ProtobufDecoder(Outbound.getDefaultInstance());
+
+    ProtobufDecoder AX_INBOUND_DECODER = new ProtobufDecoder(AxInbound.getDefaultInstance());
+    ProtobufDecoder AX_OUTBOUND_DECODER = new ProtobufDecoder(AxOutbound.getDefaultInstance());
 }

@@ -1,7 +1,7 @@
 package com.lj.kernel.remote.command;
 
 import com.lj.kernel.ax.AxState;
-import com.lj.kernel.ax.AxReplys;
+import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.remote.Commands;
 import com.lj.kernel.gpb.generated.GpbD.Inbound;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -38,7 +38,7 @@ public class AxRemoteHandler extends DisruptorAdapterHandler<Inbound> {
                     Command command = Commands.INSTANCE.interpretCommand(request.getMethod());
                     command.execute(session, request);
                 } catch (Exception e) {
-                    session.writeAndFlush(AxReplys.outbound(AxReplys.error(request.getId(), AxState.STATE_1_UNKNOWN_COMMAND), request.getUid()));
+                    session.writeAndFlush(GpbReplys.outbound(GpbReplys.error(request.getId(), AxState.STATE_1_UNKNOWN_COMMAND), request.getUid()));
                     LOG.info("Unknown command : " + request.getMethod(), e);
                 }
             }

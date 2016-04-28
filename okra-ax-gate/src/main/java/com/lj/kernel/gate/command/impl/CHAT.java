@@ -1,7 +1,7 @@
 package com.lj.kernel.gate.command.impl;
 
 import com.lj.kernel.ax.Modules;
-import com.lj.kernel.ax.AxReplys;
+import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.ax.gate.G2RClient;
 import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
@@ -58,7 +58,7 @@ public class CHAT extends AgentCommand {
                                     .build()
                             )
                             .build();
-                    channel.writeAndFlush(AxReplys.outbound(AxReplys.response(-1, build.toByteString()), reqChat.getTarget()));
+                    channel.writeAndFlush(GpbReplys.outbound(GpbReplys.response(-1, build.toByteString()), reqChat.getTarget()));
                 }
             } else {
 
