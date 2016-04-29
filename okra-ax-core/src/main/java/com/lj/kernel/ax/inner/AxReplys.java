@@ -75,6 +75,7 @@ public final class AxReplys {
         for (Long id : ids) {
             builder.addTarget(id);
         }
+        builder.setRid(rid);
         builder.setData(data);
         return builder.build();
     }

@@ -10,18 +10,18 @@ import java.util.Map;
  * @email : ogcs_tinyz@outlook.com
  * @date : 2016/3/28
  */
-public enum AxCommands {
+public enum AxConsole {
 
     INSTANCE;
 
     private final HashMap<Integer, Command> GAME_COMMAND_MAP;
 
-    private static final int[] NON_AUTH_COMMAND = new int[]{1, 2, 1000, 1001, 1002};
+    private static final int[] NON_AUTH_COMMAND = new int[]{1000};
 
-    AxCommands() {
+    AxConsole() {
         GAME_COMMAND_MAP = new HashMap<>();
 
-        GAME_COMMAND_MAP.put(900, new INNER_AUTH());
+        GAME_COMMAND_MAP.put(1000, new INNER_AUTH());
     }
 
     /**
@@ -42,6 +42,13 @@ public enum AxCommands {
             }
         }
         return false;
+    }
+
+    public void register(int cmd, Command command) throws Exception {
+        if (GAME_COMMAND_MAP.containsKey(cmd)) {
+            throw new Exception("The command code [ " + cmd + " ] is occupied.");
+        }
+        GAME_COMMAND_MAP.put(cmd, command);
     }
 
     /**

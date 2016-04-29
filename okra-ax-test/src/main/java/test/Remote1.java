@@ -1,6 +1,7 @@
 package test;
 
-import com.lj.kernel.remote.AxRemote;
+import com.lj.kernel.ax.inner.AxInnerServer;
+import com.lj.kernel.remote.Commands;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -14,9 +15,8 @@ public class Remote1 {
         ClassPathXmlApplicationContext cpxac = new ClassPathXmlApplicationContext("classpath:spring/spring.xml");
         cpxac.registerShutdownHook();
 
-        AxRemote remote = new AxRemote("R1", 9001);
-        remote.start();
-
-
+        Commands.register();
+        AxInnerServer inner = new AxInnerServer("501", 9001);
+        inner.start();
     }
 }

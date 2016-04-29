@@ -1,12 +1,13 @@
-package com.lj.kernel.remote.command.impl;
+package com.lj.kernel.remote.command;
 
 import com.lj.kernel.ax.GpbReplys;
-import com.lj.kernel.gpb.generated.GpbD.Inbound;
+import com.lj.kernel.ax.inner.AxReplys;
+import com.lj.kernel.gpb.OkraAx.AxInbound;
 import com.lj.kernel.gpb.generated.message.GpbChess.ReqChessMove;
 import com.lj.kernel.gpb.generated.message.GpbChess.ResChessMove;
-import com.lj.kernel.module.chess.Chessboard;
 import com.lj.kernel.module.Room;
-import com.lj.kernel.remote.command.RemoteCommand;
+import com.lj.kernel.module.chess.Chessboard;
+import com.lj.kernel.remote.RemoteCommand;
 import org.ogcs.app.Session;
 
 /**
@@ -17,12 +18,12 @@ import org.ogcs.app.Session;
 public class CHESS_MOVE extends RemoteCommand {
 
     @Override
-    public void execute(Session session, Inbound inbound) throws Exception {
-        Room room = roomManager.getByUid(inbound.getUid());
+    public void execute(Session session, AxInbound inbound) throws Exception {
+        Room room = roomManager.getByUid(inbound.getSource());
         if (room == null || !(room instanceof Chessboard)) {
             session.writeAndFlush(
-                    GpbReplys.outbound(
-                            GpbReplys.error(inbound.getId(), -1), inbound.getUid()
+                    AxReplys.axOutbound(inbound.getRid(),
+                            GpbReplys.error(inbound.getRid(), -1), inbound.getSource()
                     )
             );
             return;
@@ -30,11 +31,15 @@ public class CHESS_MOVE extends RemoteCommand {
         Chessboard chessboard = (Chessboard) room;
         ReqChessMove reqChessMove = ReqChessMove.parseFrom(inbound.getData());
         ResChessMove.Builder builder = ResChessMove.newBuilder();
-        if (chessboard.isOperable(inbound.getUid())) {
+        if (chessboard.isOperable(inbound.getSource())) {
             builder.setMovable(chessboard.move(reqChessMove.getFromX(), reqChessMove.getFromY(), reqChessMove.getToX(), reqChessMove.getToY()));
         } else {
             builder.setMovable(false);
         }
-        session.writeAndFlush(GpbReplys.outbound(GpbReplys.response(inbound.getId(), builder)));
+        session.writeAndFlush(
+                AxReplys.axOutbound(inbound.getRid(),
+                        GpbReplys.response(inbound.getRid(), builder)
+                )
+        );
     }
 }

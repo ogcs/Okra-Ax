@@ -1,7 +1,5 @@
 package com.lj.kernel.ax.inner;
 
-import com.lj.kernel.ax.GpbReplys;
-import com.lj.kernel.gpb.OkraAx;
 import com.lj.kernel.gpb.OkraAx.AxInbound;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -33,17 +31,11 @@ public class AxInnerHandler extends DisruptorAdapterHandler<AxInbound> {
             @SuppressWarnings("unchecked")
             public void onExecute() {
                 try {
-                    Command command = AxCommands.INSTANCE.interpretCommand(axRequest.getCmd());
+                    Command command = AxConsole.INSTANCE.interpretCommand(axRequest.getCmd());
                     command.execute(session, axRequest);
                 } catch (Exception e) {
                     // unknown request id and close channel.
-
-                    OkraAx.AxOutbound.newBuilder()
-                            .setData(null)
-                            .addTarget(axRequest.getSource())
-                            .build();
-
-                    session.writeAndFlush(GpbReplys.error(-1, STATE_1_UNKNOWN_COMMAND), ChannelFutureListener.CLOSE);
+                    session.writeAndFlush(AxReplys.error(axRequest.getRid(), STATE_1_UNKNOWN_COMMAND), ChannelFutureListener.CLOSE);
                     LOG.info("Unknown command : " + axRequest.getCmd(), e);
                 }
             }

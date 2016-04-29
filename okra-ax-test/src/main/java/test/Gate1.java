@@ -3,13 +3,16 @@ package test;
 import com.lj.kernel.ax.AxCoInfo;
 import com.lj.kernel.ax.Modules;
 import com.lj.kernel.ax.SpringContext;
-import com.lj.kernel.ax.gate.RemoteManager;
+import com.lj.kernel.ax.inner.AxInnerCoManager;
+import com.lj.kernel.ax.inner.AxInnerServer;
 import com.lj.kernel.gate.AxGate;
 import org.ogcs.app.AppContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author : TinyZ.
@@ -23,21 +26,36 @@ public class Gate1 {
         cpxac.registerShutdownHook();
 
         String gateId = "Gate1";
+        long local = 101L;
 
+        AxInnerCoManager axCoManager = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
         // 注册远程节点  - module: 1[chat]
-        List<AxCoInfo> list = new ArrayList<>();
-        list.add(new AxCoInfo("R0", "127.0.0.1", 9000));
-        list.add(new AxCoInfo("R1", "127.0.0.1", 9001));
-        list.add(new AxCoInfo("R2", "127.0.0.1", 9002));
-        RemoteManager remoteManager = (RemoteManager) AppContext.getBean(SpringContext.MANAGER_REMOTE);
-        for (AxCoInfo axCoInfo : list) {
-            remoteManager.add(gateId, String.valueOf(Modules.MODULE_CHAT), axCoInfo.getId(), axCoInfo.getHost(), axCoInfo.getPort());
-            remoteManager.add(gateId, String.valueOf(Modules.MODULE_CHESS), axCoInfo.getId(), axCoInfo.getHost(), axCoInfo.getPort());
-        }
-        // 启动服务
+        Map<String, List<AxCoInfo>> map = new HashMap<String, List<AxCoInfo>>() {{
+            put(String.valueOf(Modules.MODULE_CHAT), new ArrayList<AxCoInfo>() {{
+                add(new AxCoInfo("500", "127.0.0.1", 9000));
+                add(new AxCoInfo("501", "127.0.0.1", 9001));
+            }});
+            put(String.valueOf(Modules.MODULE_CHESS), new ArrayList<AxCoInfo>() {{
+                add(new AxCoInfo("600", "127.0.0.1", 9000));
+                add(new AxCoInfo("601", "127.0.0.1", 9001));
+                add(new AxCoInfo("602", "127.0.0.1", 9002));
+            }});
+            put(String.valueOf(Modules.MODULE_GATE), new ArrayList<AxCoInfo>() {{
+                add(new AxCoInfo("100", "127.0.0.1", 8000));
+                add(new AxCoInfo("101", "127.0.0.1", 8001));
+            }});
+        }};
+        map.forEach((module, list) -> {
+            for (AxCoInfo axCoInfo : list) {
+                axCoManager.add(module, Long.valueOf(axCoInfo.getId()), local, axCoInfo.getHost(), axCoInfo.getPort());
+            }
+        });
+
+        // 启动内部服务器
+        AxInnerServer inner = new AxInnerServer(String.valueOf(local), 8001);
+        inner.start();
+        // 启动外部服务器
         AxGate gate = new AxGate(gateId, 10001);
         gate.start();
-
-
     }
 }

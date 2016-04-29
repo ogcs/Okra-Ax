@@ -4,7 +4,6 @@ import com.lj.kernel.ax.SpringContext;
 import com.lj.kernel.ax.core.AxComponent;
 import com.lj.kernel.ax.core.ConnectorManager;
 import com.lj.kernel.ax.core.GpbClient;
-import com.lj.kernel.ax.gate.RemoteManager;
 import com.lj.kernel.gpb.OkraAx.AxInbound;
 import com.lj.kernel.gpb.OkraAx.AxOutbound;
 import com.lj.kernel.gpb.OkraAx.AxReqAuth;
@@ -24,22 +23,19 @@ import static com.lj.kernel.ax.HandlerConst.AX_OUTBOUND_DECODER;
  * @email : ogcs_tinyz@outlook.com
  * @date : 2016/4/23
  */
-public class AxClient extends GpbClient<AxOutbound> implements AxComponent {
+public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent {
 
-    private static final Logger LOG = LogManager.getLogger(AxClient.class);
-
+    private static final Logger LOG = LogManager.getLogger(AxInnerClient.class);
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
+    private AxInnerCoManager axCoManager = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
+
+    private final String module;
     private final long id;
     private final long local;
 
-    /**
-     * @param id    client's id
-     * @param local manager's id
-     * @param host  remote host
-     * @param port  remote port
-     */
-    public AxClient(long id, long local, String host, int port) {
+    public AxInnerClient(String module, long id, long local, String host, int port) {
         super(host, port, true);
+        this.module = module;
         this.local = local;
         this.id = id;
     }
@@ -61,7 +57,7 @@ public class AxClient extends GpbClient<AxOutbound> implements AxComponent {
         session.writeAndFlush(
                 AxInbound.newBuilder()
                         .setRid(REQUEST_ID.getAndIncrement())
-                        .setCmd(29999)
+                        .setCmd(1000) // 授权  INNER_AUTH
                         .setSource(local)
                         .setData(
                                 AxReqAuth.newBuilder()
@@ -90,6 +86,11 @@ public class AxClient extends GpbClient<AxOutbound> implements AxComponent {
 
     @Override
     public void connectionInactive(ChannelHandlerContext ctx) throws Exception {
+        // 移除
+        AxInnerCoShard axCoShard = axCoManager.getAxCoShard(module);
+        if (axCoShard != null) {
+            axCoManager.removeByModule(module, String.valueOf(id));
+        }
         super.connectionInactive(ctx);
     }
 }

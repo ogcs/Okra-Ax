@@ -14,6 +14,7 @@ public interface SpringContext {
 
 
     String MANAGER_CONNECTOR = "connectorManager";
+    String MANAGER_AX_COMPONENT = "axCoManager";
     String MANAGER_REMOTE = "remoteManager";
 
 

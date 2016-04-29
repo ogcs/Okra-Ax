@@ -3,7 +3,6 @@ package com.lj.kernel.gate.command;
 import com.lj.kernel.gate.command.impl.CHAT;
 import com.lj.kernel.gate.command.impl.CHESS_ROUTE;
 import com.lj.kernel.gate.command.impl.GATE_AUTH;
-import com.lj.kernel.gate.command.impl.GATE_ROUTE;
 import org.ogcs.app.Command;
 
 import java.util.HashMap;
@@ -28,7 +27,6 @@ public enum Commands {
         // Gate
         GAME_COMMAND_MAP.put(10000, new CHAT());
         GAME_COMMAND_MAP.put(10001, new GATE_AUTH());
-        GAME_COMMAND_MAP.put(10002, new GATE_ROUTE());
         // 象棋
         GAME_COMMAND_MAP.put(10003, new CHESS_ROUTE());
 

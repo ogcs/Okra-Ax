@@ -30,7 +30,7 @@ public class GATE_AUTH extends AgentCommand {
         User node = new User(session, reqGateAuth.getId());
         session.setConnector(node);
 
-        connectorManager.put(reqGateAuth.getId(), node);
+        sessions.put(reqGateAuth.getId(), node);
 
 
         // Gpb.Response 返回用户登录成功信息

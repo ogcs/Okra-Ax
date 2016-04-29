@@ -3,8 +3,8 @@ package com.lj.kernel.module.chess;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.Message;
 import com.lj.kernel.ax.SpringContext;
-import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.ax.core.ConnectorManager;
+import com.lj.kernel.ax.inner.AxReplys;
 import com.lj.kernel.gpb.generated.GpbD.Push;
 import com.lj.kernel.gpb.generated.message.GpbChess.PushChessInit;
 import com.lj.kernel.gpb.generated.message.GpbChess.PushChessMove;
@@ -46,8 +46,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Chessboard implements Room {
 
     private static final Logger LOG = LogManager.getLogger(Chessboard.class);
-    private ConnectorManager connectorManager   = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
-    private RoomManager roomManager             = (RoomManager) AppContext.getBean(SpringContext.MODULE_ROOM_MANAGER);
+    private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
+    private RoomManager roomManager = (RoomManager) AppContext.getBean(SpringContext.MODULE_ROOM_MANAGER);
 
     private Piece[][] chessboard;
     private long id;
@@ -194,7 +194,8 @@ public class Chessboard implements Room {
     }
 
     public void push(int id, GeneratedMessage.GeneratedExtension extension, Message message) {
-        connectorManager.pushById(GpbReplys.outbound(Push.newBuilder()
+        connectorManager.pushById(
+                AxReplys.axOutbound(id, Push.newBuilder()
                         .setId(id)
                         .setExtension(extension, message)
                         .build(), uids),

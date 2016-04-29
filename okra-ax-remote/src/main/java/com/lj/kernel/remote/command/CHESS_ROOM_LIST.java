@@ -1,10 +1,11 @@
-package com.lj.kernel.remote.command.impl;
+package com.lj.kernel.remote.command;
 
 import com.lj.kernel.ax.GpbReplys;
-import com.lj.kernel.gpb.generated.GpbD.Inbound;
+import com.lj.kernel.ax.inner.AxReplys;
+import com.lj.kernel.gpb.OkraAx.AxInbound;
 import com.lj.kernel.gpb.generated.message.GpbChess.ResChessRoomInfo;
 import com.lj.kernel.module.Room;
-import com.lj.kernel.remote.command.RemoteCommand;
+import com.lj.kernel.remote.RemoteCommand;
 import org.ogcs.app.Session;
 
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.Set;
 public class CHESS_ROOM_LIST extends RemoteCommand {
 
     @Override
-    public void execute(Session session, Inbound request) throws Exception {
+    public void execute(Session session, AxInbound request) throws Exception {
         Set<Room> allRoom = roomManager.getAllRoom();
         ResChessRoomInfo.Builder builder = ResChessRoomInfo.newBuilder();
         for (Room room : allRoom) {
@@ -29,6 +30,10 @@ public class CHESS_ROOM_LIST extends RemoteCommand {
             }
             builder.addInfos(roomInfo);
         }
-        session.writeAndFlush(GpbReplys.outbound(GpbReplys.response(request.getId(), builder), request.getUid()));
+        session.writeAndFlush(
+                AxReplys.axOutbound(request.getRid(),
+                        GpbReplys.response(request.getRid(), builder), request.getSource()
+                )
+        );
     }
 }

@@ -1,11 +1,14 @@
-package com.lj.kernel.remote.command.impl;
+package com.lj.kernel.remote.command;
 
 import com.lj.kernel.ax.SpringContext;
 import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.ax.core.ConnectorManager;
+import com.lj.kernel.ax.inner.AxReplys;
+import com.lj.kernel.gpb.OkraAx;
+import com.lj.kernel.gpb.OkraAx.AxOutbound;
 import com.lj.kernel.gpb.generated.Chat;
-import com.lj.kernel.gpb.generated.GpbD.Inbound;
-import com.lj.kernel.remote.command.RemoteCommand;
+import com.lj.kernel.gpb.OkraAx.AxInbound;
+import com.lj.kernel.remote.RemoteCommand;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Session;
 
@@ -19,7 +22,7 @@ public class CHAT extends RemoteCommand {
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
 
     @Override
-    public void execute(Session session, Inbound inbound) throws Exception {
+    public void execute(Session session, AxInbound inbound) throws Exception {
         Chat.ReqChat reqChat = Chat.ReqChat.parseFrom(inbound.getData());
 
         Chat.PushChat pushChat = Chat.PushChat.newBuilder()
@@ -27,13 +30,18 @@ public class CHAT extends RemoteCommand {
                 .setTarget(reqChat.getTarget())
                 .setUid(reqChat.getUid())
                 .setContent(reqChat.getContent()).build();
+        AxOutbound axOutbound = AxReplys.axOutbound(inbound.getRid(),
+                GpbReplys.response(inbound.getRid(), pushChat),
+                reqChat.getUid(),
+                reqChat.getTarget()
+        );
         // TODO: 无目标 - 全频道发言
         if (reqChat.getTarget() < 0) {
-            connectorManager.pushAll(GpbReplys.outbound(GpbReplys.response(inbound.getId(), pushChat), reqChat.getUid(), reqChat.getTarget()));
+            connectorManager.pushAll(axOutbound);
         } else {
             // TODO: 获取指定的session
             long index = reqChat.getTarget() % 2;
-            connectorManager.pushById(GpbReplys.outbound(GpbReplys.response(inbound.getId(), pushChat), reqChat.getUid(), reqChat.getTarget()), "Gate" + index);
+            connectorManager.pushById(axOutbound, "10" + index);
         }
     }
 }
