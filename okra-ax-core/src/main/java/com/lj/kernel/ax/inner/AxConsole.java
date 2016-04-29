@@ -1,5 +1,6 @@
 package com.lj.kernel.ax.inner;
 
+import com.lj.kernel.ax.inner.command.INNER_AUTH;
 import org.ogcs.app.Command;
 
 import java.util.HashMap;

@@ -1,7 +1,9 @@
-package com.lj.kernel.ax.inner;
+package com.lj.kernel.ax.inner.command;
 
 import com.lj.kernel.ax.SpringContext;
 import com.lj.kernel.ax.core.ConnectorManager;
+import com.lj.kernel.ax.inner.AxConnector;
+import com.lj.kernel.ax.inner.AxReplys;
 import com.lj.kernel.gpb.OkraAx.AxInbound;
 import com.lj.kernel.gpb.OkraAx.AxReqAuth;
 import io.netty.channel.ChannelFutureListener;
