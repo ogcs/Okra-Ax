@@ -16,23 +16,22 @@
 
 package org.ogcs.ax.component.inner;
 
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxComponent;
 import org.ogcs.ax.component.GpbClient;
-import org.ogcs.ax.component.HandlerConst;
 import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.component.manager.AxInnerCoManager;
+import org.ogcs.ax.component.manager.AxInnerCoShard;
 import org.ogcs.ax.component.manager.ConnectorManager;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
-import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelPipeline;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.ogcs.app.AppContext;
-import org.ogcs.ax.component.manager.AxInnerCoManager;
-import org.ogcs.ax.component.manager.AxInnerCoShard;
 
 
 /**

@@ -17,6 +17,13 @@
 /**
  *
  * Ax分布式架构
+ * 基于Okra框架的分布式架构方案.
+ *
+ * 1. 内部通信使用Google Protocol Buffer作为序列化/反序列化协议. 减少通信量, 增加IO吞吐量
+ *
+ *
+ * [Gate]:负责负载
+ *
  *
  *
  * @author : TinyZ.

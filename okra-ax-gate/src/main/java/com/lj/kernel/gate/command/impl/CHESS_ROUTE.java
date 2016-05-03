@@ -2,7 +2,6 @@ package com.lj.kernel.gate.command.impl;
 
 import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
-import com.lj.kernel.gpb.GpbD;
 import com.lj.kernel.gpb.GpbD.Request;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.GpbReplys;

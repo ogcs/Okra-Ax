@@ -18,7 +18,6 @@ package org.ogcs.ax.component.manager;
 
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.SpringContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,15 +27,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- *
  * 连接管理器
- *
+ * <p>
  * 管理建立的连接
  *
  * @author TinyZ
  * @since 1.0.0
  */
-@Service(SpringContext.MANAGER_CONNECTOR)
+@Service("connectorManager")
 public class ConnectorManager {
 
     // id - connector

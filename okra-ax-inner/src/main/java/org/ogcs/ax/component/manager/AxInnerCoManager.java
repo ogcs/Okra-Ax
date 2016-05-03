@@ -16,7 +16,6 @@
 
 package org.ogcs.ax.component.manager;
 
-import org.ogcs.ax.component.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerClient;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +23,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- *
  * @since 1.0
  */
-@Service(SpringContext.MANAGER_AX_COMPONENT)
+@Service("axCoManager")
 public class AxInnerCoManager {
 
     // id -

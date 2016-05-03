@@ -1,6 +1,6 @@
 package com.lj.kernel.gate.command;
 
-import com.lj.kernel.gpb.GpbD;
+import com.lj.kernel.gpb.GpbD.Request;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
@@ -13,7 +13,7 @@ import org.ogcs.ax.component.manager.ConnectorManager;
  * @email : ogcs_tinyz@outlook.com
  * @date : 2016/3/31
  */
-public abstract class AgentCommand implements Command<Session, GpbD.Request> {
+public abstract class AgentCommand implements Command<Session, Request> {
 
     // Service
     protected AxInnerCoManager components = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
