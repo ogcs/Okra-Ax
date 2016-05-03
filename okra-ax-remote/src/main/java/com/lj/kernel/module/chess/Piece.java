@@ -1,16 +1,15 @@
 package com.lj.kernel.module.chess;
 
 /**
- * @author : TinyZ.
- * @email : ogcs_tinyz@outlook.com
- * @date : 2016/4/13
+ * 象棋棋子
+ *
  */
 public class Piece {
 
-    private int side;
-    private int x;
-    private int y;
-    private int type;
+    private int side;   //  棋子拥有方
+    private int x;      //  棋子的x坐标
+    private int y;      //  棋子的y坐标
+    private int type;   //  棋子的类型
 
     public Piece(int side, int x, int y, int type) {
         this.side = side;
