@@ -1,12 +1,14 @@
 package com.lj.kernel.gate.command.impl;
 
-import com.lj.kernel.ax.GpbReplys;
-import com.lj.kernel.ax.Modules;
-import com.lj.kernel.ax.inner.AxInnerClient;
 import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
-import com.lj.kernel.gpb.generated.GpbD.Request;
+import com.lj.kernel.gpb.GpbD;
+import com.lj.kernel.gpb.GpbD.Request;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.GpbReplys;
+import org.ogcs.ax.component.Modules;
+import org.ogcs.ax.component.inner.AxInnerClient;
+import org.ogcs.ax.component.inner.AxReplys;
 
 /**
  * 象棋路由
@@ -26,7 +28,7 @@ public class CHESS_ROUTE extends AgentCommand {
             return;
         }
         client.session().writeAndFlush(
-                GpbReplys.inbound(user.id(), request.getId(), request.getMethod() + 10000, request.getData())    //  转发接口为:cmd + 10000
+                AxReplys.axInbound(user.id(), request.getId(), request.getMethod() + 10000, request.getData())    //  转发接口为:cmd + 10000
         );
     }
 }

@@ -1,15 +1,20 @@
 package com.lj.kernel.gate;
 
-import com.lj.kernel.ax.AxCoInfo;
-import com.lj.kernel.ax.core.AxComponent;
+import com.lj.kernel.gpb.GpbD.Request;
+import com.lj.kernel.gpb.GpbD.Response;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import org.ogcs.ax.component.AxCoInfo;
+import org.ogcs.ax.component.AxComponent;
 import org.ogcs.netty.impl.TcpProtocolServer;
 
-import static com.lj.kernel.ax.HandlerConst.*;
+import static org.ogcs.ax.component.HandlerConst.FRAME_PREPENDER;
+import static org.ogcs.ax.component.HandlerConst.GPB_ENCODER;
+
 
 /**
  * @author : TinyZ.
@@ -18,6 +23,7 @@ import static com.lj.kernel.ax.HandlerConst.*;
  */
 public class AxGate extends TcpProtocolServer implements AxComponent {
 
+    private static final ProtobufDecoder GPB_REQUEST_DECODER = new ProtobufDecoder(Request.getDefaultInstance());
     private static final AxGateHandler AX_REQUEST_HANDLER = new AxGateHandler();
     private AxCoInfo axCoInfo;
     private String id;

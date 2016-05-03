@@ -1,12 +1,12 @@
 package test;
 
-import com.lj.kernel.ax.AxCoInfo;
-import com.lj.kernel.ax.Modules;
-import com.lj.kernel.ax.SpringContext;
-import com.lj.kernel.ax.inner.AxInnerCoManager;
-import com.lj.kernel.ax.inner.AxInnerServer;
 import com.lj.kernel.gate.AxGate;
 import org.ogcs.app.AppContext;
+import org.ogcs.ax.component.AxCoInfo;
+import org.ogcs.ax.component.Modules;
+import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.component.inner.AxInnerServer;
+import org.ogcs.ax.component.manager.AxInnerCoManager;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.ArrayList;

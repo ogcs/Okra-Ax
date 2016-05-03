@@ -1,6 +1,6 @@
 package com.lj.kernel.module;
 
-import com.lj.kernel.ax.SpringContext;
+import com.lj.kernel.remote.SpringContext;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

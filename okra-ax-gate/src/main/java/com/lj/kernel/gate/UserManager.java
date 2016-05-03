@@ -2,7 +2,7 @@
 //
 //import com.lj.kernel.gate.persistence.domain.MemAccount;
 //import com.lj.kernel.gate.persistence.mapper.AccountMapper;
-//import com.lj.kernel.utilities.RedisUtil;
+//import org.ogcs.ax.utilities.RedisUtil;
 //import org.springframework.beans.factory.annotation.Autowired;
 //
 //import java.util.HashMap;

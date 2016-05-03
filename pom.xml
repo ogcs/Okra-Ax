@@ -14,6 +14,7 @@
         <module>okra-ax-core</module>
         <module>okra-ax-protobuf</module>
         <module>okra-ax-test</module>
+        <module>okra-ax-inner</module>
     </modules>
 
     <!-- 不指定-导致idea中maven的pom.xml变更时。语言等级设置被重置 -->

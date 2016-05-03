@@ -1,7 +1,7 @@
 package test;
 
-import com.lj.kernel.ax.client.C2GClient;
-import com.lj.kernel.gpb.generated.GpbD.Response;
+import com.lj.kernel.gate.client.C2GClient;
+import com.lj.kernel.gpb.GpbD.Response;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -33,5 +33,4 @@ public class Client1 {
 //                .build());
 
     }
-
 }

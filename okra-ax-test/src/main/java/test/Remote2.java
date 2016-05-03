@@ -1,7 +1,7 @@
 package test;
 
-import com.lj.kernel.ax.inner.AxInnerServer;
 import com.lj.kernel.remote.Commands;
+import org.ogcs.ax.component.inner.AxInnerServer;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**

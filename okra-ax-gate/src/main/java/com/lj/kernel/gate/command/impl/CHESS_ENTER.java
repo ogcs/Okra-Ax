@@ -1,13 +1,13 @@
 //package com.lj.kernel.gate.command.impl;
 //
-//import com.lj.kernel.ax.Modules;
-//import com.lj.kernel.ax.ServerProperties;
+//import org.ogcs.ax.component.Modules;
+//import org.ogcs.ax.component.ServerProperties;
 //import com.lj.kernel.ax.AxReplys;
 //import com.lj.kernel.ax.gate.G2RClient;
 //import com.lj.kernel.gate.User;
 //import com.lj.kernel.gate.command.AgentCommand;
-//import com.lj.kernel.gpb.generated.GpbD.Request;
-//import com.lj.kernel.gpb.generated.message.GpbChess.ReqChessJoin;
+//import org.ogcs.ax.gpb.generated.GpbD.Request;
+//import org.ogcs.ax.gpb.generated.message.GpbChess.ReqChessJoin;
 //import org.ogcs.app.Session;
 //
 ///**

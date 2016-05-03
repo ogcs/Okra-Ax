@@ -1,9 +1,7 @@
 package com.lj.kernel.remote;
 
-import com.lj.kernel.ax.SpringContext;
-import com.lj.kernel.ax.core.ConnectorManager;
-import com.lj.kernel.gpb.OkraAx;
-import com.lj.kernel.gpb.OkraAx.AxInbound;
+import org.ogcs.ax.component.manager.ConnectorManager;
+import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import com.lj.kernel.module.RoomManager;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;

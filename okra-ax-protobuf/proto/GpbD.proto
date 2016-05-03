@@ -35,23 +35,3 @@ message Notify {
     optional int32 id = 1;
     extensions 2 to max;    //  通知消息扩展于Notify
 }
-
-// 向内的请求
-message Inbound {
-    optional int64 uid = 1;     //  用户在系统中的唯一ID
-    required int32 id = 2;  //  The unique request id (client)  {Request#id}
-    optional int32 method = 3;    //    调用的接口
-    optional bytes data = 4;    //  协议参数
-}
-// 向外的响应
-message Outbound {
-    repeated int64 uids = 1;    //  发送目标
-    optional bytes data = 2;    //  内部响应[Gpb.Response]
-}
-
-
-
-
-// 分布式通信流程
-// client -> [Gpb.Inbound] -> server[Gate -> [Gpb.Request] -> Remote]
-// client <- [Gpb.Response] <- server[Gate <- [Gpb.Outbound] <- Remote]

@@ -1,16 +1,16 @@
 //package com.lj.kernel.gate.command.impl;
 //
-//import com.lj.kernel.ax.SpringContext;
+//import org.ogcs.ax.component.SpringContext;
 //import com.lj.kernel.ax.AxReplys;
 //import com.lj.kernel.gate.UserManager;
 //import com.lj.kernel.gate.command.AgentCommand;
-//import com.lj.kernel.gpb.generated.GpbD.Inbound;
-//import com.lj.kernel.gpb.generated.message.GpbUser.ReqLogin;
+//import org.ogcs.ax.gpb.generated.GpbD.Inbound;
+//import org.ogcs.ax.gpb.generated.message.GpbUser.ReqLogin;
 //import org.ogcs.app.AppContext;
 //import org.ogcs.app.Command;
 //import org.ogcs.app.Session;
 //
-//import static com.lj.kernel.gpb.generated.GpbD.Request;
+//import static org.ogcs.ax.gpb.generated.GpbD.Request;
 //
 //public class USER_LOGIN extends AgentCommand {
 //

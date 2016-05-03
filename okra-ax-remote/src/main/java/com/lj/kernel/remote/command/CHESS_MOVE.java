@@ -1,10 +1,11 @@
 package com.lj.kernel.remote.command;
 
-import com.lj.kernel.ax.GpbReplys;
-import com.lj.kernel.ax.inner.AxReplys;
-import com.lj.kernel.gpb.OkraAx.AxInbound;
-import com.lj.kernel.gpb.generated.message.GpbChess.ReqChessMove;
-import com.lj.kernel.gpb.generated.message.GpbChess.ResChessMove;
+import com.lj.kernel.gpb.generated.GpbChess;
+import com.lj.kernel.gpb.generated.GpbChess.ReqChessMove;
+import com.lj.kernel.gpb.generated.GpbChess.ResChessMove;
+import org.ogcs.ax.component.GpbReplys;
+import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import com.lj.kernel.module.Room;
 import com.lj.kernel.module.chess.Chessboard;
 import com.lj.kernel.remote.RemoteCommand;

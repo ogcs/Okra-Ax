@@ -1,10 +1,10 @@
 package com.lj.kernel.remote;
 
-import com.lj.kernel.ax.inner.AxConsole;
 import com.lj.kernel.remote.command.CHAT;
 import com.lj.kernel.remote.command.CHESS_JOIN;
 import com.lj.kernel.remote.command.CHESS_MOVE;
 import com.lj.kernel.remote.command.CHESS_ROOM_LIST;
+import org.ogcs.ax.component.inner.AxConsole;
 
 /**
  * @author : TinyZ.

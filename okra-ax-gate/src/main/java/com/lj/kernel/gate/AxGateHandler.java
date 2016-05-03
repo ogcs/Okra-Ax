@@ -1,8 +1,7 @@
 package com.lj.kernel.gate;
 
-import com.lj.kernel.ax.GpbReplys;
 import com.lj.kernel.gate.command.Commands;
-import com.lj.kernel.gpb.generated.GpbD.Request;
+import com.lj.kernel.gpb.GpbD.Request;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
 import org.apache.logging.log4j.LogManager;
@@ -10,9 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Command;
 import org.ogcs.app.Executor;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.GpbReplys;
 import org.ogcs.netty.handler.DisruptorAdapterHandler;
 
-import static com.lj.kernel.ax.AxState.STATE_1_UNKNOWN_COMMAND;
+import static org.ogcs.ax.component.AxState.STATE_1_UNKNOWN_COMMAND;
 
 
 /**

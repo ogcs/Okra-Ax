@@ -1,10 +1,10 @@
 //package com.lj.kernel.remote.command.impl;
 //
-//import com.lj.kernel.ax.SpringContext;
-//import com.lj.kernel.ax.core.ConnectorManager;
+//import org.ogcs.ax.component.SpringContext;
+//import org.ogcs.ax.component.manager.ConnectorManager;
 //import com.lj.kernel.ax.remote.GateNode;
-//import com.lj.kernel.gpb.generated.GpbD.Inbound;
-//import com.lj.kernel.gpb.generated.Remote.ReqRemoteAuth;
+//import org.ogcs.ax.gpb.generated.GpbD.Inbound;
+//import org.ogcs.ax.gpb.generated.Remote.ReqRemoteAuth;
 //import com.lj.kernel.remote.RemoteCommand;
 //import org.ogcs.app.AppContext;
 //import org.ogcs.app.Session;

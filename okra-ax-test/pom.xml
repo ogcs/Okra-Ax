@@ -18,6 +18,11 @@
         </dependency>
         <dependency>
             <groupId>org.ogcs</groupId>
+            <artifactId>okra-ax-inner</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ogcs</groupId>
             <artifactId>okra-ax-gate</artifactId>
             <version>1.0.0</version>
         </dependency>

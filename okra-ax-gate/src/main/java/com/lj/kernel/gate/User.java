@@ -1,10 +1,10 @@
 package com.lj.kernel.gate;
 
-import com.lj.kernel.ax.SpringContext;
-import com.lj.kernel.ax.core.ConnectorManager;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.component.manager.ConnectorManager;
 
 public class User implements Connector {
 
