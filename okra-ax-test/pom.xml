@@ -26,6 +26,11 @@
             <artifactId>okra-ax-gate</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.ogcs</groupId>
+            <artifactId>okra-ax-login</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 

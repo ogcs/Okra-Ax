@@ -1,6 +1,7 @@
 package test;
 
 import com.lj.kernel.gate.AxGate;
+import com.lj.kernel.gate.command.Commands;
 import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxCoInfo;
 import org.ogcs.ax.component.Modules;
@@ -15,9 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author : TinyZ.
- * @email : ogcs_tinyz@outlook.com
- * @date : 2016/4/23
+ * 网关服务器0
  */
 public class Gate0 {
 
@@ -30,24 +29,9 @@ public class Gate0 {
 
         AxInnerCoManager axCoManager = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
         // 注册远程节点  - module: 1[chat]
-        Map<String, List<AxCoInfo>> map = new HashMap<String, List<AxCoInfo>>() {{
-            put(String.valueOf(Modules.MODULE_CHAT), new ArrayList<AxCoInfo>() {{
-                add(new AxCoInfo("500", "127.0.0.1", 9000));
-                add(new AxCoInfo("501", "127.0.0.1", 9001));
-            }});
-            put(String.valueOf(Modules.MODULE_CHESS), new ArrayList<AxCoInfo>() {{
-                add(new AxCoInfo("600", "127.0.0.1", 9000));
-                add(new AxCoInfo("601", "127.0.0.1", 9001));
-                add(new AxCoInfo("602", "127.0.0.1", 9002));
-            }});
-            put(String.valueOf(Modules.MODULE_GATE), new ArrayList<AxCoInfo>() {{
-                add(new AxCoInfo("100", "127.0.0.1", 8000));
-                add(new AxCoInfo("101", "127.0.0.1", 8001));
-            }});
-        }};
-        map.forEach((module, list) -> {
+        AxDatas.map.forEach((module, list) -> {
             for (AxCoInfo axCoInfo : list) {
-                axCoManager.add(module, Long.valueOf(axCoInfo.getId()), local, axCoInfo.getHost(), axCoInfo.getPort());
+                axCoManager.add(module, local, axCoInfo);
             }
         });
 
