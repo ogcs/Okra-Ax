@@ -17,13 +17,12 @@
 package org.ogcs.ax.component;
 
 /**
- * @author : TinyZ.
- * @email : ogcs_tinyz@outlook.com
- * @date : 2016/4/21
+ * Ax Component Information.
+ * Include component's host and listen port
  */
 public class AxCoInfo {
 
-    private String id;  //  组件唯一ID
+    private long id;  //  组件唯一ID
     private String host;    //  组件的host地址
     private int port;       //  组件内部监听端口
     private int bind;       //  组件绑定外部监听端口
@@ -31,24 +30,24 @@ public class AxCoInfo {
     public AxCoInfo() {
     }
 
-    public AxCoInfo(String id, String host, int port) {
+    public AxCoInfo(long id, String host, int port) {
         this.id = id;
         this.host = host;
         this.port = port;
     }
 
-    public AxCoInfo(String id, String host, int port, int bind) {
+    public AxCoInfo(long id, String host, int port, int bind) {
         this.id = id;
         this.host = host;
         this.port = port;
         this.bind = bind;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

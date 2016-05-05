@@ -23,6 +23,7 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
+import org.ogcs.ax.component.AxCoInfo;
 import org.ogcs.ax.component.AxComponent;
 import org.ogcs.ax.component.GpbClient;
 import org.ogcs.ax.component.SpringContext;
@@ -47,16 +48,21 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     private static final ProtobufDecoder AX_OUTBOUND_DECODER = new ProtobufDecoder(AxOutbound.getDefaultInstance());
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
     private AxInnerCoManager axCoManager = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
-
+    private final AxCoInfo info;
     private final String module;
     private final long id;
     private final long local;
 
-    public AxInnerClient(String module, long id, long local, String host, int port) {
-        super(host, port, true);
-        this.module = module;
+    public AxInnerClient(String module, long local, AxCoInfo info) {
+        super(info.getHost(), info.getPort(), true);
         this.local = local;
-        this.id = id;
+        this.module = module;
+        this.id = info.getId();
+        this.info = info;
+    }
+
+    public AxCoInfo getInfo() {
+        return info;
     }
 
     @Override

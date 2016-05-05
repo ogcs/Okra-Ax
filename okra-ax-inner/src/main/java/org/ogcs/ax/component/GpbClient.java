@@ -106,12 +106,27 @@ public abstract class GpbClient<O> extends TcpProtocolClient {
 
     public abstract void addGpbDecoder(ChannelPipeline cp);
 
+    /**
+     * Invoke when channel active {@link ChannelInboundHandler#channelActive}
+     *
+     * @param ctx {@link ChannelHandlerContext}
+     */
     public void connectionActive(ChannelHandlerContext ctx) {
         session = new DefaultSession(ctx);
     }
 
+    /**
+     * invoke when receive some message . See {@link SimpleChannelInboundHandler#channelRead0}
+     *
+     * @param ctx {@link ChannelHandlerContext}
+     */
     public abstract void messageReceived(ChannelHandlerContext ctx, O msg);
 
+    /**
+     * Invoke when channel inactive {@link ChannelInboundHandler#channelInactive}
+     *
+     * @param ctx {@link ChannelHandlerContext}
+     */
     public void connectionInactive(ChannelHandlerContext ctx) throws Exception {
         if (isAutoConnect) {
             doConnect();
@@ -119,6 +134,11 @@ public abstract class GpbClient<O> extends TcpProtocolClient {
         session = null;
     }
 
+    /**
+     * Try reconnect to remote address.
+     *
+     * @return {@link ChannelFuture}
+     */
     @Override
     public ChannelFuture doConnect() {
         ChannelFuture future = super.doConnect();

@@ -16,6 +16,7 @@
 
 package org.ogcs.ax.component.manager;
 
+import org.ogcs.ax.component.AxCoInfo;
 import org.ogcs.ax.component.inner.AxInnerClient;
 import org.springframework.stereotype.Service;
 
@@ -34,8 +35,8 @@ public class AxInnerCoManager {
     // module
     private Map<String, AxShard<AxInnerClient>> remotes = new ConcurrentHashMap<>();
 
-    public void add(String module, long id, long local, String host, int port) {
-        AxInnerClient client = new AxInnerClient(module, id, local, host, port);
+    public void add(String module, long local, AxCoInfo info) {
+        AxInnerClient client = new AxInnerClient(module, local, info);
         client.start(); //  Connect to component
         add(module, client);
     }
