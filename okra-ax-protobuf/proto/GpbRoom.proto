@@ -1,0 +1,46 @@
+option optimize_for = SPEED;
+
+option java_package = "com.lj.kernel.gpb.generated";
+
+option java_outer_classname = "GpbRoom";
+
+import "GpbD.proto";
+
+// [api:10000] - 拉取房间信息
+message ReqTables {
+    optional int32 module = 1; //  模块 - 房间类型
+    optional int32 page = 2 [default = 0]; //  分页
+}
+message ResTables {
+    repeated VoRoomInfo rooms = 1; //  房间信息
+    optional int32 page = 2 [default = 0]; //  分页
+}
+message VoRoomInfo {
+    optional int64 roomId = 1;
+    repeated VoUserInfo users = 2;
+    optional int32 maxCount = 3;
+    extensions 100 to max;
+}
+message VoUserInfo {
+    optional int64 uid = 1;
+    optional string name = 2;
+    extensions 100 to max;
+}
+// [api:10001] - 请求加入房间
+message ReqEnter {
+    optional int32 module = 1; //  模块 - 房间类型
+    optional int64 roomId = 2; //  房间唯一ID
+    optional string name = 3; //  玩家名称
+}
+// 响应加入房间
+message ResEnter {
+    optional int32 side = 1; //  阵营
+}
+// [api:10002] - 请求离开房间
+message ReqExit {
+    optional int32 module = 1; //  模块 - 房间类型
+    optional int64 roomId = 2; //  房间唯一ID
+}
+// 响应离开房间
+message ResExit {
+}
