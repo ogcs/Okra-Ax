@@ -7,7 +7,7 @@ import "GpbD.proto";
 // [api:1000] - 请求加入棋局
 message ReqChessJoin {
     required string name = 1; //  昵称
-    required int32 room = 2; //  房间
+    required int64 roomId = 2; //  房间唯一ID
 }
 // 响应加入棋局
 message ResChessJoin {

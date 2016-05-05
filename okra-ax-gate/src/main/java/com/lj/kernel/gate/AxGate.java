@@ -1,11 +1,10 @@
 package com.lj.kernel.gate;
 
 import com.lj.kernel.gpb.GpbD.Request;
-import com.lj.kernel.gpb.GpbD.Response;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import org.ogcs.ax.component.AxCoInfo;
@@ -40,9 +39,9 @@ public class AxGate extends TcpProtocolServer implements AxComponent {
 
     @Override
     protected ChannelHandler newChannelInitializer() {
-        return new ChannelInitializer<NioSocketChannel>() {
+        return new ChannelInitializer<SocketChannel>() {
             @Override
-            protected void initChannel(NioSocketChannel ch) throws Exception {
+            protected void initChannel(SocketChannel ch) throws Exception {
                 ChannelPipeline cp = ch.pipeline();
                 cp.addLast("frame", new LengthFieldBasedFrameDecoder(102400, 0, 4, 0, 4)); // 102400 = 100k
                 cp.addLast("prepender", FRAME_PREPENDER);

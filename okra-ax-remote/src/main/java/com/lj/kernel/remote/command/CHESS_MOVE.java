@@ -39,7 +39,7 @@ public class CHESS_MOVE extends RemoteCommand {
         }
         session.writeAndFlush(
                 AxReplys.axOutbound(inbound.getRid(),
-                        GpbReplys.response(inbound.getRid(), builder)
+                        GpbReplys.response(inbound.getRid(), builder), inbound.getSource()
                 )
         );
     }

@@ -42,21 +42,21 @@ public final class GpbChess {
         getNameBytes();
 
     /**
-     * <code>required int32 room = 2;</code>
+     * <code>required int64 roomId = 2;</code>
      *
      * <pre>
-     *  房间
+     *  房间唯一ID
      * </pre>
      */
-    boolean hasRoom();
+    boolean hasRoomId();
     /**
-     * <code>required int32 room = 2;</code>
+     * <code>required int64 roomId = 2;</code>
      *
      * <pre>
-     *  房间
+     *  房间唯一ID
      * </pre>
      */
-    int getRoom();
+    long getRoomId();
   }
   /**
    * Protobuf type {@code ReqChessJoin}
@@ -122,7 +122,7 @@ public final class GpbChess {
             }
             case 16: {
               bitField0_ |= 0x00000002;
-              room_ = input.readInt32();
+              roomId_ = input.readInt64();
               break;
             }
           }
@@ -219,32 +219,32 @@ public final class GpbChess {
       }
     }
 
-    public static final int ROOM_FIELD_NUMBER = 2;
-    private int room_;
+    public static final int ROOMID_FIELD_NUMBER = 2;
+    private long roomId_;
     /**
-     * <code>required int32 room = 2;</code>
+     * <code>required int64 roomId = 2;</code>
      *
      * <pre>
-     *  房间
+     *  房间唯一ID
      * </pre>
      */
-    public boolean hasRoom() {
+    public boolean hasRoomId() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>required int32 room = 2;</code>
+     * <code>required int64 roomId = 2;</code>
      *
      * <pre>
-     *  房间
+     *  房间唯一ID
      * </pre>
      */
-    public int getRoom() {
-      return room_;
+    public long getRoomId() {
+      return roomId_;
     }
 
     private void initFields() {
       name_ = "";
-      room_ = 0;
+      roomId_ = 0L;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -256,7 +256,7 @@ public final class GpbChess {
         memoizedIsInitialized = 0;
         return false;
       }
-      if (!hasRoom()) {
+      if (!hasRoomId()) {
         memoizedIsInitialized = 0;
         return false;
       }
@@ -271,7 +271,7 @@ public final class GpbChess {
         output.writeBytes(1, getNameBytes());
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt32(2, room_);
+        output.writeInt64(2, roomId_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -288,7 +288,7 @@ public final class GpbChess {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, room_);
+          .computeInt64Size(2, roomId_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -413,7 +413,7 @@ public final class GpbChess {
         super.clear();
         name_ = "";
         bitField0_ = (bitField0_ & ~0x00000001);
-        room_ = 0;
+        roomId_ = 0L;
         bitField0_ = (bitField0_ & ~0x00000002);
         return this;
       }
@@ -450,7 +450,7 @@ public final class GpbChess {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.room_ = room_;
+        result.roomId_ = roomId_;
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -472,8 +472,8 @@ public final class GpbChess {
           name_ = other.name_;
           onChanged();
         }
-        if (other.hasRoom()) {
-          setRoom(other.getRoom());
+        if (other.hasRoomId()) {
+          setRoomId(other.getRoomId());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
@@ -484,7 +484,7 @@ public final class GpbChess {
           
           return false;
         }
-        if (!hasRoom()) {
+        if (!hasRoomId()) {
           
           return false;
         }
@@ -610,50 +610,50 @@ public final class GpbChess {
         return this;
       }
 
-      private int room_ ;
+      private long roomId_ ;
       /**
-       * <code>required int32 room = 2;</code>
+       * <code>required int64 roomId = 2;</code>
        *
        * <pre>
-       *  房间
+       *  房间唯一ID
        * </pre>
        */
-      public boolean hasRoom() {
+      public boolean hasRoomId() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>required int32 room = 2;</code>
+       * <code>required int64 roomId = 2;</code>
        *
        * <pre>
-       *  房间
+       *  房间唯一ID
        * </pre>
        */
-      public int getRoom() {
-        return room_;
+      public long getRoomId() {
+        return roomId_;
       }
       /**
-       * <code>required int32 room = 2;</code>
+       * <code>required int64 roomId = 2;</code>
        *
        * <pre>
-       *  房间
+       *  房间唯一ID
        * </pre>
        */
-      public Builder setRoom(int value) {
+      public Builder setRoomId(long value) {
         bitField0_ |= 0x00000002;
-        room_ = value;
+        roomId_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>required int32 room = 2;</code>
+       * <code>required int64 roomId = 2;</code>
        *
        * <pre>
-       *  房间
+       *  房间唯一ID
        * </pre>
        */
-      public Builder clearRoom() {
+      public Builder clearRoomId() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        room_ = 0;
+        roomId_ = 0L;
         onChanged();
         return this;
       }
@@ -5385,22 +5385,22 @@ public final class GpbChess {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\016GpbChess.proto\032\nGpbD.proto\"*\n\014ReqChess" +
-      "Join\022\014\n\004name\030\001 \002(\t\022\014\n\004room\030\002 \002(\005\"\034\n\014ResC" +
-      "hessJoin\022\014\n\004side\030\001 \001(\005\"F\n\014ReqChessMove\022\r" +
-      "\n\005fromX\030\001 \002(\005\022\r\n\005fromY\030\002 \002(\005\022\013\n\003toX\030\003 \002(" +
-      "\005\022\013\n\003toY\030\004 \002(\005\"\037\n\014ResChessMove\022\017\n\007movabl" +
-      "e\030\001 \002(\010\"\022\n\020ReqChessRoomInfo\"f\n\020ResChessR" +
-      "oomInfo\022)\n\005infos\030\001 \003(\0132\032.ResChessRoomInf" +
-      "o.RoomInfo\032\'\n\010RoomInfo\022\n\n\002id\030\001 \001(\005\022\017\n\007pl" +
-      "ayers\030\002 \003(\t\"q\n\rPushChessMove\022\r\n\005fromX\030\001 " +
-      "\001(\005\022\r\n\005fromY\030\002 \001(\005\022\013\n\003toX\030\003 \001(\005\022\013\n\003toY\030\004",
-      " \001(\0052(\n\tchessMove\022\005.Push\030e \001(\0132\016.PushChe" +
-      "ssMove\">\n\nPushReport\022\014\n\004side\030\001 \001(\0052\"\n\006re" +
-      "port\022\005.Push\030f \001(\0132\013.PushReport\"4\n\rPushCh" +
-      "essInit2#\n\004init\022\005.Push\030g \001(\0132\016.PushChess" +
-      "InitB)\n\033com.lj.kernel.gpb.generatedB\010Gpb" +
-      "ChessH\001"
+      "\n\016GpbChess.proto\032\nGpbD.proto\",\n\014ReqChess" +
+      "Join\022\014\n\004name\030\001 \002(\t\022\016\n\006roomId\030\002 \002(\003\"\034\n\014Re" +
+      "sChessJoin\022\014\n\004side\030\001 \001(\005\"F\n\014ReqChessMove" +
+      "\022\r\n\005fromX\030\001 \002(\005\022\r\n\005fromY\030\002 \002(\005\022\013\n\003toX\030\003 " +
+      "\002(\005\022\013\n\003toY\030\004 \002(\005\"\037\n\014ResChessMove\022\017\n\007mova" +
+      "ble\030\001 \002(\010\"\022\n\020ReqChessRoomInfo\"f\n\020ResChes" +
+      "sRoomInfo\022)\n\005infos\030\001 \003(\0132\032.ResChessRoomI" +
+      "nfo.RoomInfo\032\'\n\010RoomInfo\022\n\n\002id\030\001 \001(\005\022\017\n\007" +
+      "players\030\002 \003(\t\"q\n\rPushChessMove\022\r\n\005fromX\030" +
+      "\001 \001(\005\022\r\n\005fromY\030\002 \001(\005\022\013\n\003toX\030\003 \001(\005\022\013\n\003toY",
+      "\030\004 \001(\0052(\n\tchessMove\022\005.Push\030e \001(\0132\016.PushC" +
+      "hessMove\">\n\nPushReport\022\014\n\004side\030\001 \001(\0052\"\n\006" +
+      "report\022\005.Push\030f \001(\0132\013.PushReport\"4\n\rPush" +
+      "ChessInit2#\n\004init\022\005.Push\030g \001(\0132\016.PushChe" +
+      "ssInitB)\n\033com.lj.kernel.gpb.generatedB\010G" +
+      "pbChessH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5420,7 +5420,7 @@ public final class GpbChess {
     internal_static_ReqChessJoin_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_ReqChessJoin_descriptor,
-        new java.lang.String[] { "Name", "Room", });
+        new java.lang.String[] { "Name", "RoomId", });
     internal_static_ResChessJoin_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_ResChessJoin_fieldAccessorTable = new

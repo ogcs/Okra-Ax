@@ -1,4 +1,3 @@
-
 /*
  *   Copyright 2016 - 2026 the original author or authors.
  *
@@ -14,7 +13,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-
 package org.ogcs.ax.component.inner;
 
 import org.ogcs.app.Command;
@@ -64,7 +62,7 @@ public enum AxConsole {
 
     public void register(int cmd, Command command) throws Exception {
         if (GAME_COMMAND_MAP.containsKey(cmd)) {
-            throw new Exception("The command code [ " + cmd + " ] is occupied.");
+            throw new Exception("The command code [ " + cmd + " ] is registered.");
         }
         GAME_COMMAND_MAP.put(cmd, command);
     }

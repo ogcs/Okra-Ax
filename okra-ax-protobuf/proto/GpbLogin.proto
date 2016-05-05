@@ -1,0 +1,16 @@
+option optimize_for = SPEED;
+
+option java_package = "com.lj.kernel.gpb.generated";
+
+option java_outer_classname = "GpbLogin";
+
+import "GpbD.proto";
+
+// [api:10000] - 登录授权
+message ReqLoginAuth {
+    optional int64 uid = 1;     //  唯一ID
+    optional int64 auth = 2;    //  授权key
+}
+// 响应登录授权
+message ResLoginAuth {
+}

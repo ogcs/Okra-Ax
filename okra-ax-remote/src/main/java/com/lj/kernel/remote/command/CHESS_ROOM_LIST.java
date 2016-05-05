@@ -1,13 +1,13 @@
 package com.lj.kernel.remote.command;
 
-import com.lj.kernel.gpb.generated.GpbChess;
 import com.lj.kernel.gpb.generated.GpbChess.ResChessRoomInfo;
-import org.ogcs.ax.component.GpbReplys;
-import org.ogcs.ax.component.inner.AxReplys;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
+import com.lj.kernel.gpb.generated.GpbChess.ResChessRoomInfo.RoomInfo;
 import com.lj.kernel.module.Room;
 import com.lj.kernel.remote.RemoteCommand;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.GpbReplys;
+import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
 import java.util.Set;
 
@@ -23,7 +23,7 @@ public class CHESS_ROOM_LIST extends RemoteCommand {
         Set<Room> allRoom = roomManager.getAllRoom();
         ResChessRoomInfo.Builder builder = ResChessRoomInfo.newBuilder();
         for (Room room : allRoom) {
-            ResChessRoomInfo.RoomInfo.Builder roomInfo = ResChessRoomInfo.RoomInfo.newBuilder();
+            RoomInfo.Builder roomInfo = RoomInfo.newBuilder();
             roomInfo.setId((int) room.id());
             Set<Long> players = room.players();
             for (Long uid : players) {

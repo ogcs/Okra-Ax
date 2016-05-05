@@ -1,9 +1,9 @@
 package com.lj.kernel.gate.command;
 
-import com.lj.kernel.gate.command.impl.CHAT;
-import com.lj.kernel.gate.command.impl.CHESS_ROUTE;
-import com.lj.kernel.gate.command.impl.GATE_AUTH;
+import com.lj.kernel.gate.command.impl.*;
+import com.lj.kernel.gate.command.inner.LOGIN_AUTH;
 import org.ogcs.app.Command;
+import org.ogcs.ax.component.inner.AxConsole;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,15 +21,27 @@ public enum Commands {
 
     private static final int[] NON_AUTH_COMMAND = new int[]{1, 2, 1000, 1001, 1002};
 
+    static {
+        // 注册Ax内部消息
+        try {
+            AxConsole.INSTANCE.register(1001, new LOGIN_AUTH());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     Commands() {
         GAME_COMMAND_MAP = new HashMap<>();
 
         // Gate
         GAME_COMMAND_MAP.put(10000, new CHAT());
         GAME_COMMAND_MAP.put(10001, new GATE_AUTH());
-        // 象棋
-        GAME_COMMAND_MAP.put(10003, new CHESS_ROUTE());
+        // 房间
+        GAME_COMMAND_MAP.put(10003, new ROOM_ROUTE());
+        GAME_COMMAND_MAP.put(10004, new ROOM_ENTER());
+        GAME_COMMAND_MAP.put(10005, new ROOM_TABLES());
 
+        GAME_COMMAND_MAP.put(10006, new GUEST_LOGIN());
     }
 
     /**

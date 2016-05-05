@@ -24,7 +24,7 @@ public class CHESS_JOIN extends RemoteCommand {
         ReqChessJoin reqChessJoin = ReqChessJoin.parseFrom(inbound.getData());
         Chessboard room = (Chessboard) roomManager.getByUid(inbound.getSource());
         if (room == null) {
-            room = new Chessboard(reqChessJoin.getRoom());
+            room = new Chessboard(reqChessJoin.getRoomId());
             roomManager.put(inbound.getSource(), room);
         }
         room.enter(axConnector.id(), inbound.getSource());

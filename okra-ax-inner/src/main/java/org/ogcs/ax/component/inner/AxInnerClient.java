@@ -92,6 +92,8 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
                         )
                         .build()
         );
+        // register to component manager
+        axCoManager.add(module, this);
     }
 
     @Override
@@ -111,7 +113,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
 
     @Override
     public void connectionInactive(ChannelHandlerContext ctx) throws Exception {
-        // 移除
+        // remove component
         AxShard axCoShard = axCoManager.getAxCoShard(module);
         if (axCoShard != null) {
             axCoManager.removeByModule(module, String.valueOf(id));

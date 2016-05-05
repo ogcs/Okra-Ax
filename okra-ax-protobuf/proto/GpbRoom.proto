@@ -4,8 +4,6 @@ option java_package = "com.lj.kernel.gpb.generated";
 
 option java_outer_classname = "GpbRoom";
 
-import "GpbD.proto";
-
 // [api:10000] - 拉取房间信息
 message ReqTables {
     optional int32 module = 1; //  模块 - 房间类型

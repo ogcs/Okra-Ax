@@ -25,8 +25,9 @@ public interface Modules {
 
 
     int MODULE_GATE = 1;    //  网关模块
-    int MODULE_CHAT = 2;    //  聊天模块
-    int MODULE_CHESS = 3;   //  象棋模块
+    int MODULE_LOGIN = 2;   //  登录模块
+    int MODULE_CHAT = 3;    //  聊天模块
+    int MODULE_CHESS = 4;   //  象棋模块
 
 
 

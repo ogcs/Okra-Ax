@@ -13,7 +13,7 @@ public class User implements Connector {
 
     private Session session;
     private Long id;//   uid
-    private long rid;   //  角色所在房间
+    private long roomId;   //  角色所在房间
 
     //    private MemAccount memAccount;
 //    public User(MemAccount memAccount) {
@@ -30,12 +30,12 @@ public class User implements Connector {
         return id;
     }
 
-    public long getRid() {
-        return rid;
+    public long getRoomId() {
+        return roomId;
     }
 
-    public void setRid(long rid) {
-        this.rid = rid;
+    public void setRoomId(long roomId) {
+        this.roomId = roomId;
     }
 
     @Deprecated
@@ -72,6 +72,10 @@ public class User implements Connector {
     public void disconnect() {
 //        roomManager.exit(this);
         connectorManager.remove(session);
+
+        if (roomId > 0) {   //  退出房间
+
+        }
 
         System.out.println("离线:" + session.toString());
     }
