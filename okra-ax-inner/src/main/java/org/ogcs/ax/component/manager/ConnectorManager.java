@@ -64,6 +64,9 @@ public class ConnectorManager {
     }
 
     public void pushById(Object data, Object... ids) {
+        if (ids == null){
+            throw new NullPointerException("ids");
+        }
         for (Object id : ids) {
             Connector connector = connectors.get(id);
             if (connector != null && connector.isConnected())
@@ -72,6 +75,9 @@ public class ConnectorManager {
     }
 
     public void pushById(Object data, List<Object> ids) {
+        if (ids == null){
+            throw new NullPointerException("ids");
+        }
         for (Object id : ids) {
             Connector connector = connectors.get(id);
             if (connector != null && connector.isConnected())
