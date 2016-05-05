@@ -32,18 +32,18 @@ public class AxInnerCoManager {
     private Map<String, AxInnerClient> clients = new ConcurrentHashMap<>();
 
     // module
-    private Map<String, AxInnerCoShard> remotes = new ConcurrentHashMap<>();
+    private Map<String, AxShard<AxInnerClient>> remotes = new ConcurrentHashMap<>();
 
     public void add(String module, long id, long local, String host, int port) {
         AxInnerClient client = new AxInnerClient(module, id, local, host, port);
-        client.start();
+        client.start(); //  Connect to component
         add(module, client);
     }
 
     public void add(String module, AxInnerClient client) {
-        AxInnerCoShard axCoShard = remotes.get(module);
+        AxShard<AxInnerClient> axCoShard = remotes.get(module);
         if (axCoShard == null) {
-            axCoShard = new AxInnerCoShard(module);
+            axCoShard = new AxShard<>(module);
             remotes.put(module, axCoShard);
             clients.put(client.id(), client);
         }
@@ -54,7 +54,7 @@ public class AxInnerCoManager {
         return clients.get(id);
     }
 
-    public AxInnerCoShard getAxCoShard(String module) {
+    public AxShard getAxCoShard(String module) {
         return remotes.get(module);
     }
 
@@ -63,7 +63,7 @@ public class AxInnerCoManager {
     }
 
     public AxInnerClient getByHash(String module, String key) {
-        AxInnerCoShard axCoShard = remotes.get(module);
+        AxShard<AxInnerClient> axCoShard = remotes.get(module);
         if (axCoShard != null) {
             return axCoShard.getShard(key);
         }
@@ -72,7 +72,7 @@ public class AxInnerCoManager {
 
     public AxInnerClient removeByModule(String module, String id) {
         clients.remove(id);
-        AxInnerCoShard axCoShard = remotes.get(module);
+        AxShard<AxInnerClient> axCoShard = remotes.get(module);
         if (axCoShard != null) {
             return axCoShard.remove(id);
         }

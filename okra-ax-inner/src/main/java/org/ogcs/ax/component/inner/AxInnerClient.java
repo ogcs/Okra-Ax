@@ -27,7 +27,7 @@ import org.ogcs.ax.component.AxComponent;
 import org.ogcs.ax.component.GpbClient;
 import org.ogcs.ax.component.SpringContext;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
-import org.ogcs.ax.component.manager.AxInnerCoShard;
+import org.ogcs.ax.component.manager.AxShard;
 import org.ogcs.ax.component.manager.ConnectorManager;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
@@ -106,7 +106,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     @Override
     public void connectionInactive(ChannelHandlerContext ctx) throws Exception {
         // 移除
-        AxInnerCoShard axCoShard = axCoManager.getAxCoShard(module);
+        AxShard axCoShard = axCoManager.getAxCoShard(module);
         if (axCoShard != null) {
             axCoManager.removeByModule(module, String.valueOf(id));
         }
