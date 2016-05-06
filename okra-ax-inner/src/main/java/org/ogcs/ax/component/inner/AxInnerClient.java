@@ -16,6 +16,8 @@
 
 package org.ogcs.ax.component.inner;
 
+import com.google.protobuf.ByteString;
+import com.lj.kernel.gpb.GpbD.Request;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
@@ -23,16 +25,16 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
-import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.AxComponent;
-import org.ogcs.ax.component.GpbClient;
-import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.component.*;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
 import org.ogcs.ax.component.manager.AxShard;
 import org.ogcs.ax.component.manager.ConnectorManager;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -92,12 +94,52 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
                         )
                         .build()
         );
+        ByteString abcd = AxReqAuth.newBuilder()
+                .setKey("ABCD")
+                .setSource(local)
+                .build().toByteString();
+        request(local, 1000, abcd, (t)-> {
+            System.out.println();
+        });
         // register to component manager
         axCoManager.add(module, this);
     }
 
+    private static final Map<Integer, AxCallback> callbacks = new ConcurrentHashMap<>();
+
+    public void request(long source, int cmd, ByteString msg, AxCallback callback) {
+        int rid = REQUEST_ID.getAndIncrement();
+        if (callback != null)
+            callbacks.put(rid, callback);
+        transport(rid, cmd, source, msg);
+    }
+
+    public void push(int cmd, ByteString msg) {
+        transport(REQUEST_ID.getAndIncrement(), cmd, -1, msg);
+    }
+
+    public void transport(int rid, int cmd, long source, ByteString msg) {
+        if (session == null) {
+            throw new NullPointerException("session");
+        }
+        session.writeAndFlush(
+                AxInbound.newBuilder()
+                        .setRid(rid)
+                        .setCmd(cmd) // 授权  INNER_AUTH
+                        .setSource(source)
+                        .setData(msg)
+                        .build()
+        );
+    }
+
     @Override
     public void messageReceived(ChannelHandlerContext ctx, AxOutbound msg) {
+        AxCallback callback = callbacks.remove(msg.getRid());
+        if (callback != null) {
+            callback.run(msg);
+            return;
+        }
+        // 处理没有回调 和 服务方推送消息的情况
         if (msg.hasError()) {
             LOG.warn("Ax Inner Exception [ " + msg.getError().getState() + "] : " + msg.getError().getMsg());
         } else {
