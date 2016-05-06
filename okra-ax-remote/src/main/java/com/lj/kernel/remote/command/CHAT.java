@@ -11,6 +11,7 @@ import org.ogcs.ax.component.GpbReplys;
 import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.component.manager.ConnectorManager;
 import org.ogcs.ax.gpb.OkraAx;
+import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 
 /**
@@ -23,7 +24,7 @@ public class CHAT extends RemoteCommand {
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
 
     @Override
-    public void execute(Session session, OkraAx.AxInbound inbound) throws Exception {
+    public void execute(Session session, AxInbound inbound) throws Exception {
         ReqChat reqChat = ReqChat.parseFrom(inbound.getData());
 
         PushChat pushChat = PushChat.newBuilder()

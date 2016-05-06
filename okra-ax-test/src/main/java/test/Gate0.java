@@ -1,6 +1,7 @@
 package test;
 
 import com.lj.kernel.gate.AxGate;
+import com.lj.kernel.gate.command.Commands;
 import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxCoInfo;
 import org.ogcs.ax.component.SpringContext;
@@ -33,6 +34,7 @@ public class Gate0 {
         AxInnerServer inner = new AxInnerServer(String.valueOf(local), 8000);
         inner.start();
         // 启动外部服务器
+        Commands.INSTANCE.initialize();
         AxGate gate = new AxGate(gateId, 10000);
         gate.start();
     }

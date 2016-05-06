@@ -4,7 +4,7 @@ option optimize_for = SPEED;
 //option java_generic_services = true;
 
 option java_package = "org.ogcs.ax.gpb";
-// Okra-Ax
+// Okra-Ax内部协议
 option java_outer_classname = "OkraAx";
 
 // 向内的请求
@@ -30,4 +30,7 @@ message AxError {
 message AxReqAuth {
     optional int64 source = 1;  //  请求源
     optional string key = 2;    //  授权密钥
+}
+message AxNode {
+
 }

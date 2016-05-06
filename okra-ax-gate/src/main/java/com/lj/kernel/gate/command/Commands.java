@@ -21,15 +21,6 @@ public enum Commands {
 
     private static final int[] NON_AUTH_COMMAND = new int[]{1, 2, 1000, 1001, 1002};
 
-    static {
-        // 注册Ax内部消息
-        try {
-            AxConsole.INSTANCE.register(1001, new LOGIN_AUTH());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     Commands() {
         GAME_COMMAND_MAP = new HashMap<>();
 
@@ -42,6 +33,15 @@ public enum Commands {
         GAME_COMMAND_MAP.put(10005, new ROOM_HALL());
 
         GAME_COMMAND_MAP.put(10006, new GUEST_LOGIN());
+    }
+
+    public void initialize() {
+        // 注册Ax内部消息
+        try {
+            AxConsole.INSTANCE.register(1001, new LOGIN_AUTH());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

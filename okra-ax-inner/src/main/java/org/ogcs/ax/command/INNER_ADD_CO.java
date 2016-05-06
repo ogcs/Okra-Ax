@@ -24,31 +24,29 @@ import org.ogcs.app.Session;
 import org.ogcs.ax.component.AxConnector;
 import org.ogcs.ax.component.SpringContext;
 import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.component.manager.AxInnerCoManager;
 import org.ogcs.ax.component.manager.ConnectorManager;
+import org.ogcs.ax.gpb.OkraAx;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
-import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
 
 /**
  * @author : TinyZ.
  * @email : ogcs_tinyz@outlook.com
  * @date : 2016/4/28
  */
-public class INNER_AUTH implements Command<Session, AxInbound> {
+public class INNER_ADD_CO implements Command<Session, AxInbound> {
 
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
 
+    private AxInnerCoManager components = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
+
     @Override
     public void execute(Session session, AxInbound axInbound) throws Exception {
-        AxReqAuth axReqAuth = AxReqAuth.parseFrom(axInbound.getData());
-        if (!axReqAuth.getKey().equals("ABCD")) {
-            session.writeAndFlush(AxReplys.error(axInbound.getRid(), -91), ChannelFutureListener.CLOSE);// 访问授权校验失败 - 断开连接
-            return;
-        }
+        OkraAx.AxReqAuth axReqAuth = OkraAx.AxReqAuth.parseFrom(axInbound.getData());
 
-        AxConnector axConnector = new AxConnector(axReqAuth.getSource(), session);
-        session.setConnector(axConnector);
+        components.add("", 1L, null);
 
-        connectorManager.put(axConnector.id(), axConnector);
-        System.out.println("节点注册成功：" + axConnector.id());
+
+        System.out.println("节点注册成功.");
     }
 }
