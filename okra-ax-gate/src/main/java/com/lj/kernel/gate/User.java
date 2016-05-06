@@ -1,14 +1,19 @@
 package com.lj.kernel.gate;
 
+import com.lj.kernel.gpb.generated.GpbRoom;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.Modules;
 import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.component.inner.AxInnerClient;
+import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.component.manager.AxInnerCoManager;
 import org.ogcs.ax.component.manager.ConnectorManager;
 
 public class User implements Connector {
 
-//    private RoomManager roomManager = (RoomManager) AppContext.getBean(SpringContext.MODULE_ROOM_MANAGER);
+    private AxInnerCoManager components = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
 
     private Session session;
@@ -74,7 +79,18 @@ public class User implements Connector {
         connectorManager.remove(session);
 
         if (roomId > 0) {   //  退出房间
-
+            AxInnerClient client = components.getByHash(String.valueOf(Modules.MODULE_CHESS), String.valueOf(roomId));
+            if (client != null) {
+                client.session().writeAndFlush(
+                        AxReplys.axInbound(id, -1, 21000,
+                                GpbRoom.ReqExit.newBuilder()
+                                        .setRoomId(1)
+                                        .setRoomId(roomId)
+                                        .build()
+                        )
+                );
+            }
+            roomId = 0;
         }
 
         System.out.println("离线:" + session.toString());

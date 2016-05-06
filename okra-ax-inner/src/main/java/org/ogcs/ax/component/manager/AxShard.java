@@ -56,7 +56,7 @@ public class AxShard<C extends AxComponent> {
     public C remove(String id) {
         C shard = resources.remove(id);
         if (shard != null) {
-            for (int n = 0; n < VISUAL_NODE_COUNT; n++) { // 虚拟节点数量
+            for (int n = 0; n < VISUAL_NODE_COUNT; n++) {
                 long hashCode = Murmur2.hash64(shard.id() + "-NODE-" + n);
                 nodes.remove(hashCode);
             }

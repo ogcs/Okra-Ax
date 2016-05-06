@@ -22,6 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Ax Console .
+ *
+ * Register and interpret command.
+ *
  * @author : TinyZ.
  * @email : ogcs_tinyz@outlook.com
  * @date : 2016/3/28

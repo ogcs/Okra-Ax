@@ -17,7 +17,7 @@ public class ROOM_ENTER extends AgentCommand {
         User user = (User) session.getConnector();
         ReqChessJoin reqChessJoin = ReqChessJoin.parseFrom(request.getData());
 
-        long roomId = reqChessJoin.getRoomId() > 0L ? reqChessJoin.getRoomId() : ServerProperties.id();
+        long roomId = reqChessJoin.getRoomId() > 0L ? reqChessJoin.getRoomId() : ServerProperties.id(); //  指定房间进入 或者 创建房间
         AxInnerClient client = components.getByHash(Modules.MODULE_CHESS, String.valueOf(roomId));
         if (client != null) {
             Session coSession = client.session();

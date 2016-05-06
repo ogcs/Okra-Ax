@@ -1,19 +1,12 @@
 package test;
 
 import com.lj.kernel.gate.AxGate;
-import com.lj.kernel.gate.command.Commands;
 import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.Modules;
 import org.ogcs.ax.component.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerServer;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 网关服务器1
@@ -31,7 +24,8 @@ public class Gate1 {
         // 注册远程节点  - module: 1[chat]
         AxDatas.map.forEach((module, list) -> {
             for (AxCoInfo axCoInfo : list) {
-                axCoManager.add(module, local, axCoInfo);
+                if (axCoInfo.getId() != local)
+                    axCoManager.add(module, local, axCoInfo);
             }
         });
 

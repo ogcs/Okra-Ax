@@ -10,17 +10,23 @@ import org.ogcs.ax.component.inner.AxInnerClient;
 import org.ogcs.ax.component.inner.AxReplys;
 
 /**
- * 获取房间列表
+ * 获取大厅列表
  *
  * @author : TinyZ.
  * @email : ogcs_tinyz@outlook.com
  * @date : 2016/4/14
  */
-public class ROOM_TABLES extends AgentCommand {
+public class ROOM_HALL extends AgentCommand {
 
     @Override
     public void execute(Session session, Request request) throws Exception {
         User user = (User) session.getConnector();
+
+        // TODO：从redis获取服务器列表
+
+
+
+
         AxInnerClient client = components.getByHash(Modules.MODULE_CHESS, String.valueOf(user.getRoomId()));
         if (client == null) {
             session.writeAndFlush(GpbReplys.error(request.getId(), -1));

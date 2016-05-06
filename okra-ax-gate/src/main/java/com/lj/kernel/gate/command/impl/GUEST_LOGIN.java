@@ -26,7 +26,7 @@ public class GUEST_LOGIN extends AgentCommand {
             );
             return;
         }
-        // 用户登录等
+        // 游客登录 - 没有用户信息
         User node = new User(session, reqLoginAuth.getUid());
         session.setConnector(node);
 
