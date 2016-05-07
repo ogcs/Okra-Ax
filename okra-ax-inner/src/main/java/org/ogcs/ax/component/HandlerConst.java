@@ -16,11 +16,8 @@
 
 package org.ogcs.ax.component;
 
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
-import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 import io.netty.channel.ChannelHandler;
 import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 
 /**

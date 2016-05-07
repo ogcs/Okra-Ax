@@ -21,6 +21,8 @@ import org.ogcs.app.Session;
 import org.ogcs.ax.component.manager.ConnectorManager;
 
 /**
+ * Ax connector.
+ *
  * @author : TinyZ.
  * @email : ogcs_tinyz@outlook.com
  * @since 1.0

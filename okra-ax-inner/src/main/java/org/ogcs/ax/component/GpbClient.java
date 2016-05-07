@@ -13,7 +13,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-
 package org.ogcs.ax.component;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -29,7 +28,6 @@ import org.ogcs.netty.impl.TcpProtocolClient;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-
 
 /**
  * Google Protocol Buffer Client

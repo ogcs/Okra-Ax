@@ -16,6 +16,7 @@
 package org.ogcs.ax.component.inner;
 
 import org.ogcs.app.Command;
+import org.ogcs.ax.command.INNER_ADD_CO;
 import org.ogcs.ax.command.INNER_AUTH;
 
 import java.util.HashMap;
@@ -23,7 +24,7 @@ import java.util.Map;
 
 /**
  * Ax Console .
- *
+ * <p>
  * Register and interpret command.
  *
  * @author : TinyZ.
@@ -42,6 +43,7 @@ public enum AxConsole {
         GAME_COMMAND_MAP = new HashMap<>();
 
         GAME_COMMAND_MAP.put(1000, new INNER_AUTH());
+        GAME_COMMAND_MAP.put(1001, new INNER_ADD_CO());
     }
 
     /**

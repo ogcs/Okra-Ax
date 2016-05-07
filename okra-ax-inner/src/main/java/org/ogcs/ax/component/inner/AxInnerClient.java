@@ -13,11 +13,9 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-
 package org.ogcs.ax.component.inner;
 
 import com.google.protobuf.ByteString;
-import com.lj.kernel.gpb.GpbD.Request;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
@@ -36,9 +34,9 @@ import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
 /**
  * Gate connect to Remote
+ * 内部组件 - Client模块
  *
  * @author : TinyZ.
  * @email : ogcs_tinyz@outlook.com
@@ -94,13 +92,13 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
                         )
                         .build()
         );
-        ByteString abcd = AxReqAuth.newBuilder()
-                .setKey("ABCD")
-                .setSource(local)
-                .build().toByteString();
-        request(local, 1000, abcd, (t)-> {
-            System.out.println();
-        });
+//        ByteString abcd = AxReqAuth.newBuilder()
+//                .setKey("ABCD")
+//                .setSource(local)
+//                .build().toByteString();
+//        request(local, 1000, abcd, (t)-> {
+//            System.out.println();
+//        });
         // register to component manager
         axCoManager.add(module, this);
     }
@@ -115,7 +113,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     }
 
     public void push(int cmd, ByteString msg) {
-        transport(REQUEST_ID.getAndIncrement(), cmd, -1, msg);
+        transport(REQUEST_ID.getAndIncrement(), cmd, local, msg);
     }
 
     public void transport(int rid, int cmd, long source, ByteString msg) {
@@ -125,7 +123,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         session.writeAndFlush(
                 AxInbound.newBuilder()
                         .setRid(rid)
-                        .setCmd(cmd) // 授权  INNER_AUTH
+                        .setCmd(cmd)
                         .setSource(source)
                         .setData(msg)
                         .build()

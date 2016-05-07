@@ -13,7 +13,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-
 package org.ogcs.ax.component.inner;
 
 import com.google.protobuf.ByteString;

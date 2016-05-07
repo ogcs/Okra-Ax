@@ -13,7 +13,6 @@
  *   See the License for the specific language governing permissions and
  *   limitations under the License.
  */
-
 package org.ogcs.ax.component.inner;
 
 import io.netty.channel.ChannelHandler;
@@ -27,11 +26,12 @@ import org.ogcs.ax.component.HandlerConst;
 import org.ogcs.ax.gpb.OkraAx;
 import org.ogcs.netty.impl.TcpProtocolServer;
 
-
 /**
- * @author : TinyZ.
- * @email : ogcs_tinyz@outlook.com
- * @date : 2016/4/23
+ * 内部组件 - Server模块
+ *
+ * @author : TinyZ
+ * @email : tinyzzh815@gmail.com
+ * @since 1.0
  */
 public class AxInnerServer extends TcpProtocolServer implements AxComponent {
 
