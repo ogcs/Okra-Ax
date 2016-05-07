@@ -6,13 +6,12 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import org.ogcs.ax.component.AxCoInfo;
 import org.ogcs.ax.component.AxComponent;
 import org.ogcs.netty.impl.TcpProtocolServer;
-
-import static org.ogcs.ax.component.HandlerConst.FRAME_PREPENDER;
-import static org.ogcs.ax.component.HandlerConst.GPB_ENCODER;
 
 
 /**
@@ -22,8 +21,11 @@ import static org.ogcs.ax.component.HandlerConst.GPB_ENCODER;
  */
 public class AxGate extends TcpProtocolServer implements AxComponent {
 
-    private static final ProtobufDecoder GPB_REQUEST_DECODER = new ProtobufDecoder(Request.getDefaultInstance());
-    private static final AxGateHandler AX_REQUEST_HANDLER = new AxGateHandler();
+    private static final ChannelHandler FRAME_PREPENDER = new LengthFieldPrepender(4, false);
+    private static final ChannelHandler GPB_ENCODER = new ProtobufEncoder();
+    private static final ChannelHandler GPB_REQUEST_DECODER = new ProtobufDecoder(Request.getDefaultInstance());
+    private static final ChannelHandler AX_REQUEST_HANDLER = new AxGateHandler();
+
     private AxCoInfo axCoInfo;
     private String id;
 

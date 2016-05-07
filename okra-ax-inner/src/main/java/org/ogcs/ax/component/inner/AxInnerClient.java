@@ -17,6 +17,7 @@ package org.ogcs.ax.component.inner;
 
 import com.google.protobuf.ByteString;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
@@ -45,9 +46,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent {
 
     private static final Logger LOG = LogManager.getLogger(AxInnerClient.class);
-    private static final ProtobufDecoder AX_OUTBOUND_DECODER = new ProtobufDecoder(AxOutbound.getDefaultInstance());
+
+    private static final ChannelHandler AX_OUTBOUND_DECODER = new ProtobufDecoder(AxOutbound.getDefaultInstance());
+
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
     private AxInnerCoManager axCoManager = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
+
     private final AxCoInfo info;
     private final String module;
     private final long id;

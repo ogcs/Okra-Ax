@@ -23,7 +23,6 @@ package org.ogcs.ax.component;
  */
 public interface Modules {
 
-
     int MODULE_GATE = 1;    //  网关模块
     int MODULE_LOGIN = 2;   //  登录模块
     int MODULE_CHAT = 3;    //  聊天模块

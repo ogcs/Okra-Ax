@@ -20,10 +20,11 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
+import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import org.ogcs.ax.component.AxComponent;
-import org.ogcs.ax.component.HandlerConst;
-import org.ogcs.ax.gpb.OkraAx;
+import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.netty.impl.TcpProtocolServer;
 
 /**
@@ -35,8 +36,11 @@ import org.ogcs.netty.impl.TcpProtocolServer;
  */
 public class AxInnerServer extends TcpProtocolServer implements AxComponent {
 
-    private static final ProtobufDecoder AX_INBOUND_DECODER = new ProtobufDecoder(OkraAx.AxInbound.getDefaultInstance());
-    private static final AxInnerHandler AX_INNER_HANDLER = new AxInnerHandler();
+    private static final ChannelHandler FRAME_PREPENDER = new LengthFieldPrepender(4, false);
+    private static final ChannelHandler GPB_ENCODER = new ProtobufEncoder();
+    private static final ChannelHandler AX_INBOUND_DECODER = new ProtobufDecoder(AxInbound.getDefaultInstance());
+    private static final ChannelHandler AX_INNER_HANDLER = new AxInnerHandler();
+
     private String id;
 
     public AxInnerServer(String id, int port) {
@@ -56,9 +60,9 @@ public class AxInnerServer extends TcpProtocolServer implements AxComponent {
             protected void initChannel(NioSocketChannel ch) throws Exception {
                 ChannelPipeline cp = ch.pipeline();
                 cp.addLast("frame", new LengthFieldBasedFrameDecoder(102400, 0, 4, 0, 4)); // 102400 = 100k
-                cp.addLast("prepender", HandlerConst.FRAME_PREPENDER);
+                cp.addLast("prepender", FRAME_PREPENDER);
                 cp.addLast("axInboundDecoder", AX_INBOUND_DECODER);
-                cp.addLast("pbEncoder", HandlerConst.GPB_ENCODER);
+                cp.addLast("pbEncoder", GPB_ENCODER);
                 cp.addLast("axHandler", AX_INNER_HANDLER);
             }
         };
