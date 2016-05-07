@@ -20,6 +20,12 @@ public class ROOM_ENTER extends AgentCommand {
         long roomId = reqChessJoin.getRoomId() > 0L ? reqChessJoin.getRoomId() : ServerProperties.id(); //  指定房间进入 或者 创建房间
         AxInnerClient client = components.getByHash(Modules.MODULE_CHESS, String.valueOf(roomId));
         if (client != null) {
+            // TODO: 简化请求流程
+            client.request(user.id(), request.getApi(), request.getData(), (msg)->{
+
+
+            });
+
             Session coSession = client.session();
             if (coSession != null) {
                 coSession.writeAndFlush(

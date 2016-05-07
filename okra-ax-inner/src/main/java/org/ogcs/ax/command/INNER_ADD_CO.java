@@ -17,17 +17,14 @@
 package org.ogcs.ax.command;
 
 
-import io.netty.channel.ChannelFutureListener;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.AxConnector;
 import org.ogcs.ax.component.SpringContext;
 import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
-import org.ogcs.ax.component.manager.ConnectorManager;
-import org.ogcs.ax.gpb.OkraAx;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
+import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
 
 /**
  * @author : TinyZ.
@@ -36,17 +33,14 @@ import org.ogcs.ax.gpb.OkraAx.AxInbound;
  */
 public class INNER_ADD_CO implements Command<Session, AxInbound> {
 
-    private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
-
     private AxInnerCoManager components = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
 
     @Override
     public void execute(Session session, AxInbound axInbound) throws Exception {
-        OkraAx.AxReqAuth axReqAuth = OkraAx.AxReqAuth.parseFrom(axInbound.getData());
+        AxReqAuth axReqAuth = AxReqAuth.parseFrom(axInbound.getData());
+//        components.add("", 1L, null);
 
-        components.add("", 1L, null);
-
-
+        session.writeAndFlush(AxReplys.axOutbound(axInbound.getRid(), axInbound.getData(), -1L));
         System.out.println("节点注册成功.");
     }
 }

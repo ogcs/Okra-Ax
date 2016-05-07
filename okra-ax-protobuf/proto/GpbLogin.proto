@@ -4,8 +4,6 @@ option java_package = "com.lj.kernel.gpb.generated";
 
 option java_outer_classname = "GpbLogin";
 
-import "GpbD.proto";
-
 // [api:10000] - 登录授权
 message ReqLoginAuth {
     optional int64 uid = 1;     //  唯一ID
