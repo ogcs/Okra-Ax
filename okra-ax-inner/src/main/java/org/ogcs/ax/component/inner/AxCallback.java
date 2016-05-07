@@ -3,7 +3,7 @@ package org.ogcs.ax.component.inner;
 /**
  * 回调
  */
-public interface AxCallback1<T> {
+public interface AxCallback<T> {
 
     void run(T t);
 }
