@@ -26,11 +26,19 @@ message AxError {
     required int32 state = 1;// error code
     optional string msg = 2;// response special error message. [Nullable].
 }
+// 无内容
+message AxVoid {
+}
 // 授权
 message AxReqAuth {
     optional int64 source = 1;  //  请求源
     optional string key = 2;    //  授权密钥
 }
-message AxNode {
-
+// 组件信息
+message AxNodeInfo {
+    required int32 module = 1;//模块
+    required int64  id = 2;//  组件唯一ID
+    optional string host = 3;//  组件的host地址
+    optional int32 port = 4;//  组件内部监听端口
+    optional int32 bind = 5;//  组件绑定外部监听端口
 }

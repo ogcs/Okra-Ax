@@ -40,8 +40,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 内部组件 - Client模块
  *
  * @author : TinyZ.
- * @email : ogcs_tinyz@outlook.com
- * @date : 2016/4/23
+ * @since 1.0
  */
 public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent {
 
@@ -107,9 +106,9 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         axCoManager.add(module, this);
     }
 
-    private static final Map<Integer, AxCallback> callbacks = new ConcurrentHashMap<>();
+    private static final Map<Integer, AxCallback<AxOutbound>> callbacks = new ConcurrentHashMap<>();
 
-    public void request(long source, int cmd, ByteString msg, AxCallback callback) {
+    public void request(long source, int cmd, ByteString msg, AxCallback<AxOutbound> callback) {
         int rid = REQUEST_ID.getAndIncrement();
         if (callback != null)
             callbacks.put(rid, callback);
@@ -119,7 +118,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     public AxOutbound request(long source, int cmd, ByteString msg) {
         BlockingCallback<AxOutbound> callback = new BlockingCallback<>();
         request(source, cmd, msg, callback);
-        while(!callback.isDone()) {
+        while (!callback.isDone()) {
             try {
                 callback.wait();
             } catch (InterruptedException e) {
@@ -133,7 +132,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         transport(REQUEST_ID.getAndIncrement(), cmd, source, msg);
     }
 
-    public void transport(int rid, int cmd, long source, ByteString msg) {
+    private void transport(int rid, int cmd, long source, ByteString msg) {
         if (session == null) {
             throw new NullPointerException("session");
         }
@@ -149,7 +148,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
 
     @Override
     public void messageReceived(ChannelHandlerContext ctx, AxOutbound msg) {
-        AxCallback callback = callbacks.remove(msg.getRid());
+        AxCallback<AxOutbound> callback = callbacks.remove(msg.getRid());
         if (callback != null) {
             callback.run(msg);
             return;

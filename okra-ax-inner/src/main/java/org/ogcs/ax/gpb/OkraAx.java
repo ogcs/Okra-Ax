@@ -2462,6 +2462,327 @@ public final class OkraAx {
     // @@protoc_insertion_point(class_scope:AxError)
   }
 
+  public interface AxVoidOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:AxVoid)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code AxVoid}
+   *
+   * <pre>
+   * 无内容
+   * </pre>
+   */
+  public static final class AxVoid extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:AxVoid)
+      AxVoidOrBuilder {
+    // Use AxVoid.newBuilder() to construct.
+    private AxVoid(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private AxVoid(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final AxVoid defaultInstance;
+    public static AxVoid getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public AxVoid getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private AxVoid(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.ogcs.ax.gpb.OkraAx.internal_static_AxVoid_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.ogcs.ax.gpb.OkraAx.internal_static_AxVoid_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.ogcs.ax.gpb.OkraAx.AxVoid.class, org.ogcs.ax.gpb.OkraAx.AxVoid.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<AxVoid> PARSER =
+        new com.google.protobuf.AbstractParser<AxVoid>() {
+      public AxVoid parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new AxVoid(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<AxVoid> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static org.ogcs.ax.gpb.OkraAx.AxVoid parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(org.ogcs.ax.gpb.OkraAx.AxVoid prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code AxVoid}
+     *
+     * <pre>
+     * 无内容
+     * </pre>
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:AxVoid)
+        org.ogcs.ax.gpb.OkraAx.AxVoidOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.ogcs.ax.gpb.OkraAx.internal_static_AxVoid_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.ogcs.ax.gpb.OkraAx.internal_static_AxVoid_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.ogcs.ax.gpb.OkraAx.AxVoid.class, org.ogcs.ax.gpb.OkraAx.AxVoid.Builder.class);
+      }
+
+      // Construct using org.ogcs.ax.gpb.OkraAx.AxVoid.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.ogcs.ax.gpb.OkraAx.internal_static_AxVoid_descriptor;
+      }
+
+      public org.ogcs.ax.gpb.OkraAx.AxVoid getDefaultInstanceForType() {
+        return org.ogcs.ax.gpb.OkraAx.AxVoid.getDefaultInstance();
+      }
+
+      public org.ogcs.ax.gpb.OkraAx.AxVoid build() {
+        org.ogcs.ax.gpb.OkraAx.AxVoid result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.ogcs.ax.gpb.OkraAx.AxVoid buildPartial() {
+        org.ogcs.ax.gpb.OkraAx.AxVoid result = new org.ogcs.ax.gpb.OkraAx.AxVoid(this);
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.ogcs.ax.gpb.OkraAx.AxVoid) {
+          return mergeFrom((org.ogcs.ax.gpb.OkraAx.AxVoid)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.ogcs.ax.gpb.OkraAx.AxVoid other) {
+        if (other == org.ogcs.ax.gpb.OkraAx.AxVoid.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.ogcs.ax.gpb.OkraAx.AxVoid parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.ogcs.ax.gpb.OkraAx.AxVoid) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:AxVoid)
+    }
+
+    static {
+      defaultInstance = new AxVoid(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:AxVoid)
+  }
+
   public interface AxReqAuthOrBuilder extends
       // @@protoc_insertion_point(interface_extends:AxReqAuth)
       com.google.protobuf.MessageOrBuilder {
@@ -3104,30 +3425,128 @@ public final class OkraAx {
     // @@protoc_insertion_point(class_scope:AxReqAuth)
   }
 
-  public interface AxNodeOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:AxNode)
+  public interface AxNodeInfoOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:AxNodeInfo)
       com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required int32 module = 1;</code>
+     *
+     * <pre>
+     *模块
+     * </pre>
+     */
+    boolean hasModule();
+    /**
+     * <code>required int32 module = 1;</code>
+     *
+     * <pre>
+     *模块
+     * </pre>
+     */
+    int getModule();
+
+    /**
+     * <code>required int64 id = 2;</code>
+     *
+     * <pre>
+     *  组件唯一ID
+     * </pre>
+     */
+    boolean hasId();
+    /**
+     * <code>required int64 id = 2;</code>
+     *
+     * <pre>
+     *  组件唯一ID
+     * </pre>
+     */
+    long getId();
+
+    /**
+     * <code>optional string host = 3;</code>
+     *
+     * <pre>
+     *  组件的host地址
+     * </pre>
+     */
+    boolean hasHost();
+    /**
+     * <code>optional string host = 3;</code>
+     *
+     * <pre>
+     *  组件的host地址
+     * </pre>
+     */
+    java.lang.String getHost();
+    /**
+     * <code>optional string host = 3;</code>
+     *
+     * <pre>
+     *  组件的host地址
+     * </pre>
+     */
+    com.google.protobuf.ByteString
+        getHostBytes();
+
+    /**
+     * <code>optional int32 port = 4;</code>
+     *
+     * <pre>
+     *  组件内部监听端口
+     * </pre>
+     */
+    boolean hasPort();
+    /**
+     * <code>optional int32 port = 4;</code>
+     *
+     * <pre>
+     *  组件内部监听端口
+     * </pre>
+     */
+    int getPort();
+
+    /**
+     * <code>optional int32 bind = 5;</code>
+     *
+     * <pre>
+     *  组件绑定外部监听端口
+     * </pre>
+     */
+    boolean hasBind();
+    /**
+     * <code>optional int32 bind = 5;</code>
+     *
+     * <pre>
+     *  组件绑定外部监听端口
+     * </pre>
+     */
+    int getBind();
   }
   /**
-   * Protobuf type {@code AxNode}
+   * Protobuf type {@code AxNodeInfo}
+   *
+   * <pre>
+   * 组件信息
+   * </pre>
    */
-  public static final class AxNode extends
+  public static final class AxNodeInfo extends
       com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:AxNode)
-      AxNodeOrBuilder {
-    // Use AxNode.newBuilder() to construct.
-    private AxNode(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      // @@protoc_insertion_point(message_implements:AxNodeInfo)
+      AxNodeInfoOrBuilder {
+    // Use AxNodeInfo.newBuilder() to construct.
+    private AxNodeInfo(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
       this.unknownFields = builder.getUnknownFields();
     }
-    private AxNode(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+    private AxNodeInfo(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
 
-    private static final AxNode defaultInstance;
-    public static AxNode getDefaultInstance() {
+    private static final AxNodeInfo defaultInstance;
+    public static AxNodeInfo getDefaultInstance() {
       return defaultInstance;
     }
 
-    public AxNode getDefaultInstanceForType() {
+    public AxNodeInfo getDefaultInstanceForType() {
       return defaultInstance;
     }
 
@@ -3137,11 +3556,12 @@ public final class OkraAx {
         getUnknownFields() {
       return this.unknownFields;
     }
-    private AxNode(
+    private AxNodeInfo(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       initFields();
+      int mutable_bitField0_ = 0;
       com.google.protobuf.UnknownFieldSet.Builder unknownFields =
           com.google.protobuf.UnknownFieldSet.newBuilder();
       try {
@@ -3159,6 +3579,32 @@ public final class OkraAx {
               }
               break;
             }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              module_ = input.readInt32();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              id_ = input.readInt64();
+              break;
+            }
+            case 26: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000004;
+              host_ = bs;
+              break;
+            }
+            case 32: {
+              bitField0_ |= 0x00000008;
+              port_ = input.readInt32();
+              break;
+            }
+            case 40: {
+              bitField0_ |= 0x00000010;
+              bind_ = input.readInt32();
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -3173,32 +3619,184 @@ public final class OkraAx {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return org.ogcs.ax.gpb.OkraAx.internal_static_AxNode_descriptor;
+      return org.ogcs.ax.gpb.OkraAx.internal_static_AxNodeInfo_descriptor;
     }
 
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return org.ogcs.ax.gpb.OkraAx.internal_static_AxNode_fieldAccessorTable
+      return org.ogcs.ax.gpb.OkraAx.internal_static_AxNodeInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              org.ogcs.ax.gpb.OkraAx.AxNode.class, org.ogcs.ax.gpb.OkraAx.AxNode.Builder.class);
+              org.ogcs.ax.gpb.OkraAx.AxNodeInfo.class, org.ogcs.ax.gpb.OkraAx.AxNodeInfo.Builder.class);
     }
 
-    public static com.google.protobuf.Parser<AxNode> PARSER =
-        new com.google.protobuf.AbstractParser<AxNode>() {
-      public AxNode parsePartialFrom(
+    public static com.google.protobuf.Parser<AxNodeInfo> PARSER =
+        new com.google.protobuf.AbstractParser<AxNodeInfo>() {
+      public AxNodeInfo parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new AxNode(input, extensionRegistry);
+        return new AxNodeInfo(input, extensionRegistry);
       }
     };
 
     @java.lang.Override
-    public com.google.protobuf.Parser<AxNode> getParserForType() {
+    public com.google.protobuf.Parser<AxNodeInfo> getParserForType() {
       return PARSER;
     }
 
+    private int bitField0_;
+    public static final int MODULE_FIELD_NUMBER = 1;
+    private int module_;
+    /**
+     * <code>required int32 module = 1;</code>
+     *
+     * <pre>
+     *模块
+     * </pre>
+     */
+    public boolean hasModule() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required int32 module = 1;</code>
+     *
+     * <pre>
+     *模块
+     * </pre>
+     */
+    public int getModule() {
+      return module_;
+    }
+
+    public static final int ID_FIELD_NUMBER = 2;
+    private long id_;
+    /**
+     * <code>required int64 id = 2;</code>
+     *
+     * <pre>
+     *  组件唯一ID
+     * </pre>
+     */
+    public boolean hasId() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int64 id = 2;</code>
+     *
+     * <pre>
+     *  组件唯一ID
+     * </pre>
+     */
+    public long getId() {
+      return id_;
+    }
+
+    public static final int HOST_FIELD_NUMBER = 3;
+    private java.lang.Object host_;
+    /**
+     * <code>optional string host = 3;</code>
+     *
+     * <pre>
+     *  组件的host地址
+     * </pre>
+     */
+    public boolean hasHost() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional string host = 3;</code>
+     *
+     * <pre>
+     *  组件的host地址
+     * </pre>
+     */
+    public java.lang.String getHost() {
+      java.lang.Object ref = host_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          host_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>optional string host = 3;</code>
+     *
+     * <pre>
+     *  组件的host地址
+     * </pre>
+     */
+    public com.google.protobuf.ByteString
+        getHostBytes() {
+      java.lang.Object ref = host_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        host_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int PORT_FIELD_NUMBER = 4;
+    private int port_;
+    /**
+     * <code>optional int32 port = 4;</code>
+     *
+     * <pre>
+     *  组件内部监听端口
+     * </pre>
+     */
+    public boolean hasPort() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional int32 port = 4;</code>
+     *
+     * <pre>
+     *  组件内部监听端口
+     * </pre>
+     */
+    public int getPort() {
+      return port_;
+    }
+
+    public static final int BIND_FIELD_NUMBER = 5;
+    private int bind_;
+    /**
+     * <code>optional int32 bind = 5;</code>
+     *
+     * <pre>
+     *  组件绑定外部监听端口
+     * </pre>
+     */
+    public boolean hasBind() {
+      return ((bitField0_ & 0x00000010) == 0x00000010);
+    }
+    /**
+     * <code>optional int32 bind = 5;</code>
+     *
+     * <pre>
+     *  组件绑定外部监听端口
+     * </pre>
+     */
+    public int getBind() {
+      return bind_;
+    }
+
     private void initFields() {
+      module_ = 0;
+      id_ = 0L;
+      host_ = "";
+      port_ = 0;
+      bind_ = 0;
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -3206,6 +3804,14 @@ public final class OkraAx {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
+      if (!hasModule()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasId()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -3213,6 +3819,21 @@ public final class OkraAx {
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt32(1, module_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt64(2, id_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, getHostBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeInt32(4, port_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        output.writeInt32(5, bind_);
+      }
       getUnknownFields().writeTo(output);
     }
 
@@ -3222,6 +3843,26 @@ public final class OkraAx {
       if (size != -1) return size;
 
       size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, module_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(2, id_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, getHostBytes());
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(4, port_);
+      }
+      if (((bitField0_ & 0x00000010) == 0x00000010)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(5, bind_);
+      }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
       return size;
@@ -3234,53 +3875,53 @@ public final class OkraAx {
       return super.writeReplace();
     }
 
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseFrom(
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseFrom(
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseFrom(byte[] data)
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseFrom(
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseFrom(java.io.InputStream input)
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseFrom(
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseFrom(input, extensionRegistry);
     }
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseDelimitedFrom(java.io.InputStream input)
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input);
     }
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseDelimitedFrom(
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return PARSER.parseDelimitedFrom(input, extensionRegistry);
     }
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseFrom(
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return PARSER.parseFrom(input);
     }
-    public static org.ogcs.ax.gpb.OkraAx.AxNode parseFrom(
+    public static org.ogcs.ax.gpb.OkraAx.AxNodeInfo parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -3289,7 +3930,7 @@ public final class OkraAx {
 
     public static Builder newBuilder() { return Builder.create(); }
     public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder(org.ogcs.ax.gpb.OkraAx.AxNode prototype) {
+    public static Builder newBuilder(org.ogcs.ax.gpb.OkraAx.AxNodeInfo prototype) {
       return newBuilder().mergeFrom(prototype);
     }
     public Builder toBuilder() { return newBuilder(this); }
@@ -3301,25 +3942,29 @@ public final class OkraAx {
       return builder;
     }
     /**
-     * Protobuf type {@code AxNode}
+     * Protobuf type {@code AxNodeInfo}
+     *
+     * <pre>
+     * 组件信息
+     * </pre>
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:AxNode)
-        org.ogcs.ax.gpb.OkraAx.AxNodeOrBuilder {
+        // @@protoc_insertion_point(builder_implements:AxNodeInfo)
+        org.ogcs.ax.gpb.OkraAx.AxNodeInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return org.ogcs.ax.gpb.OkraAx.internal_static_AxNode_descriptor;
+        return org.ogcs.ax.gpb.OkraAx.internal_static_AxNodeInfo_descriptor;
       }
 
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return org.ogcs.ax.gpb.OkraAx.internal_static_AxNode_fieldAccessorTable
+        return org.ogcs.ax.gpb.OkraAx.internal_static_AxNodeInfo_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                org.ogcs.ax.gpb.OkraAx.AxNode.class, org.ogcs.ax.gpb.OkraAx.AxNode.Builder.class);
+                org.ogcs.ax.gpb.OkraAx.AxNodeInfo.class, org.ogcs.ax.gpb.OkraAx.AxNodeInfo.Builder.class);
       }
 
-      // Construct using org.ogcs.ax.gpb.OkraAx.AxNode.newBuilder()
+      // Construct using org.ogcs.ax.gpb.OkraAx.AxNodeInfo.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -3339,6 +3984,16 @@ public final class OkraAx {
 
       public Builder clear() {
         super.clear();
+        module_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        id_ = 0L;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        host_ = "";
+        bitField0_ = (bitField0_ & ~0x00000004);
+        port_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        bind_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000010);
         return this;
       }
 
@@ -3348,43 +4003,91 @@ public final class OkraAx {
 
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return org.ogcs.ax.gpb.OkraAx.internal_static_AxNode_descriptor;
+        return org.ogcs.ax.gpb.OkraAx.internal_static_AxNodeInfo_descriptor;
       }
 
-      public org.ogcs.ax.gpb.OkraAx.AxNode getDefaultInstanceForType() {
-        return org.ogcs.ax.gpb.OkraAx.AxNode.getDefaultInstance();
+      public org.ogcs.ax.gpb.OkraAx.AxNodeInfo getDefaultInstanceForType() {
+        return org.ogcs.ax.gpb.OkraAx.AxNodeInfo.getDefaultInstance();
       }
 
-      public org.ogcs.ax.gpb.OkraAx.AxNode build() {
-        org.ogcs.ax.gpb.OkraAx.AxNode result = buildPartial();
+      public org.ogcs.ax.gpb.OkraAx.AxNodeInfo build() {
+        org.ogcs.ax.gpb.OkraAx.AxNodeInfo result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      public org.ogcs.ax.gpb.OkraAx.AxNode buildPartial() {
-        org.ogcs.ax.gpb.OkraAx.AxNode result = new org.ogcs.ax.gpb.OkraAx.AxNode(this);
+      public org.ogcs.ax.gpb.OkraAx.AxNodeInfo buildPartial() {
+        org.ogcs.ax.gpb.OkraAx.AxNodeInfo result = new org.ogcs.ax.gpb.OkraAx.AxNodeInfo(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.module_ = module_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.id_ = id_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.host_ = host_;
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        result.port_ = port_;
+        if (((from_bitField0_ & 0x00000010) == 0x00000010)) {
+          to_bitField0_ |= 0x00000010;
+        }
+        result.bind_ = bind_;
+        result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
       }
 
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof org.ogcs.ax.gpb.OkraAx.AxNode) {
-          return mergeFrom((org.ogcs.ax.gpb.OkraAx.AxNode)other);
+        if (other instanceof org.ogcs.ax.gpb.OkraAx.AxNodeInfo) {
+          return mergeFrom((org.ogcs.ax.gpb.OkraAx.AxNodeInfo)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(org.ogcs.ax.gpb.OkraAx.AxNode other) {
-        if (other == org.ogcs.ax.gpb.OkraAx.AxNode.getDefaultInstance()) return this;
+      public Builder mergeFrom(org.ogcs.ax.gpb.OkraAx.AxNodeInfo other) {
+        if (other == org.ogcs.ax.gpb.OkraAx.AxNodeInfo.getDefaultInstance()) return this;
+        if (other.hasModule()) {
+          setModule(other.getModule());
+        }
+        if (other.hasId()) {
+          setId(other.getId());
+        }
+        if (other.hasHost()) {
+          bitField0_ |= 0x00000004;
+          host_ = other.host_;
+          onChanged();
+        }
+        if (other.hasPort()) {
+          setPort(other.getPort());
+        }
+        if (other.hasBind()) {
+          setBind(other.getBind());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
+        if (!hasModule()) {
+          
+          return false;
+        }
+        if (!hasId()) {
+          
+          return false;
+        }
         return true;
       }
 
@@ -3392,11 +4095,11 @@ public final class OkraAx {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        org.ogcs.ax.gpb.OkraAx.AxNode parsedMessage = null;
+        org.ogcs.ax.gpb.OkraAx.AxNodeInfo parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (org.ogcs.ax.gpb.OkraAx.AxNode) e.getUnfinishedMessage();
+          parsedMessage = (org.ogcs.ax.gpb.OkraAx.AxNodeInfo) e.getUnfinishedMessage();
           throw e;
         } finally {
           if (parsedMessage != null) {
@@ -3405,16 +4108,309 @@ public final class OkraAx {
         }
         return this;
       }
+      private int bitField0_;
 
-      // @@protoc_insertion_point(builder_scope:AxNode)
+      private int module_ ;
+      /**
+       * <code>required int32 module = 1;</code>
+       *
+       * <pre>
+       *模块
+       * </pre>
+       */
+      public boolean hasModule() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required int32 module = 1;</code>
+       *
+       * <pre>
+       *模块
+       * </pre>
+       */
+      public int getModule() {
+        return module_;
+      }
+      /**
+       * <code>required int32 module = 1;</code>
+       *
+       * <pre>
+       *模块
+       * </pre>
+       */
+      public Builder setModule(int value) {
+        bitField0_ |= 0x00000001;
+        module_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 module = 1;</code>
+       *
+       * <pre>
+       *模块
+       * </pre>
+       */
+      public Builder clearModule() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        module_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private long id_ ;
+      /**
+       * <code>required int64 id = 2;</code>
+       *
+       * <pre>
+       *  组件唯一ID
+       * </pre>
+       */
+      public boolean hasId() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required int64 id = 2;</code>
+       *
+       * <pre>
+       *  组件唯一ID
+       * </pre>
+       */
+      public long getId() {
+        return id_;
+      }
+      /**
+       * <code>required int64 id = 2;</code>
+       *
+       * <pre>
+       *  组件唯一ID
+       * </pre>
+       */
+      public Builder setId(long value) {
+        bitField0_ |= 0x00000002;
+        id_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int64 id = 2;</code>
+       *
+       * <pre>
+       *  组件唯一ID
+       * </pre>
+       */
+      public Builder clearId() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        id_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object host_ = "";
+      /**
+       * <code>optional string host = 3;</code>
+       *
+       * <pre>
+       *  组件的host地址
+       * </pre>
+       */
+      public boolean hasHost() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional string host = 3;</code>
+       *
+       * <pre>
+       *  组件的host地址
+       * </pre>
+       */
+      public java.lang.String getHost() {
+        java.lang.Object ref = host_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            host_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string host = 3;</code>
+       *
+       * <pre>
+       *  组件的host地址
+       * </pre>
+       */
+      public com.google.protobuf.ByteString
+          getHostBytes() {
+        java.lang.Object ref = host_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          host_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string host = 3;</code>
+       *
+       * <pre>
+       *  组件的host地址
+       * </pre>
+       */
+      public Builder setHost(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        host_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string host = 3;</code>
+       *
+       * <pre>
+       *  组件的host地址
+       * </pre>
+       */
+      public Builder clearHost() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        host_ = getDefaultInstance().getHost();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string host = 3;</code>
+       *
+       * <pre>
+       *  组件的host地址
+       * </pre>
+       */
+      public Builder setHostBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        host_ = value;
+        onChanged();
+        return this;
+      }
+
+      private int port_ ;
+      /**
+       * <code>optional int32 port = 4;</code>
+       *
+       * <pre>
+       *  组件内部监听端口
+       * </pre>
+       */
+      public boolean hasPort() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional int32 port = 4;</code>
+       *
+       * <pre>
+       *  组件内部监听端口
+       * </pre>
+       */
+      public int getPort() {
+        return port_;
+      }
+      /**
+       * <code>optional int32 port = 4;</code>
+       *
+       * <pre>
+       *  组件内部监听端口
+       * </pre>
+       */
+      public Builder setPort(int value) {
+        bitField0_ |= 0x00000008;
+        port_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 port = 4;</code>
+       *
+       * <pre>
+       *  组件内部监听端口
+       * </pre>
+       */
+      public Builder clearPort() {
+        bitField0_ = (bitField0_ & ~0x00000008);
+        port_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int bind_ ;
+      /**
+       * <code>optional int32 bind = 5;</code>
+       *
+       * <pre>
+       *  组件绑定外部监听端口
+       * </pre>
+       */
+      public boolean hasBind() {
+        return ((bitField0_ & 0x00000010) == 0x00000010);
+      }
+      /**
+       * <code>optional int32 bind = 5;</code>
+       *
+       * <pre>
+       *  组件绑定外部监听端口
+       * </pre>
+       */
+      public int getBind() {
+        return bind_;
+      }
+      /**
+       * <code>optional int32 bind = 5;</code>
+       *
+       * <pre>
+       *  组件绑定外部监听端口
+       * </pre>
+       */
+      public Builder setBind(int value) {
+        bitField0_ |= 0x00000010;
+        bind_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int32 bind = 5;</code>
+       *
+       * <pre>
+       *  组件绑定外部监听端口
+       * </pre>
+       */
+      public Builder clearBind() {
+        bitField0_ = (bitField0_ & ~0x00000010);
+        bind_ = 0;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:AxNodeInfo)
     }
 
     static {
-      defaultInstance = new AxNode(true);
+      defaultInstance = new AxNodeInfo(true);
       defaultInstance.initFields();
     }
 
-    // @@protoc_insertion_point(class_scope:AxNode)
+    // @@protoc_insertion_point(class_scope:AxNodeInfo)
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
@@ -3433,15 +4429,20 @@ public final class OkraAx {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_AxError_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_AxVoid_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_AxVoid_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_AxReqAuth_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_AxReqAuth_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_AxNode_descriptor;
+    internal_static_AxNodeInfo_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_AxNode_fieldAccessorTable;
+      internal_static_AxNodeInfo_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3456,9 +4457,11 @@ public final class OkraAx {
       "P\n\nAxOutbound\022\013\n\003rid\030\001 \002(\005\022\016\n\006target\030\002 \003" +
       "(\003\022\014\n\004data\030\003 \001(\014\022\027\n\005error\030\004 \001(\0132\010.AxErro" +
       "r\"%\n\007AxError\022\r\n\005state\030\001 \002(\005\022\013\n\003msg\030\002 \001(\t" +
-      "\"(\n\tAxReqAuth\022\016\n\006source\030\001 \001(\003\022\013\n\003key\030\002 \001" +
-      "(\t\"\010\n\006AxNodeB\033\n\017org.ogcs.ax.gpbB\006OkraAxH" +
-      "\001"
+      "\"\010\n\006AxVoid\"(\n\tAxReqAuth\022\016\n\006source\030\001 \001(\003\022" +
+      "\013\n\003key\030\002 \001(\t\"R\n\nAxNodeInfo\022\016\n\006module\030\001 \002" +
+      "(\005\022\n\n\002id\030\002 \002(\003\022\014\n\004host\030\003 \001(\t\022\014\n\004port\030\004 \001" +
+      "(\005\022\014\n\004bind\030\005 \001(\005B\033\n\017org.ogcs.ax.gpbB\006Okr" +
+      "aAxH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3490,18 +4493,24 @@ public final class OkraAx {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_AxError_descriptor,
         new java.lang.String[] { "State", "Msg", });
-    internal_static_AxReqAuth_descriptor =
+    internal_static_AxVoid_descriptor =
       getDescriptor().getMessageTypes().get(3);
+    internal_static_AxVoid_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_AxVoid_descriptor,
+        new java.lang.String[] { });
+    internal_static_AxReqAuth_descriptor =
+      getDescriptor().getMessageTypes().get(4);
     internal_static_AxReqAuth_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_AxReqAuth_descriptor,
         new java.lang.String[] { "Source", "Key", });
-    internal_static_AxNode_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_AxNode_fieldAccessorTable = new
+    internal_static_AxNodeInfo_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_AxNodeInfo_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_AxNode_descriptor,
-        new java.lang.String[] { });
+        internal_static_AxNodeInfo_descriptor,
+        new java.lang.String[] { "Module", "Id", "Host", "Port", "Bind", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

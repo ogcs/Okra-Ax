@@ -5,10 +5,13 @@ import com.lj.kernel.gate.command.AgentCommand;
 import com.lj.kernel.gpb.GpbD.Request;
 import com.lj.kernel.gpb.generated.GpbChess.ReqChessJoin;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.AxCallback;
 import org.ogcs.ax.component.Modules;
 import org.ogcs.ax.component.ServerProperties;
 import org.ogcs.ax.component.inner.AxInnerClient;
 import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.gpb.OkraAx;
+import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 
 public class ROOM_ENTER extends AgentCommand {
 
@@ -21,8 +24,7 @@ public class ROOM_ENTER extends AgentCommand {
         AxInnerClient client = components.getByHash(Modules.MODULE_CHESS, String.valueOf(roomId));
         if (client != null) {
             // TODO: 简化请求流程
-            client.request(user.id(), request.getApi(), request.getData(), (msg)->{
-
+            client.request(user.id(), request.getApi(), request.getData(), (AxCallback<AxOutbound>) (msg) -> {
 
             });
 

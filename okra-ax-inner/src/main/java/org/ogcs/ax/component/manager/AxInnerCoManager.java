@@ -35,6 +35,10 @@ public class AxInnerCoManager {
     // module
     private Map<String, AxShard<AxInnerClient>> remotes = new ConcurrentHashMap<>();
 
+    public boolean isExist(String id) {
+        return clients.containsKey(id);
+    }
+
     public void add(String module, long local, AxCoInfo info) {
         AxInnerClient client = new AxInnerClient(module, local, info);
         client.start(); //  Connect to component

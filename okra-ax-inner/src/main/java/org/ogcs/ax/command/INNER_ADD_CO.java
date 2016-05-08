@@ -20,11 +20,14 @@ package org.ogcs.ax.command;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.AxCoInfo;
 import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.component.inner.AxInnerClient;
 import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
+import org.ogcs.ax.gpb.OkraAx;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
-import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
+import org.ogcs.ax.gpb.OkraAx.AxNodeInfo;
 
 /**
  * @author : TinyZ.
@@ -37,10 +40,29 @@ public class INNER_ADD_CO implements Command<Session, AxInbound> {
 
     @Override
     public void execute(Session session, AxInbound axInbound) throws Exception {
-        AxReqAuth axReqAuth = AxReqAuth.parseFrom(axInbound.getData());
-//        components.add("", 1L, null);
+        AxNodeInfo nodeInfo = AxNodeInfo.parseFrom(axInbound.getData());
 
-        session.writeAndFlush(AxReplys.axOutbound(axInbound.getRid(), axInbound.getData(), -1L));
+        // 更新组件
+        AxCoInfo info = new AxCoInfo(nodeInfo.getId(), nodeInfo.getHost(), nodeInfo.getPort(), nodeInfo.getBind());
+
+        AxInnerClient client = new AxInnerClient(String.valueOf(nodeInfo.getModule()), 1L, info);
+        client.start();
+
+        if (client.session().isOnline()) {
+            // 成功建立连接。
+
+        }
+
+
+        // TODO: 如何确认已经简历连接
+        session.writeAndFlush(AxReplys.axOutbound(axInbound.getRid(), axInbound.getData(), axInbound.getSource()));
         System.out.println("节点注册成功.");
+
+
+
+
+
+
+
     }
 }
