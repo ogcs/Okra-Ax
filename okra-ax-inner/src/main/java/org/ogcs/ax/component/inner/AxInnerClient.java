@@ -116,8 +116,21 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         transport(rid, cmd, source, msg);
     }
 
-    public void push(int cmd, ByteString msg) {
-        transport(REQUEST_ID.getAndIncrement(), cmd, local, msg);
+    public AxOutbound request(long source, int cmd, ByteString msg) {
+        BlockingCallback<AxOutbound> callback = new BlockingCallback<>();
+        request(source, cmd, msg, callback);
+        while(!callback.isDone()) {
+            try {
+                callback.wait();
+            } catch (InterruptedException e) {
+                LOG.info("Interrupted while blocking.  out of time ", e);
+            }
+        }
+        return callback.get();
+    }
+
+    public void push(long source, int cmd, ByteString msg) {
+        transport(REQUEST_ID.getAndIncrement(), cmd, source, msg);
     }
 
     public void transport(int rid, int cmd, long source, ByteString msg) {
