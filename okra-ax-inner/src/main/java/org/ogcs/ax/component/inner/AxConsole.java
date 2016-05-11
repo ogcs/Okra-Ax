@@ -39,11 +39,13 @@ public enum AxConsole {
 
     private static final int[] NON_AUTH_COMMAND = new int[]{1000};
 
+    private final Map<Integer, Integer> ROUTE = new HashMap<>();
+
     AxConsole() {
         GAME_COMMAND_MAP = new HashMap<>();
 
         GAME_COMMAND_MAP.put(1000, new INNER_AUTH());
-        GAME_COMMAND_MAP.put(1001, new INNER_ADD_CO());
+        GAME_COMMAND_MAP.put(1002, new INNER_ADD_CO());
     }
 
     /**
@@ -55,6 +57,10 @@ public enum AxConsole {
         } else {
             throw new Exception("Unknown command : " + cmd);
         }
+    }
+    
+    public int route(int cmd) {
+        return ROUTE.get(cmd);
     }
 
     public boolean isCmdWithoutAuth(int cmd) {

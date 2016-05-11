@@ -1,11 +1,10 @@
 package com.lj.kernel.remote.command.room;
 
-import com.lj.kernel.gpb.generated.GpbRoom;
 import com.lj.kernel.gpb.generated.GpbRoom.ReqExit;
+import com.lj.kernel.gpb.generated.GpbRoom.ResExit;
 import com.lj.kernel.module.Room;
 import com.lj.kernel.remote.RemoteCommand;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.GpbReplys;
 import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
@@ -24,16 +23,13 @@ public class ROOM_EXIT extends RemoteCommand {
         Room room = roomManager.get(reqExit.getRoomId());
         if (room == null) {
             session.writeAndFlush(
-                    AxReplys.axOutbound(inbound.getRid(),
-                            GpbReplys.error(inbound.getRid(), -1),// TODO: 房间不存在
-                            inbound.getSource()
-                    )
+                    AxReplys.error(inbound.getRid(), -1)
             );
             return;
         }
         session.writeAndFlush(
                 AxReplys.axOutbound(inbound.getRid(),
-                        GpbReplys.response(inbound.getRid(), GpbRoom.ResEnter.getDefaultInstance()),
+                        ResExit.getDefaultInstance(),
                         inbound.getSource()
                 )
         );

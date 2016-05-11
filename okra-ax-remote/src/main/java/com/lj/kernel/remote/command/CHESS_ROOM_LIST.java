@@ -5,7 +5,6 @@ import com.lj.kernel.gpb.generated.GpbChess.ResChessRoomInfo.RoomInfo;
 import com.lj.kernel.module.Room;
 import com.lj.kernel.remote.RemoteCommand;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.GpbReplys;
 import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
@@ -33,7 +32,8 @@ public class CHESS_ROOM_LIST extends RemoteCommand {
         }
         session.writeAndFlush(
                 AxReplys.axOutbound(request.getRid(),
-                        GpbReplys.response(request.getRid(), builder), request.getSource()
+                        builder.build(),
+                        request.getSource()
                 )
         );
     }

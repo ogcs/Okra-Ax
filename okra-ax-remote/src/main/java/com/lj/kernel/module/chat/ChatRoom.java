@@ -15,7 +15,6 @@ public class ChatRoom implements Room {
     private long id;
     private Set<Long> users;
 
-
     public ChatRoom(long id) {
         this.id = id;
     }
@@ -28,6 +27,11 @@ public class ChatRoom implements Room {
     @Override
     public int type() {
         return 0;
+    }
+
+    @Override
+    public boolean isFully() {
+        return false;
     }
 
     @Override

@@ -1,14 +1,13 @@
 package com.lj.kernel.remote.command;
 
-import com.lj.kernel.gpb.generated.GpbChess;
 import com.lj.kernel.gpb.generated.GpbChess.ReqChessJoin;
-import org.ogcs.ax.component.AxConnector;
-import org.ogcs.ax.component.GpbReplys;
-import org.ogcs.ax.component.inner.AxReplys;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
+import com.lj.kernel.gpb.generated.GpbChess.ResChessJoin;
 import com.lj.kernel.module.chess.Chessboard;
 import com.lj.kernel.remote.RemoteCommand;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.AxConnector;
+import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
 /**
  * @author : TinyZ.
@@ -22,6 +21,7 @@ public class CHESS_JOIN extends RemoteCommand {
         AxConnector axConnector = (AxConnector) session.getConnector();
 
         ReqChessJoin reqChessJoin = ReqChessJoin.parseFrom(inbound.getData());
+
         Chessboard room = (Chessboard) roomManager.getByUid(inbound.getSource());
         if (room == null) {
             room = new Chessboard(reqChessJoin.getRoomId());
@@ -31,10 +31,9 @@ public class CHESS_JOIN extends RemoteCommand {
 
         session.writeAndFlush(
                 AxReplys.axOutbound(inbound.getRid(),
-                        GpbReplys.response(inbound.getRid(),
-                                GpbChess.ResChessJoin.newBuilder()
-                                        .setSide(room.index(inbound.getSource()))
-                                        .build()),
+                        ResChessJoin.newBuilder()
+                                .setSide(room.index(inbound.getSource()))
+                                .build(),
                         inbound.getSource()
                 )
         );

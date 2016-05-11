@@ -30,38 +30,21 @@ public final class GpbD {
     int getId();
 
     /**
-     * <code>optional int32 api = 2;</code>
-     *
-     * <pre>
-     *  The service
-     * </pre>
-     */
-    boolean hasApi();
-    /**
-     * <code>optional int32 api = 2;</code>
-     *
-     * <pre>
-     *  The service
-     * </pre>
-     */
-    int getApi();
-
-    /**
-     * <code>optional int32 method = 3;</code>
+     * <code>optional int32 cmd = 3;</code>
      *
      * <pre>
      *  invoked method
      * </pre>
      */
-    boolean hasMethod();
+    boolean hasCmd();
     /**
-     * <code>optional int32 method = 3;</code>
+     * <code>optional int32 cmd = 3;</code>
      *
      * <pre>
      *  invoked method
      * </pre>
      */
-    int getMethod();
+    int getCmd();
 
     /**
      * <code>optional bytes data = 4;</code>
@@ -141,18 +124,13 @@ public final class GpbD {
               id_ = input.readInt32();
               break;
             }
-            case 16: {
-              bitField0_ |= 0x00000002;
-              api_ = input.readInt32();
-              break;
-            }
             case 24: {
-              bitField0_ |= 0x00000004;
-              method_ = input.readInt32();
+              bitField0_ |= 0x00000002;
+              cmd_ = input.readInt32();
               break;
             }
             case 34: {
-              bitField0_ |= 0x00000008;
+              bitField0_ |= 0x00000004;
               data_ = input.readBytes();
               break;
             }
@@ -219,50 +197,27 @@ public final class GpbD {
       return id_;
     }
 
-    public static final int API_FIELD_NUMBER = 2;
-    private int api_;
+    public static final int CMD_FIELD_NUMBER = 3;
+    private int cmd_;
     /**
-     * <code>optional int32 api = 2;</code>
+     * <code>optional int32 cmd = 3;</code>
      *
      * <pre>
-     *  The service
+     *  invoked method
      * </pre>
      */
-    public boolean hasApi() {
+    public boolean hasCmd() {
       return ((bitField0_ & 0x00000002) == 0x00000002);
     }
     /**
-     * <code>optional int32 api = 2;</code>
-     *
-     * <pre>
-     *  The service
-     * </pre>
-     */
-    public int getApi() {
-      return api_;
-    }
-
-    public static final int METHOD_FIELD_NUMBER = 3;
-    private int method_;
-    /**
-     * <code>optional int32 method = 3;</code>
+     * <code>optional int32 cmd = 3;</code>
      *
      * <pre>
      *  invoked method
      * </pre>
      */
-    public boolean hasMethod() {
-      return ((bitField0_ & 0x00000004) == 0x00000004);
-    }
-    /**
-     * <code>optional int32 method = 3;</code>
-     *
-     * <pre>
-     *  invoked method
-     * </pre>
-     */
-    public int getMethod() {
-      return method_;
+    public int getCmd() {
+      return cmd_;
     }
 
     public static final int DATA_FIELD_NUMBER = 4;
@@ -275,7 +230,7 @@ public final class GpbD {
      * </pre>
      */
     public boolean hasData() {
-      return ((bitField0_ & 0x00000008) == 0x00000008);
+      return ((bitField0_ & 0x00000004) == 0x00000004);
     }
     /**
      * <code>optional bytes data = 4;</code>
@@ -290,8 +245,7 @@ public final class GpbD {
 
     private void initFields() {
       id_ = 0;
-      api_ = 0;
-      method_ = 0;
+      cmd_ = 0;
       data_ = com.google.protobuf.ByteString.EMPTY;
     }
     private byte memoizedIsInitialized = -1;
@@ -315,12 +269,9 @@ public final class GpbD {
         output.writeInt32(1, id_);
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
-        output.writeInt32(2, api_);
+        output.writeInt32(3, cmd_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        output.writeInt32(3, method_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         output.writeBytes(4, data_);
       }
       getUnknownFields().writeTo(output);
@@ -338,13 +289,9 @@ public final class GpbD {
       }
       if (((bitField0_ & 0x00000002) == 0x00000002)) {
         size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(2, api_);
+          .computeInt32Size(3, cmd_);
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeInt32Size(3, method_);
-      }
-      if (((bitField0_ & 0x00000008) == 0x00000008)) {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(4, data_);
       }
@@ -471,12 +418,10 @@ public final class GpbD {
         super.clear();
         id_ = 0;
         bitField0_ = (bitField0_ & ~0x00000001);
-        api_ = 0;
+        cmd_ = 0;
         bitField0_ = (bitField0_ & ~0x00000002);
-        method_ = 0;
-        bitField0_ = (bitField0_ & ~0x00000004);
         data_ = com.google.protobuf.ByteString.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -512,13 +457,9 @@ public final class GpbD {
         if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
           to_bitField0_ |= 0x00000002;
         }
-        result.api_ = api_;
+        result.cmd_ = cmd_;
         if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
           to_bitField0_ |= 0x00000004;
-        }
-        result.method_ = method_;
-        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
-          to_bitField0_ |= 0x00000008;
         }
         result.data_ = data_;
         result.bitField0_ = to_bitField0_;
@@ -540,11 +481,8 @@ public final class GpbD {
         if (other.hasId()) {
           setId(other.getId());
         }
-        if (other.hasApi()) {
-          setApi(other.getApi());
-        }
-        if (other.hasMethod()) {
-          setMethod(other.getMethod());
+        if (other.hasCmd()) {
+          setCmd(other.getCmd());
         }
         if (other.hasData()) {
           setData(other.getData());
@@ -628,98 +566,50 @@ public final class GpbD {
         return this;
       }
 
-      private int api_ ;
+      private int cmd_ ;
       /**
-       * <code>optional int32 api = 2;</code>
+       * <code>optional int32 cmd = 3;</code>
        *
        * <pre>
-       *  The service
+       *  invoked method
        * </pre>
        */
-      public boolean hasApi() {
+      public boolean hasCmd() {
         return ((bitField0_ & 0x00000002) == 0x00000002);
       }
       /**
-       * <code>optional int32 api = 2;</code>
+       * <code>optional int32 cmd = 3;</code>
        *
        * <pre>
-       *  The service
+       *  invoked method
        * </pre>
        */
-      public int getApi() {
-        return api_;
+      public int getCmd() {
+        return cmd_;
       }
       /**
-       * <code>optional int32 api = 2;</code>
+       * <code>optional int32 cmd = 3;</code>
        *
        * <pre>
-       *  The service
+       *  invoked method
        * </pre>
        */
-      public Builder setApi(int value) {
+      public Builder setCmd(int value) {
         bitField0_ |= 0x00000002;
-        api_ = value;
+        cmd_ = value;
         onChanged();
         return this;
       }
       /**
-       * <code>optional int32 api = 2;</code>
+       * <code>optional int32 cmd = 3;</code>
        *
        * <pre>
-       *  The service
+       *  invoked method
        * </pre>
        */
-      public Builder clearApi() {
+      public Builder clearCmd() {
         bitField0_ = (bitField0_ & ~0x00000002);
-        api_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int method_ ;
-      /**
-       * <code>optional int32 method = 3;</code>
-       *
-       * <pre>
-       *  invoked method
-       * </pre>
-       */
-      public boolean hasMethod() {
-        return ((bitField0_ & 0x00000004) == 0x00000004);
-      }
-      /**
-       * <code>optional int32 method = 3;</code>
-       *
-       * <pre>
-       *  invoked method
-       * </pre>
-       */
-      public int getMethod() {
-        return method_;
-      }
-      /**
-       * <code>optional int32 method = 3;</code>
-       *
-       * <pre>
-       *  invoked method
-       * </pre>
-       */
-      public Builder setMethod(int value) {
-        bitField0_ |= 0x00000004;
-        method_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>optional int32 method = 3;</code>
-       *
-       * <pre>
-       *  invoked method
-       * </pre>
-       */
-      public Builder clearMethod() {
-        bitField0_ = (bitField0_ & ~0x00000004);
-        method_ = 0;
+        cmd_ = 0;
         onChanged();
         return this;
       }
@@ -733,7 +623,7 @@ public final class GpbD {
        * </pre>
        */
       public boolean hasData() {
-        return ((bitField0_ & 0x00000008) == 0x00000008);
+        return ((bitField0_ & 0x00000004) == 0x00000004);
       }
       /**
        * <code>optional bytes data = 4;</code>
@@ -756,7 +646,7 @@ public final class GpbD {
         if (value == null) {
     throw new NullPointerException();
   }
-  bitField0_ |= 0x00000008;
+  bitField0_ |= 0x00000004;
         data_ = value;
         onChanged();
         return this;
@@ -769,7 +659,7 @@ public final class GpbD {
        * </pre>
        */
       public Builder clearData() {
-        bitField0_ = (bitField0_ & ~0x00000008);
+        bitField0_ = (bitField0_ & ~0x00000004);
         data_ = getDefaultInstance().getData();
         onChanged();
         return this;
@@ -3056,6 +2946,327 @@ public final class GpbD {
     // @@protoc_insertion_point(class_scope:Notify)
   }
 
+  public interface VoidOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Void)
+      com.google.protobuf.MessageOrBuilder {
+  }
+  /**
+   * Protobuf type {@code Void}
+   *
+   * <pre>
+   * 空返回
+   * </pre>
+   */
+  public static final class Void extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:Void)
+      VoidOrBuilder {
+    // Use Void.newBuilder() to construct.
+    private Void(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private Void(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final Void defaultInstance;
+    public static Void getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public Void getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private Void(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.lj.kernel.gpb.GpbD.internal_static_Void_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.lj.kernel.gpb.GpbD.internal_static_Void_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.lj.kernel.gpb.GpbD.Void.class, com.lj.kernel.gpb.GpbD.Void.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<Void> PARSER =
+        new com.google.protobuf.AbstractParser<Void>() {
+      public Void parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new Void(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Void> getParserForType() {
+      return PARSER;
+    }
+
+    private void initFields() {
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.lj.kernel.gpb.GpbD.Void parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.lj.kernel.gpb.GpbD.Void parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.lj.kernel.gpb.GpbD.Void parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.lj.kernel.gpb.GpbD.Void parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.lj.kernel.gpb.GpbD.Void parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.lj.kernel.gpb.GpbD.Void parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.lj.kernel.gpb.GpbD.Void parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.lj.kernel.gpb.GpbD.Void parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.lj.kernel.gpb.GpbD.Void parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.lj.kernel.gpb.GpbD.Void parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.lj.kernel.gpb.GpbD.Void prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code Void}
+     *
+     * <pre>
+     * 空返回
+     * </pre>
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:Void)
+        com.lj.kernel.gpb.GpbD.VoidOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.lj.kernel.gpb.GpbD.internal_static_Void_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.lj.kernel.gpb.GpbD.internal_static_Void_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.lj.kernel.gpb.GpbD.Void.class, com.lj.kernel.gpb.GpbD.Void.Builder.class);
+      }
+
+      // Construct using com.lj.kernel.gpb.GpbD.Void.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.lj.kernel.gpb.GpbD.internal_static_Void_descriptor;
+      }
+
+      public com.lj.kernel.gpb.GpbD.Void getDefaultInstanceForType() {
+        return com.lj.kernel.gpb.GpbD.Void.getDefaultInstance();
+      }
+
+      public com.lj.kernel.gpb.GpbD.Void build() {
+        com.lj.kernel.gpb.GpbD.Void result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.lj.kernel.gpb.GpbD.Void buildPartial() {
+        com.lj.kernel.gpb.GpbD.Void result = new com.lj.kernel.gpb.GpbD.Void(this);
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.lj.kernel.gpb.GpbD.Void) {
+          return mergeFrom((com.lj.kernel.gpb.GpbD.Void)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.lj.kernel.gpb.GpbD.Void other) {
+        if (other == com.lj.kernel.gpb.GpbD.Void.getDefaultInstance()) return this;
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.lj.kernel.gpb.GpbD.Void parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.lj.kernel.gpb.GpbD.Void) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:Void)
+    }
+
+    static {
+      defaultInstance = new Void(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:Void)
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_Request_descriptor;
   private static
@@ -3081,6 +3292,11 @@ public final class GpbD {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_Notify_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Void_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Void_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -3090,13 +3306,13 @@ public final class GpbD {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\nGpbD.proto\"@\n\007Request\022\n\n\002id\030\001 \002(\005\022\013\n\003a" +
-      "pi\030\002 \001(\005\022\016\n\006method\030\003 \001(\005\022\014\n\004data\030\004 \001(\014\"B" +
-      "\n\010Response\022\n\n\002id\030\001 \002(\005\022\025\n\005error\030\002 \001(\0132\006." +
-      "Error\022\014\n\004data\030\003 \001(\014*\005\010\n\020\200\001\"#\n\005Error\022\r\n\005s" +
-      "tate\030\001 \002(\005\022\013\n\003msg\030\002 \001(\t\"\034\n\004Push\022\n\n\002id\030\001 " +
-      "\001(\005*\010\010\002\020\200\200\200\200\002\"\036\n\006Notify\022\n\n\002id\030\001 \001(\005*\010\010\002\020" +
-      "\200\200\200\200\002B\033\n\021com.lj.kernel.gpbB\004GpbDH\001"
+      "\n\nGpbD.proto\"0\n\007Request\022\n\n\002id\030\001 \002(\005\022\013\n\003c" +
+      "md\030\003 \001(\005\022\014\n\004data\030\004 \001(\014\"B\n\010Response\022\n\n\002id" +
+      "\030\001 \002(\005\022\025\n\005error\030\002 \001(\0132\006.Error\022\014\n\004data\030\003 " +
+      "\001(\014*\005\010\n\020\200\001\"#\n\005Error\022\r\n\005state\030\001 \002(\005\022\013\n\003ms" +
+      "g\030\002 \001(\t\"\034\n\004Push\022\n\n\002id\030\001 \001(\005*\010\010\002\020\200\200\200\200\002\"\036\n" +
+      "\006Notify\022\n\n\002id\030\001 \001(\005*\010\010\002\020\200\200\200\200\002\"\006\n\004VoidB\033\n" +
+      "\021com.lj.kernel.gpbB\004GpbDH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3115,7 +3331,7 @@ public final class GpbD {
     internal_static_Request_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_Request_descriptor,
-        new java.lang.String[] { "Id", "Api", "Method", "Data", });
+        new java.lang.String[] { "Id", "Cmd", "Data", });
     internal_static_Response_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_Response_fieldAccessorTable = new
@@ -3140,6 +3356,12 @@ public final class GpbD {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_Notify_descriptor,
         new java.lang.String[] { "Id", });
+    internal_static_Void_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_Void_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Void_descriptor,
+        new java.lang.String[] { });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -1,15 +1,13 @@
 package com.lj.kernel.remote.command;
 
-import com.lj.kernel.gpb.generated.GpbChess;
 import com.lj.kernel.gpb.generated.GpbChess.ReqChessMove;
 import com.lj.kernel.gpb.generated.GpbChess.ResChessMove;
-import org.ogcs.ax.component.GpbReplys;
-import org.ogcs.ax.component.inner.AxReplys;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import com.lj.kernel.module.Room;
 import com.lj.kernel.module.chess.Chessboard;
 import com.lj.kernel.remote.RemoteCommand;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
 /**
  * @author : TinyZ.
@@ -23,9 +21,7 @@ public class CHESS_MOVE extends RemoteCommand {
         Room room = roomManager.getByUid(inbound.getSource());
         if (room == null || !(room instanceof Chessboard)) {
             session.writeAndFlush(
-                    AxReplys.axOutbound(inbound.getRid(),
-                            GpbReplys.error(inbound.getRid(), -1), inbound.getSource()
-                    )
+                    AxReplys.error(inbound.getRid(), -100)
             );
             return;
         }
@@ -39,7 +35,8 @@ public class CHESS_MOVE extends RemoteCommand {
         }
         session.writeAndFlush(
                 AxReplys.axOutbound(inbound.getRid(),
-                        GpbReplys.response(inbound.getRid(), builder), inbound.getSource()
+                        builder.build(),
+                        inbound.getSource()
                 )
         );
     }

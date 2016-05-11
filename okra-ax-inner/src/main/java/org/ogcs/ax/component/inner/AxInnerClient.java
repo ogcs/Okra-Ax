@@ -82,26 +82,25 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     public void connectionActive(ChannelHandlerContext ctx) {
         super.connectionActive(ctx);
         // 验证访问授权
-        session.writeAndFlush(
-                AxInbound.newBuilder()
-                        .setRid(REQUEST_ID.getAndIncrement())
-                        .setCmd(1000) // 授权  INNER_AUTH
-                        .setSource(local)
-                        .setData(
-                                AxReqAuth.newBuilder()
-                                        .setKey("ABCD")
-                                        .setSource(local)
-                                        .build().toByteString()
-                        )
-                        .build()
-        );
-//        ByteString abcd = AxReqAuth.newBuilder()
-//                .setKey("ABCD")
-//                .setSource(local)
-//                .build().toByteString();
-//        request(local, 1000, abcd, (t)-> {
-//            System.out.println();
-//        });
+        ByteString abcd = AxReqAuth.newBuilder()
+                .setKey("ABCD")
+                .setSource(local)
+                .build().toByteString();
+        push(local, 1000, abcd);
+
+//        session.writeAndFlush(
+//                AxInbound.newBuilder()
+//                        .setRid(REQUEST_ID.getAndIncrement())
+//                        .setCmd(1000) // 授权  INNER_AUTH
+//                        .setSource(local)
+//                        .setData(
+//                                AxReqAuth.newBuilder()
+//                                        .setKey("ABCD")
+//                                        .setSource(local)
+//                                        .build().toByteString()
+//                        )
+//                        .build()
+//        );
         // register to component manager
         axCoManager.add(module, this);
     }
@@ -128,6 +127,13 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         return callback.get();
     }
 
+    /**
+     * Push message without callback.
+     *
+     * @param source source
+     * @param cmd    remote method.
+     * @param msg    message data.
+     */
     public void push(long source, int cmd, ByteString msg) {
         transport(REQUEST_ID.getAndIncrement(), cmd, source, msg);
     }

@@ -4,10 +4,6 @@ import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
 import com.lj.kernel.gpb.GpbD.Request;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.GpbReplys;
-import org.ogcs.ax.component.Modules;
-import org.ogcs.ax.component.inner.AxInnerClient;
-import org.ogcs.ax.component.inner.AxReplys;
 
 /**
  * 获取大厅列表
@@ -22,20 +18,15 @@ public class ROOM_HALL extends AgentCommand {
     public void execute(Session session, Request request) throws Exception {
         User user = (User) session.getConnector();
 
-        // TODO：从redis获取服务器列表
+        // TODO：类似于QQ对战平台 - 显示大厅列表 - 大厅包含多个房间 - 房间包含多个用户
 
-
-
-
-        AxInnerClient client = components.getByHash(Modules.MODULE_CHESS, String.valueOf(user.getRoomId()));
-        if (client == null) {
-            session.writeAndFlush(GpbReplys.error(request.getId(), -1));
-            return;
-        }
-
-
-        client.session().writeAndFlush(
-                AxReplys.axInbound(user.id(), request.getId(), request.getApi(), request.getData())    //  转发接口为:cmd + 10000
-        );
+//        AxInnerClient client = components.getByHash(Modules.MODULE_CHESS, String.valueOf(user.getRoomId()));
+//        if (client == null) {
+//            session.writeAndFlush(GpbReplys.error(request.getId(), -1));
+//            return;
+//        }
+//        client.session().writeAndFlush(
+//                AxReplys.axInbound(user.id(), request.getId(), request.getCmd(), request.getData())    //  转发接口为:cmd + 10000
+//        );
     }
 }

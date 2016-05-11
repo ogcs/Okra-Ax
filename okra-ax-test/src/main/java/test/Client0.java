@@ -41,8 +41,7 @@ public class Client0 {
                 .build();
         Request request = Request.newBuilder()
                 .setId(1000)
-                .setApi(Modules.MODULE_CHAT)
-                .setMethod(10000) // CHAT
+                .setCmd(10000) // CHAT
                 .setData(reqChat.toByteString())
                 .build();
 

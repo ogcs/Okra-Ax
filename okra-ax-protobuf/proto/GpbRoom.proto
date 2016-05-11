@@ -42,3 +42,9 @@ message ReqExit {
 // 响应离开房间
 message ResExit {
 }
+//  路由请求
+message ReqRoute {
+    required int32 module = 1; //  模块 - 房间类型
+    required int32 cmd = 2; //  路由的接口
+    optional bytes data = 3;    //  参数
+}

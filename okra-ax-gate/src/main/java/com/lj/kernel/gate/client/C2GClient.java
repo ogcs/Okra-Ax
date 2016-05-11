@@ -59,8 +59,7 @@ public class C2GClient extends GpbClient<Response> {
                 .build();
         session.writeAndFlush(GpbD.Request.newBuilder()
                 .setId(REQUEST_ID.getAndIncrement())
-                .setApi(Modules.MODULE_GATE)
-                .setMethod(10001)
+                .setCmd(10001)
                 .setData(build.toByteString())
                 .build());
     }

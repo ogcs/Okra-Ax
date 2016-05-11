@@ -75,6 +75,11 @@ public class Chessboard implements Room {
     }
 
     @Override
+    public boolean isFully() {
+        return players().size() >= 2;
+    }
+
+    @Override
     public void enter(String gate, long uid) {
         if (count >= 2) {
             return;
@@ -196,10 +201,12 @@ public class Chessboard implements Room {
 
     public void push(int id, GeneratedMessage.GeneratedExtension extension, Message message) {
         connectorManager.pushById(
-                AxReplys.axOutbound(id, Push.newBuilder()
-                        .setId(id)
-                        .setExtension(extension, message)
-                        .build(), uids),
+                AxReplys.axOutbound(id,
+                        Push.newBuilder()
+                                .setId(id)
+                                .setExtension(extension, message)
+                                .build(),
+                        uids),
                 gate4UidsMap.keySet().toArray());
     }
 }

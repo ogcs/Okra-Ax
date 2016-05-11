@@ -4960,6 +4960,682 @@ public final class GpbRoom {
     // @@protoc_insertion_point(class_scope:ResExit)
   }
 
+  public interface ReqRouteOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:ReqRoute)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required int32 module = 1;</code>
+     *
+     * <pre>
+     *  模块 - 房间类型
+     * </pre>
+     */
+    boolean hasModule();
+    /**
+     * <code>required int32 module = 1;</code>
+     *
+     * <pre>
+     *  模块 - 房间类型
+     * </pre>
+     */
+    int getModule();
+
+    /**
+     * <code>required int32 cmd = 2;</code>
+     *
+     * <pre>
+     *  路由的接口
+     * </pre>
+     */
+    boolean hasCmd();
+    /**
+     * <code>required int32 cmd = 2;</code>
+     *
+     * <pre>
+     *  路由的接口
+     * </pre>
+     */
+    int getCmd();
+
+    /**
+     * <code>optional bytes data = 3;</code>
+     *
+     * <pre>
+     *  参数
+     * </pre>
+     */
+    boolean hasData();
+    /**
+     * <code>optional bytes data = 3;</code>
+     *
+     * <pre>
+     *  参数
+     * </pre>
+     */
+    com.google.protobuf.ByteString getData();
+  }
+  /**
+   * Protobuf type {@code ReqRoute}
+   *
+   * <pre>
+   *  路由请求
+   * </pre>
+   */
+  public static final class ReqRoute extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:ReqRoute)
+      ReqRouteOrBuilder {
+    // Use ReqRoute.newBuilder() to construct.
+    private ReqRoute(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private ReqRoute(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final ReqRoute defaultInstance;
+    public static ReqRoute getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public ReqRoute getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private ReqRoute(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 8: {
+              bitField0_ |= 0x00000001;
+              module_ = input.readInt32();
+              break;
+            }
+            case 16: {
+              bitField0_ |= 0x00000002;
+              cmd_ = input.readInt32();
+              break;
+            }
+            case 26: {
+              bitField0_ |= 0x00000004;
+              data_ = input.readBytes();
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.lj.kernel.gpb.generated.GpbRoom.internal_static_ReqRoute_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.lj.kernel.gpb.generated.GpbRoom.internal_static_ReqRoute_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.lj.kernel.gpb.generated.GpbRoom.ReqRoute.class, com.lj.kernel.gpb.generated.GpbRoom.ReqRoute.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<ReqRoute> PARSER =
+        new com.google.protobuf.AbstractParser<ReqRoute>() {
+      public ReqRoute parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new ReqRoute(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<ReqRoute> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int MODULE_FIELD_NUMBER = 1;
+    private int module_;
+    /**
+     * <code>required int32 module = 1;</code>
+     *
+     * <pre>
+     *  模块 - 房间类型
+     * </pre>
+     */
+    public boolean hasModule() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required int32 module = 1;</code>
+     *
+     * <pre>
+     *  模块 - 房间类型
+     * </pre>
+     */
+    public int getModule() {
+      return module_;
+    }
+
+    public static final int CMD_FIELD_NUMBER = 2;
+    private int cmd_;
+    /**
+     * <code>required int32 cmd = 2;</code>
+     *
+     * <pre>
+     *  路由的接口
+     * </pre>
+     */
+    public boolean hasCmd() {
+      return ((bitField0_ & 0x00000002) == 0x00000002);
+    }
+    /**
+     * <code>required int32 cmd = 2;</code>
+     *
+     * <pre>
+     *  路由的接口
+     * </pre>
+     */
+    public int getCmd() {
+      return cmd_;
+    }
+
+    public static final int DATA_FIELD_NUMBER = 3;
+    private com.google.protobuf.ByteString data_;
+    /**
+     * <code>optional bytes data = 3;</code>
+     *
+     * <pre>
+     *  参数
+     * </pre>
+     */
+    public boolean hasData() {
+      return ((bitField0_ & 0x00000004) == 0x00000004);
+    }
+    /**
+     * <code>optional bytes data = 3;</code>
+     *
+     * <pre>
+     *  参数
+     * </pre>
+     */
+    public com.google.protobuf.ByteString getData() {
+      return data_;
+    }
+
+    private void initFields() {
+      module_ = 0;
+      cmd_ = 0;
+      data_ = com.google.protobuf.ByteString.EMPTY;
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasModule()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      if (!hasCmd()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeInt32(1, module_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        output.writeInt32(2, cmd_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        output.writeBytes(3, data_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, module_);
+      }
+      if (((bitField0_ & 0x00000002) == 0x00000002)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(2, cmd_);
+      }
+      if (((bitField0_ & 0x00000004) == 0x00000004)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(3, data_);
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(com.lj.kernel.gpb.generated.GpbRoom.ReqRoute prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code ReqRoute}
+     *
+     * <pre>
+     *  路由请求
+     * </pre>
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:ReqRoute)
+        com.lj.kernel.gpb.generated.GpbRoom.ReqRouteOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.lj.kernel.gpb.generated.GpbRoom.internal_static_ReqRoute_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.lj.kernel.gpb.generated.GpbRoom.internal_static_ReqRoute_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.lj.kernel.gpb.generated.GpbRoom.ReqRoute.class, com.lj.kernel.gpb.generated.GpbRoom.ReqRoute.Builder.class);
+      }
+
+      // Construct using com.lj.kernel.gpb.generated.GpbRoom.ReqRoute.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        module_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        cmd_ = 0;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        data_ = com.google.protobuf.ByteString.EMPTY;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.lj.kernel.gpb.generated.GpbRoom.internal_static_ReqRoute_descriptor;
+      }
+
+      public com.lj.kernel.gpb.generated.GpbRoom.ReqRoute getDefaultInstanceForType() {
+        return com.lj.kernel.gpb.generated.GpbRoom.ReqRoute.getDefaultInstance();
+      }
+
+      public com.lj.kernel.gpb.generated.GpbRoom.ReqRoute build() {
+        com.lj.kernel.gpb.generated.GpbRoom.ReqRoute result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public com.lj.kernel.gpb.generated.GpbRoom.ReqRoute buildPartial() {
+        com.lj.kernel.gpb.generated.GpbRoom.ReqRoute result = new com.lj.kernel.gpb.generated.GpbRoom.ReqRoute(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.module_ = module_;
+        if (((from_bitField0_ & 0x00000002) == 0x00000002)) {
+          to_bitField0_ |= 0x00000002;
+        }
+        result.cmd_ = cmd_;
+        if (((from_bitField0_ & 0x00000004) == 0x00000004)) {
+          to_bitField0_ |= 0x00000004;
+        }
+        result.data_ = data_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.lj.kernel.gpb.generated.GpbRoom.ReqRoute) {
+          return mergeFrom((com.lj.kernel.gpb.generated.GpbRoom.ReqRoute)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.lj.kernel.gpb.generated.GpbRoom.ReqRoute other) {
+        if (other == com.lj.kernel.gpb.generated.GpbRoom.ReqRoute.getDefaultInstance()) return this;
+        if (other.hasModule()) {
+          setModule(other.getModule());
+        }
+        if (other.hasCmd()) {
+          setCmd(other.getCmd());
+        }
+        if (other.hasData()) {
+          setData(other.getData());
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasModule()) {
+          
+          return false;
+        }
+        if (!hasCmd()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.lj.kernel.gpb.generated.GpbRoom.ReqRoute parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (com.lj.kernel.gpb.generated.GpbRoom.ReqRoute) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private int module_ ;
+      /**
+       * <code>required int32 module = 1;</code>
+       *
+       * <pre>
+       *  模块 - 房间类型
+       * </pre>
+       */
+      public boolean hasModule() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required int32 module = 1;</code>
+       *
+       * <pre>
+       *  模块 - 房间类型
+       * </pre>
+       */
+      public int getModule() {
+        return module_;
+      }
+      /**
+       * <code>required int32 module = 1;</code>
+       *
+       * <pre>
+       *  模块 - 房间类型
+       * </pre>
+       */
+      public Builder setModule(int value) {
+        bitField0_ |= 0x00000001;
+        module_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 module = 1;</code>
+       *
+       * <pre>
+       *  模块 - 房间类型
+       * </pre>
+       */
+      public Builder clearModule() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        module_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private int cmd_ ;
+      /**
+       * <code>required int32 cmd = 2;</code>
+       *
+       * <pre>
+       *  路由的接口
+       * </pre>
+       */
+      public boolean hasCmd() {
+        return ((bitField0_ & 0x00000002) == 0x00000002);
+      }
+      /**
+       * <code>required int32 cmd = 2;</code>
+       *
+       * <pre>
+       *  路由的接口
+       * </pre>
+       */
+      public int getCmd() {
+        return cmd_;
+      }
+      /**
+       * <code>required int32 cmd = 2;</code>
+       *
+       * <pre>
+       *  路由的接口
+       * </pre>
+       */
+      public Builder setCmd(int value) {
+        bitField0_ |= 0x00000002;
+        cmd_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required int32 cmd = 2;</code>
+       *
+       * <pre>
+       *  路由的接口
+       * </pre>
+       */
+      public Builder clearCmd() {
+        bitField0_ = (bitField0_ & ~0x00000002);
+        cmd_ = 0;
+        onChanged();
+        return this;
+      }
+
+      private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
+      /**
+       * <code>optional bytes data = 3;</code>
+       *
+       * <pre>
+       *  参数
+       * </pre>
+       */
+      public boolean hasData() {
+        return ((bitField0_ & 0x00000004) == 0x00000004);
+      }
+      /**
+       * <code>optional bytes data = 3;</code>
+       *
+       * <pre>
+       *  参数
+       * </pre>
+       */
+      public com.google.protobuf.ByteString getData() {
+        return data_;
+      }
+      /**
+       * <code>optional bytes data = 3;</code>
+       *
+       * <pre>
+       *  参数
+       * </pre>
+       */
+      public Builder setData(com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000004;
+        data_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bytes data = 3;</code>
+       *
+       * <pre>
+       *  参数
+       * </pre>
+       */
+      public Builder clearData() {
+        bitField0_ = (bitField0_ & ~0x00000004);
+        data_ = getDefaultInstance().getData();
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:ReqRoute)
+    }
+
+    static {
+      defaultInstance = new ReqRoute(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:ReqRoute)
+  }
+
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_ReqTables_descriptor;
   private static
@@ -5000,6 +5676,11 @@ public final class GpbRoom {
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_ResExit_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_ReqRoute_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_ReqRoute_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -5018,8 +5699,10 @@ public final class GpbRoom {
       "\030\002 \001(\t*\010\010d\020\200\200\200\200\002\"8\n\010ReqEnter\022\016\n\006module\030\001" +
       " \001(\005\022\016\n\006roomId\030\002 \001(\003\022\014\n\004name\030\003 \001(\t\"\030\n\010Re" +
       "sEnter\022\014\n\004side\030\001 \001(\005\")\n\007ReqExit\022\016\n\006modul" +
-      "e\030\001 \001(\005\022\016\n\006roomId\030\002 \001(\003\"\t\n\007ResExitB(\n\033co",
-      "m.lj.kernel.gpb.generatedB\007GpbRoomH\001"
+      "e\030\001 \001(\005\022\016\n\006roomId\030\002 \001(\003\"\t\n\007ResExit\"5\n\010Re",
+      "qRoute\022\016\n\006module\030\001 \002(\005\022\013\n\003cmd\030\002 \002(\005\022\014\n\004d" +
+      "ata\030\003 \001(\014B(\n\033com.lj.kernel.gpb.generated" +
+      "B\007GpbRoomH\001"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -5081,6 +5764,12 @@ public final class GpbRoom {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_ResExit_descriptor,
         new java.lang.String[] { });
+    internal_static_ReqRoute_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_ReqRoute_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_ReqRoute_descriptor,
+        new java.lang.String[] { "Module", "Cmd", "Data", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

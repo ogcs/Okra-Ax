@@ -3,7 +3,6 @@ package test;
 import com.lj.kernel.gate.client.C2GClient;
 import com.lj.kernel.gpb.GpbD.Request;
 import com.lj.kernel.gpb.GpbD.Response;
-import com.lj.kernel.gpb.generated.Chat;
 import com.lj.kernel.gpb.generated.GpbLogin;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -39,8 +38,7 @@ public class UserClient0 {
         channel.writeAndFlush(
                 Request.newBuilder()
                         .setId(1000)
-                        .setApi(Modules.MODULE_GATE)
-                        .setMethod(10006)
+                        .setCmd(10006)
                         .setData(
                                 GpbLogin.ReqLoginAuth.newBuilder()
                                         .setUid(uid)

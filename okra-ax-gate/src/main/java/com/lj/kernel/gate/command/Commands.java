@@ -30,6 +30,7 @@ public enum Commands {
         // 房间
         GAME_COMMAND_MAP.put(10003, new ROOM_ROUTE());
         GAME_COMMAND_MAP.put(10004, new ROOM_ENTER());
+
         GAME_COMMAND_MAP.put(10005, new ROOM_HALL());
 
         GAME_COMMAND_MAP.put(10006, new GUEST_LOGIN());

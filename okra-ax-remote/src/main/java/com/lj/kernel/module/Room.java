@@ -27,6 +27,12 @@ public interface Room {
     int type();
 
     /**
+     * 是否房间已满
+     * @return 当房间满,返回true，否则返回false
+     */
+    boolean isFully();
+
+    /**
      * 用户进入房间
      *
      * @param gateId 网关服务器id

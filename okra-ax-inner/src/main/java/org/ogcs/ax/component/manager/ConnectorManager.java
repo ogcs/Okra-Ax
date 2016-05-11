@@ -31,6 +31,11 @@ import java.util.stream.Collectors;
  * <p>
  * 管理建立的连接
  *
+ *
+ * 内部组件注册时, id为String,
+ * 用户注册时, id为Long
+ * 利用id的类型隔离
+ * 
  * @author TinyZ
  * @since 1.0.0
  */

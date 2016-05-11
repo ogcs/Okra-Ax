@@ -30,7 +30,7 @@ public class CHAT extends AgentCommand {
             if (remote == null) {
                 return;
             }
-            int method = request.getMethod() + 10000;// TODO: command  = c + 10000
+            int method = request.getCmd() + 10000;// TODO: command  = c + 10000
             remote.session().writeAndFlush(
                     AxReplys.axInbound(user.id(), request.getId(), method, request.getData())
             );

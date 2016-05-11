@@ -4,6 +4,7 @@ import com.lj.kernel.remote.command.CHAT;
 import com.lj.kernel.remote.command.CHESS_JOIN;
 import com.lj.kernel.remote.command.CHESS_MOVE;
 import com.lj.kernel.remote.command.CHESS_ROOM_LIST;
+import com.lj.kernel.remote.command.room.ROOM_ENTER;
 import com.lj.kernel.remote.command.room.ROOM_EXIT;
 import org.ogcs.app.Command;
 import org.ogcs.ax.component.inner.AxConsole;
@@ -23,6 +24,7 @@ public final class Commands {
             AxConsole.INSTANCE.register(20003, new CHESS_ROOM_LIST());
 
             AxConsole.INSTANCE.register(21000, new ROOM_EXIT());
+            AxConsole.INSTANCE.register(21001, new ROOM_ENTER());
         } catch (Exception e) {
             e.printStackTrace();
         }

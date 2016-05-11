@@ -9,8 +9,7 @@ option java_outer_classname = "GpbD";
 // 请求
 message Request {
     required int32 id = 1; //  The unique request id (client)
-    optional int32 api = 2; //  The service
-    optional int32 method = 3; //  invoked method
+    optional int32 cmd = 3; //  invoked method
     optional bytes data = 4; //  The binary request data
 }
 // 响应
@@ -34,4 +33,7 @@ message Push {
 message Notify {
     optional int32 id = 1;
     extensions 2 to max;    //  通知消息扩展于Notify
+}
+// 空返回
+message Void {
 }

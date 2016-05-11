@@ -32,14 +32,25 @@ public class AxGateHandler extends DisruptorAdapterHandler<Request> {
             @Override
             @SuppressWarnings("unchecked")
             public void onExecute() {
+                if (null == request) {
+                    throw new NullPointerException("request");
+                }
+                if (!isLogin(session) && !Commands.INSTANCE.isCmdWithoutAuth(request.getCmd())) {
+                    session.writeAndFlush(GpbReplys.error(-1, STATE_1_UNKNOWN_COMMAND), ChannelFutureListener.CLOSE);
+                    return;
+                }
                 try {
-                    Command command = Commands.INSTANCE.interpretCommand(request.getMethod());
+                    Command command = Commands.INSTANCE.interpretCommand(request.getCmd());
                     command.execute(session, request);
                 } catch (Exception e) {
                     // unknown request id and close channel.
                     session.writeAndFlush(GpbReplys.error(-1, STATE_1_UNKNOWN_COMMAND), ChannelFutureListener.CLOSE);
-                    LOG.info("Unknown command : " + request.getMethod(), e);
+                    LOG.info("Unknown command : " + request.getCmd(), e);
                 }
+            }
+
+            private boolean isLogin(Session session) {
+                return session.getConnector() != null;
             }
 
             @Override
