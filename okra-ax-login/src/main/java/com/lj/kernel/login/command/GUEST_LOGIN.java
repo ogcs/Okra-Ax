@@ -38,7 +38,7 @@ public class GUEST_LOGIN implements Command<Session, Map<String, String>> {
         AxCoInfo info = client.getInfo();
 
         long uid = ServerProperties.id();   //  生成一个新的id
-        long auth = (long) (Math.random() * 10000000);   //  随机一个数字作为授权码
+        long auth = System.currentTimeMillis() + (long) (Math.random() * 86400000);   //  随机一个数字作为授权码 - TODO: 有效期一天 - 0点移除
         client.session().writeAndFlush(
                 AxReplys.axInbound(-1, -1,
                         1001, // LOGIN_AUTH
