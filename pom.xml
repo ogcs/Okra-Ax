@@ -8,6 +8,7 @@
     <artifactId>okra-ax</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
+
     <modules>
         <module>okra-ax-gate</module>
         <module>okra-ax-remote</module>
@@ -16,20 +17,6 @@
         <module>okra-ax-inner</module>
         <module>okra-ax-login</module>
     </modules>
-
-    <!-- 不指定-导致idea中maven的pom.xml变更时。语言等级设置被重置 -->
-    <build>
-        <finalName>MQService</finalName>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
     <dependencies>
         <dependency>
@@ -67,7 +54,6 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.4.1</version>
         </dependency>
-
     </dependencies>
 
 </project>
