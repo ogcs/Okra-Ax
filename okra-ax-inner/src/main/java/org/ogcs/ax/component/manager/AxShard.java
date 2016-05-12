@@ -69,4 +69,14 @@ public class AxShard<C extends AxComponent> {
         SortedMap<Long, C> tail = nodes.tailMap(hash);
         return tail.isEmpty() ? nodes.get(nodes.firstKey()) : tail.get(tail.firstKey());
     }
+
+    @Override
+    public String toString() {
+        String var = "Shard : [";
+        for (C c : resources.values()) {
+            var += c.id() + ",";
+        }
+        var += "]";
+        return var;
+    }
 }

@@ -161,4 +161,12 @@ public abstract class GpbClient<O> extends TcpProtocolClient {
         }
         return future;
     }
+
+    public boolean isAutoConnect() {
+        return isAutoConnect;
+    }
+
+    public void setAutoConnect(boolean autoConnect) {
+        isAutoConnect = autoConnect;
+    }
 }

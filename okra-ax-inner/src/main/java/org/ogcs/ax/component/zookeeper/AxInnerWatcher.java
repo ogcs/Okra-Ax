@@ -29,9 +29,9 @@ public class AxInnerWatcher implements Watcher {
 
     private AxInnerCoManager components = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
     private final String rootPath;
-    private ZooKeeper zk;
-    private Stat stat;
-    private long local;
+    private final ZooKeeper zk;
+    private final Stat stat;
+    private final long local;
 
     public AxInnerWatcher(String rootPath, ZooKeeper zk, Stat stat, long local) {
         this.zk = zk;
@@ -42,45 +42,83 @@ public class AxInnerWatcher implements Watcher {
 
     @Override
     public void process(WatchedEvent event) {
-        boolean monitor = true;
+        System.out.println(event.toString());
+        String path = event.getPath();
+        if (path == null && event.getType() == Event.EventType.None) {
+            LOG.info("WatchEvent : None");
+            return;
+        }
         switch (event.getType()) {
             case None:
-                monitor = false;
                 break;
             case NodeCreated:
                 break;
             case NodeDeleted: {
-                monitor = false;
-                String path = event.getPath();
                 if (path != null) {
                     int lastIndex = path.lastIndexOf("/");
-                    String module = path.substring(rootPath.length(), lastIndex);
-                    String id = path.substring(lastIndex, path.length());
+                    String module = path.substring(rootPath.length() + 1, lastIndex);
+                    String id = path.substring(lastIndex + 1, path.length());
                     components.removeByModule(module, id);
                     System.out.println();
                 }
                 break;
             }
-            case NodeDataChanged:
+            case NodeDataChanged: {
+                monitorDataChanged(path, local, true);
                 break;
-            case NodeChildrenChanged:
-                break;
-        }
-        if (monitor) {
-            try {
-                if (zk.exists(event.getPath(), false) != null) {
-                    monitor(zk, event.getPath(), 0);
-                }
-            } catch (KeeperException | InterruptedException e) {
-                LOG.error("Monitor ZooKeeper : ", e);
             }
+            case NodeChildrenChanged: {
+                monitorChildrenChanged(path, local);
+                break;
+            }
+        }
+        System.out.println(components.toString());
+    }
+
+    public void monitorDataChanged(String path, long local, boolean cover) {
+        try {
+            byte[] data = zk.getData(path, true, stat);
+            if (data != null && data.length > 0) {
+                System.out.println("Watch : " + path + " => " + new String(data));
+                try {
+                    int lastIndex = path.lastIndexOf("/");
+                    String id = path.substring(lastIndex + 1, path.length());
+                    String module = path.substring(rootPath.length() + 1, lastIndex);
+                    if (components.isExist(id)) {
+                        if (cover) {
+                            components.removeByModule(module, id);
+                        } else {
+                            return;
+                        }
+                    }
+                    //  Json
+                    AxCoInfo axCoInfo = JSON.parseObject(new String(data), AxCoInfo.class);
+                    components.add(module, local, axCoInfo);
+                } catch (Exception e) {
+                    LOG.error("JSON error : "); // , e
+                }
+            }
+        } catch (Exception e) {
+            LOG.error("Error from function getData() and path : " + path, e);
+        }
+    }
+
+    public void monitorChildrenChanged(String path, long local) {
+        try {
+            List<String> children = zk.getChildren(path, true, stat);
+            for (String node : children) {
+                String realPath = path + "/" + node;
+                monitorDataChanged(realPath, local, false);
+            }
+        } catch (KeeperException | InterruptedException e) {
+            LOG.error("Error from function getChildren() and path : " + path, e);
         }
     }
 
     public void monitor(ZooKeeper zk, String root, int deep) {
         try {
-            deep -= 1;
             boolean isMonitorNextFloor = deep > 0;
+            deep -= 1;
             // 1. monitor EventType.NodeChildrenChanged
             List<String> children = zk.getChildren(root, true, stat);
             for (String nodePath : children) {
@@ -91,11 +129,15 @@ public class AxInnerWatcher implements Watcher {
                     if (data != null && data.length > 0) {
                         System.out.println("Node : " + realPath + " => " + new String(data));
                         //  Json
-                        AxCoInfo axCoInfo = JSON.parseObject(new String(data), AxCoInfo.class);
-                        int lastIndex = realPath.lastIndexOf("/");
-                        String module = realPath.substring(rootPath.length(), lastIndex);
-                        components.add(module, local, axCoInfo);
-                        System.out.println();
+                        try {
+                            AxCoInfo axCoInfo = JSON.parseObject(new String(data), AxCoInfo.class);
+                            int lastIndex = realPath.lastIndexOf("/");
+                            String module = realPath.substring(rootPath.length() + 1, lastIndex);
+                            components.add(module, local, axCoInfo);
+                            System.out.println();
+                        } catch (Exception e) {
+                            LOG.error("JSON error : ", e);
+                        }
                     }
                 } catch (Exception e) {
                     LOG.error("Error from function getData() and path : " + root, e);

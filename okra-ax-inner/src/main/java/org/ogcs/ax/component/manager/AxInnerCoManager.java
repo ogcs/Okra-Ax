@@ -16,6 +16,7 @@
 
 package org.ogcs.ax.component.manager;
 
+import org.ogcs.app.Session;
 import org.ogcs.ax.component.AxCoInfo;
 import org.ogcs.ax.component.inner.AxInnerClient;
 import org.springframework.stereotype.Service;
@@ -76,11 +77,30 @@ public class AxInnerCoManager {
     }
 
     public AxInnerClient removeByModule(String module, String id) {
+        System.out.println("REMOVE - 移除组件");
         clients.remove(id);
         AxShard<AxInnerClient> axCoShard = remotes.get(module);
         if (axCoShard != null) {
-            return axCoShard.remove(id);
+            AxInnerClient remove = axCoShard.remove(id);
+            // Close channel
+            if (remove != null) {
+                remove.setAutoConnect(false);   //  取消断线重连
+                Session session = remove.session();
+                if (session != null && session.isOnline())
+                    session.ctx().close();
+            }
+            return remove;
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        String var = "";
+        var += "=>Client size : " + clients.size() + ", ";
+        for (Map.Entry<String, AxShard<AxInnerClient>> entry : remotes.entrySet()) {
+            var += "\n=>Module:" + entry.getKey() + ", " + entry.getValue().toString();
+        }
+        return var;
     }
 }
