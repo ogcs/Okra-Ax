@@ -25,6 +25,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 内部组件管理器
+ * 用于管理连接远程节点客户端列表
+ *
+ * {@link AxShard}实现最终一致性Hash算法
+ *
  * @since 1.0
  */
 @Service("axCoManager")

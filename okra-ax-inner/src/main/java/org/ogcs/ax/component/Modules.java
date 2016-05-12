@@ -23,11 +23,23 @@ package org.ogcs.ax.component;
  */
 public interface Modules {
 
-    int MODULE_GATE = 1;    //  网关模块
-    int MODULE_LOGIN = 2;   //  登录模块
-    int MODULE_CHAT = 3;    //  聊天模块
-    int MODULE_CHESS = 4;   //  象棋模块
+    String MODULE_GATE = "gate";    //  网关模块
+    String MODULE_LOGIN = "login";   //  登录模块
+    String MODULE_CHAT = "chat";    //  聊天模块
+    String MODULE_CHESS = "chess";   //  象棋模块
 
-
-
+    static String module(int module) {
+        switch (module) {
+            case 1:
+                return MODULE_GATE;
+            case 2:
+                return MODULE_LOGIN;
+            case 3:
+                return MODULE_CHAT;
+            case 4:
+                return MODULE_CHESS;
+            default:
+                return "";
+        }
+    }
 }

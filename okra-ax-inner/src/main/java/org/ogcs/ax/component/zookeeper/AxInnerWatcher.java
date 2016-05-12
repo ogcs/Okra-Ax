@@ -6,17 +6,19 @@ import org.apache.logging.log4j.Logger;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.Watcher.Event.EventType;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxCoInfo;
 import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.component.inner.AxInnerClient;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
 
 import java.util.List;
 
 /**
- * ZooKeeper管理集群
+ * ZooKeeper Watcher
  *
  * @author : TinyZ.
  * @email : tinyzzh815@gmail.com
@@ -42,16 +44,13 @@ public class AxInnerWatcher implements Watcher {
 
     @Override
     public void process(WatchedEvent event) {
-        System.out.println(event.toString());
+        System.out.println("..." + event.toString());
         String path = event.getPath();
-        if (path == null && event.getType() == Event.EventType.None) {
-            LOG.info("WatchEvent : None");
+        if (path == null && event.getType() == EventType.None) {
             return;
         }
         switch (event.getType()) {
             case None:
-                break;
-            case NodeCreated:
                 break;
             case NodeDeleted: {
                 if (path != null) {
@@ -64,90 +63,74 @@ public class AxInnerWatcher implements Watcher {
                 break;
             }
             case NodeDataChanged: {
-                monitorDataChanged(path, local, true);
+                monitor(path, true);
                 break;
             }
+            case NodeCreated:
             case NodeChildrenChanged: {
-                monitorChildrenChanged(path, local);
+                monitor(path, false);
                 break;
             }
         }
         System.out.println(components.toString());
     }
 
-    public void monitorDataChanged(String path, long local, boolean cover) {
+    public void monitor(String root, boolean cover) {
+        monitorDataChanged(root, cover);
+        monitorChildrenChanged(root);
+    }
+
+    public void monitorDataChanged(String path, boolean cover) {
         try {
             byte[] data = zk.getData(path, true, stat);
             if (data != null && data.length > 0) {
-                System.out.println("Watch : " + path + " => " + new String(data));
                 try {
                     int lastIndex = path.lastIndexOf("/");
                     String id = path.substring(lastIndex + 1, path.length());
                     String module = path.substring(rootPath.length() + 1, lastIndex);
+                    if (String.valueOf(local).equals(id)) {
+                        return;
+                    }
                     if (components.isExist(id)) {
                         if (cover) {
+                            System.out.println("IsExist: " + id);
                             components.removeByModule(module, id);
                         } else {
                             return;
                         }
                     }
                     //  Json
+                    System.out.println("DataChanged : " + path + ":" + cover + " => " + new String(data));
                     AxCoInfo axCoInfo = JSON.parseObject(new String(data), AxCoInfo.class);
                     components.add(module, local, axCoInfo);
+
+//                    try {
+//                        String s = String.valueOf(axCoInfo.getId());
+//                        AxInnerClient client = components.get(s);
+//                        AxCoInfo info = client.getInfo();
+//                        System.out.println("新组件: " + info.getId() + ", Bind: " + info.getBind());
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
                 } catch (Exception e) {
-                    LOG.error("JSON error : "); // , e
+                    LOG.error("JSON error : " + new String(data)); // , e
                 }
             }
         } catch (Exception e) {
-            LOG.error("Error from function getData() and path : " + path, e);
+            LOG.error("DataChanged Error. Path : " + path, e);
         }
     }
 
-    public void monitorChildrenChanged(String path, long local) {
+    public void monitorChildrenChanged(String path) {
         try {
             List<String> children = zk.getChildren(path, true, stat);
             for (String node : children) {
-                String realPath = path + "/" + node;
-                monitorDataChanged(realPath, local, false);
+//                String realPath = path + "/" + node;
+//                monitorDataChanged(realPath, false);
+                monitor(path + "/" + node, false);
             }
         } catch (KeeperException | InterruptedException e) {
-            LOG.error("Error from function getChildren() and path : " + path, e);
-        }
-    }
-
-    public void monitor(ZooKeeper zk, String root, int deep) {
-        try {
-            boolean isMonitorNextFloor = deep > 0;
-            deep -= 1;
-            // 1. monitor EventType.NodeChildrenChanged
-            List<String> children = zk.getChildren(root, true, stat);
-            for (String nodePath : children) {
-                // 2. monitor EventType.NodeDataChanged
-                String realPath = root + "/" + nodePath;
-                try {
-                    byte[] data = zk.getData(realPath, true, stat);
-                    if (data != null && data.length > 0) {
-                        System.out.println("Node : " + realPath + " => " + new String(data));
-                        //  Json
-                        try {
-                            AxCoInfo axCoInfo = JSON.parseObject(new String(data), AxCoInfo.class);
-                            int lastIndex = realPath.lastIndexOf("/");
-                            String module = realPath.substring(rootPath.length() + 1, lastIndex);
-                            components.add(module, local, axCoInfo);
-                            System.out.println();
-                        } catch (Exception e) {
-                            LOG.error("JSON error : ", e);
-                        }
-                    }
-                } catch (Exception e) {
-                    LOG.error("Error from function getData() and path : " + root, e);
-                }
-                if (isMonitorNextFloor) {
-                    monitor(zk, realPath, deep);
-                }
-            }
-        } catch (KeeperException | InterruptedException e) {
-            LOG.error("Error from function getChildren() and path : " + root, e);
+            LOG.error("ChildrenChanged Error. Path : " + path, e);
         }
     }
 }

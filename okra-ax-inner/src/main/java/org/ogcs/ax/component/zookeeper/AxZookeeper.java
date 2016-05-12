@@ -59,16 +59,9 @@ public class AxZookeeper {
             zk = new ZooKeeper(connectString, timeout, null);
             AxInnerWatcher watcher = new AxInnerWatcher(root, this.zk, stat, local);
             zk.register(watcher);
-
-//        zk.create("/ax/remote", null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-//        zk.create("/ax/gate", null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-//        zk.create("/ax/monitor", null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-//        zk.create("/ax/remote/chess", null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-
             // 监听节点
             for (String watch : watches) {
-                create(root + "/" + watch, watcher, "".getBytes(), zk, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-
+                create(root, watch, watcher, "".getBytes(), zk, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
 //                String[] split = watch.split("/");
 //                String nodePath = root;
 //                for (int i = 0; i < split.length; i++) {
@@ -82,38 +75,35 @@ public class AxZookeeper {
 //                }
             }
             // 创建自身节点
-            String localPath = root + "/" + module + "/" + local;
-            create(localPath, watcher, JSON.toJSONBytes(info), zk, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+            String localPath = module + "/" + local;
+            create(root, localPath, watcher, JSON.toJSONBytes(info), zk, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 //            zk.create(localPath, JSON.toJSONBytes(info), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
 
             // 监控全部节点
-            watcher.monitor(zk, root, 100);
+//            watcher.monitor(zk, root, 100);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void create(String path, AxInnerWatcher watcher, byte[] data, ZooKeeper zk, List<ACL> acl, CreateMode createMode) {
+    public void create(String root, String path, AxInnerWatcher watcher, byte[] data, ZooKeeper zk, List<ACL> acl, CreateMode createMode) {
         try {
             String[] split = path.split("/");
             if (split.length > 0) {
-                String nodePath = "";
+                String nodePath = root;
                 for (int i = 0; i < split.length; i++) {
-                    nodePath += (i == 0 ? "" : "/") + split[i];
-                    if (nodePath.length() <= 0) {
-                        continue;
-                    }
+                    nodePath += "/" + split[i];
                     System.out.println(nodePath);
                     if (i < split.length - 1) {
                         if (zk.exists(nodePath, true) == null) {
                             zk.create(nodePath, null, acl, CreateMode.PERSISTENT); // 父节点没有数据
                         }
-                        watcher.monitorChildrenChanged(nodePath, local);
+                        // watcher.monitor(nodePath, false);   // 不监控父节点 - 有需求在监控列表watches中设置
                     } else {
                         if (zk.exists(nodePath, true) == null) {
                             zk.create(nodePath, data, acl, createMode);
                         }
-                        watcher.monitorDataChanged(nodePath, local, false);
+                        watcher.monitor(nodePath, false);
                     }
                 }
             }

@@ -39,14 +39,16 @@ public class AxProperties {
     public static String axZkConnectString = "127.0.0.1:2181";
     public static int axZkTimeout = 5000;
     public static String axZkRootPath = "/ax";
-    public static String[] axZkWatches = new String[]{""};
+    public static String[] axZkWatches = new String[]{};
 
     // 组件配置
     public static String axModule = "remote/chess";
     public static long axId = 1;
     public static String axHost = "127.0.0.1";
-    public static int axPort = 9005;
+    public static int axPort = 9000;
     public static int axBind = 0;
+    public static String axInnerAuth = "password";
+    public static int axLoginPort = 0;
 
     static {
         String filePath = new File("").getAbsolutePath() + "/conf/" + File.separator + fileName;
@@ -63,12 +65,13 @@ public class AxProperties {
                 axZkWatches = watches.split(",");
             }
 
-
             axModule = props.getProperty("ax.module", axModule).toLowerCase();
             axId = Long.valueOf(props.getProperty("ax.id", String.valueOf(axId)));
             axHost = props.getProperty("ax.host", axHost).toLowerCase();
             axPort = Integer.parseInt(props.getProperty("ax.port", String.valueOf(axPort)));
             axBind = Integer.parseInt(props.getProperty("ax.bind", String.valueOf(axBind)));
+            axInnerAuth = props.getProperty("ax.inner.auth", axInnerAuth).toLowerCase();
+            axLoginPort = Integer.parseInt(props.getProperty("ax.login.port", String.valueOf(axLoginPort)));
 
             LOG.info("Okra-Ax properties load success.");
         } catch (IOException e) {

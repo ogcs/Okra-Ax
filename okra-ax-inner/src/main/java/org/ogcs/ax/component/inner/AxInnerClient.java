@@ -83,7 +83,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         super.connectionActive(ctx);
         // 验证访问授权
         ByteString abcd = AxReqAuth.newBuilder()
-                .setKey("ABCD")
+                .setKey(AxProperties.axInnerAuth)
                 .setSource(local)
                 .build().toByteString();
         push(local, 1000, abcd);
@@ -180,6 +180,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         if (axCoShard != null) {
             axCoManager.removeByModule(module, String.valueOf(id));
         }
+        System.out.println("断开连接");
         super.connectionInactive(ctx);
     }
 }

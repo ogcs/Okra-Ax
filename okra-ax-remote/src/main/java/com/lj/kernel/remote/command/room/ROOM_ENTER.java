@@ -42,7 +42,7 @@ public class ROOM_ENTER extends RemoteCommand {
         room.enter(connector.id(), inbound.getSource());
 
         ResEnter.Builder builder = ResEnter.newBuilder();
-        switch (reqEnter.getModule()) {
+        switch (Modules.module(reqEnter.getModule())) {
             case Modules.MODULE_CHESS: {
                 if (!(room instanceof Chessboard)) {
                     session.writeAndFlush(AxReplys.error(inbound.getRid(), -2));//房间类型错误
