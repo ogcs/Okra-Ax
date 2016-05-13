@@ -1,3 +1,19 @@
+/*
+ *         Copyright 2016 - 2026 TinyZ.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.ogcs.ax.component.zookeeper;
 
 import com.alibaba.fastjson.JSON;
@@ -12,7 +28,6 @@ import org.apache.zookeeper.data.Stat;
 import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxCoInfo;
 import org.ogcs.ax.component.SpringContext;
-import org.ogcs.ax.component.inner.AxInnerClient;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
 
 import java.util.List;
@@ -103,15 +118,6 @@ public class AxInnerWatcher implements Watcher {
                     System.out.println("DataChanged : " + path + ":" + cover + " => " + new String(data));
                     AxCoInfo axCoInfo = JSON.parseObject(new String(data), AxCoInfo.class);
                     components.add(module, local, axCoInfo);
-
-//                    try {
-//                        String s = String.valueOf(axCoInfo.getId());
-//                        AxInnerClient client = components.get(s);
-//                        AxCoInfo info = client.getInfo();
-//                        System.out.println("新组件: " + info.getId() + ", Bind: " + info.getBind());
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
                 } catch (Exception e) {
                     LOG.error("JSON error : " + new String(data)); // , e
                 }
@@ -125,8 +131,6 @@ public class AxInnerWatcher implements Watcher {
         try {
             List<String> children = zk.getChildren(path, true, stat);
             for (String node : children) {
-//                String realPath = path + "/" + node;
-//                monitorDataChanged(realPath, false);
                 monitor(path + "/" + node, false);
             }
         } catch (KeeperException | InterruptedException e) {
