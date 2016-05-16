@@ -16,6 +16,7 @@
         <module>okra-ax-test</module>
         <module>okra-ax-inner</module>
         <module>okra-ax-login</module>
+        <module>okra-ax-bootstarp</module>
     </modules>
 
     <dependencies>
