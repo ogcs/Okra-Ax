@@ -79,7 +79,8 @@ public class User implements Connector {
         connectorManager.remove(session);
 
         if (roomId > 0) {   //  退出房间
-            AxInnerClient client = components.getByHash(String.valueOf(Modules.MODULE_CHESS), String.valueOf(roomId));
+
+            AxInnerClient client = components.getByHash(Modules.module(4), String.valueOf(roomId));
             if (client != null) {
                 client.session().writeAndFlush(
                         AxReplys.axInbound(id, -1, 21000,
