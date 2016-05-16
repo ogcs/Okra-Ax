@@ -13,7 +13,7 @@ import java.util.Map;
  * @email : ogcs_tinyz@outlook.com
  * @date : 2016/3/28
  */
-public enum Commands {
+public enum GateCommands {
 
     INSTANCE;
 
@@ -21,7 +21,7 @@ public enum Commands {
 
     private static final int[] NON_AUTH_COMMAND = new int[]{1, 2, 1000, 1001, 1002};
 
-    Commands() {
+    GateCommands() {
         GAME_COMMAND_MAP = new HashMap<>();
 
         // Gate

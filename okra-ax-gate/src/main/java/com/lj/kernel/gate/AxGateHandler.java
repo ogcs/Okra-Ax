@@ -1,6 +1,6 @@
 package com.lj.kernel.gate;
 
-import com.lj.kernel.gate.command.Commands;
+import com.lj.kernel.gate.command.GateCommands;
 import com.lj.kernel.gpb.GpbD.Request;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -35,12 +35,12 @@ public class AxGateHandler extends DisruptorAdapterHandler<Request> {
                 if (null == request) {
                     throw new NullPointerException("request");
                 }
-                if (!isLogin(session) && !Commands.INSTANCE.isCmdWithoutAuth(request.getCmd())) {
+                if (!isLogin(session) && !GateCommands.INSTANCE.isCmdWithoutAuth(request.getCmd())) {
                     session.writeAndFlush(GpbReplys.error(-1, STATE_1_UNKNOWN_COMMAND), ChannelFutureListener.CLOSE);
                     return;
                 }
                 try {
-                    Command command = Commands.INSTANCE.interpretCommand(request.getCmd());
+                    Command command = GateCommands.INSTANCE.interpretCommand(request.getCmd());
                     command.execute(session, request);
                 } catch (Exception e) {
                     // unknown request id and close channel.
