@@ -51,10 +51,13 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
     private AxInnerCoManager axCoManager = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
 
+    private static final long DEFAULT_TIME_OUT = 30000;
+
     private final AxCoInfo info;
     private final String module;
     private final long id;
     private final long local;
+    private final long timeout;
 
     public AxInnerClient(String module, long local, AxCoInfo info) {
         super(info.getHost(), info.getPort(), true);
@@ -62,6 +65,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         this.module = module;
         this.id = info.getId();
         this.info = info;
+        this.timeout = DEFAULT_TIME_OUT;
     }
 
     public AxCoInfo getInfo() {
@@ -82,25 +86,11 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     public void connectionActive(ChannelHandlerContext ctx) {
         super.connectionActive(ctx);
         // 验证访问授权
-        ByteString abcd = AxReqAuth.newBuilder()
+        push(local, 1000, AxReqAuth.newBuilder()
                 .setKey(AxProperties.axInnerAuth)
                 .setSource(local)
-                .build().toByteString();
-        push(local, 1000, abcd);
-
-//        session.writeAndFlush(
-//                AxInbound.newBuilder()
-//                        .setRid(REQUEST_ID.getAndIncrement())
-//                        .setCmd(1000) // 授权  INNER_AUTH
-//                        .setSource(local)
-//                        .setData(
-//                                AxReqAuth.newBuilder()
-//                                        .setKey("ABCD")
-//                                        .setSource(local)
-//                                        .build().toByteString()
-//                        )
-//                        .build()
-//        );
+                .build().toByteString()
+        );
         // register to component manager
         axCoManager.add(module, this);
     }
@@ -117,11 +107,17 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     public AxOutbound request(long source, int cmd, ByteString msg) {
         BlockingCallback<AxOutbound> callback = new BlockingCallback<>();
         request(source, cmd, msg, callback);
-        while (!callback.isDone()) {
-            try {
-                callback.wait();
-            } catch (InterruptedException e) {
-                LOG.info("Interrupted while blocking.  out of time ", e);
+        synchronized (callback) {
+            while (!callback.isDone()) {
+                try {
+                    callback.wait(this.timeout);
+                } catch (InterruptedException e) {
+                    LOG.info("Interrupted while blocking.  out of time ", e);
+                }
+                if (!callback.isDone()) {
+                    Thread.currentThread().interrupt();
+                    break;
+                }
             }
         }
         return callback.get();
