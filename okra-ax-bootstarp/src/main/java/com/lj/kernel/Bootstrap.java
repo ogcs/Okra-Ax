@@ -1,6 +1,7 @@
 package com.lj.kernel;
 
 import com.lj.kernel.gate.AxGate;
+import com.lj.kernel.gate.command.GateCommands;
 import com.lj.kernel.login.HttpServer;
 import com.lj.kernel.remote.Commands;
 import org.ogcs.ax.component.AxCoInfo;
@@ -33,7 +34,7 @@ public class Bootstrap {
         inner.start();
         // gate
         if (AxProperties.axBind > 0) {
-            com.lj.kernel.gate.command.Commands.INSTANCE.initialize();
+            GateCommands.INSTANCE.initialize();
             AxGate gate = new AxGate(id, AxProperties.axBind);
             gate.start();
         } else if (AxProperties.axLoginPort > 0) {
