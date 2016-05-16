@@ -34,7 +34,8 @@ public class AxProperties {
     private static final Logger LOG = LogManager.getLogger(AxProperties.class);
 
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger(0);
-    private static final String fileName = "ax.properties";
+    private static final String filePath = new File("").getAbsolutePath() + "/conf/" + File.separator + "ax.properties";
+
     //  zookeeper setting
     public static String axZkConnectString = "127.0.0.1:2181";
     public static int axZkTimeout = 5000;
@@ -51,7 +52,6 @@ public class AxProperties {
     public static int axLoginPort = 0;
 
     static {
-        String filePath = new File("").getAbsolutePath() + "/conf/" + File.separator + fileName;
         Properties props = new Properties();
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(filePath));
