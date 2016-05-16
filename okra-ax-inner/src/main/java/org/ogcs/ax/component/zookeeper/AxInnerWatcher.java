@@ -59,7 +59,6 @@ public class AxInnerWatcher implements Watcher {
 
     @Override
     public void process(WatchedEvent event) {
-        System.out.println("..." + event.toString());
         String path = event.getPath();
         if (path == null && event.getType() == EventType.None) {
             return;
@@ -73,7 +72,6 @@ public class AxInnerWatcher implements Watcher {
                     String module = path.substring(rootPath.length() + 1, lastIndex);
                     String id = path.substring(lastIndex + 1, path.length());
                     components.removeByModule(module, id);
-                    System.out.println();
                 }
                 break;
             }
@@ -87,7 +85,6 @@ public class AxInnerWatcher implements Watcher {
                 break;
             }
         }
-        System.out.println(components.toString());
     }
 
     public void monitor(String root, boolean cover) {
@@ -108,14 +105,13 @@ public class AxInnerWatcher implements Watcher {
                     }
                     if (components.isExist(id)) {
                         if (cover) {
-                            System.out.println("IsExist: " + id);
                             components.removeByModule(module, id);
                         } else {
                             return;
                         }
                     }
                     //  Json
-                    System.out.println("DataChanged : " + path + ":" + cover + " => " + new String(data));
+//                    System.out.println("DataChanged : " + path + ":" + cover + " => " + new String(data));
                     AxCoInfo axCoInfo = JSON.parseObject(new String(data), AxCoInfo.class);
                     components.add(module, local, axCoInfo);
                 } catch (Exception e) {

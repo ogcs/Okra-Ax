@@ -27,13 +27,11 @@ import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
 import org.ogcs.ax.component.AxCoInfo;
 
-import java.io.IOException;
 import java.util.List;
 
 /**
  * @author : TinyZ.
  * @email : tinyzzh815@gmail.com
- * @date : 2016/5/11
  * @since 1.0
  */
 public class AxZookeeper {
@@ -54,7 +52,7 @@ public class AxZookeeper {
     /**
      * @param connectString ZooKeeper连接字符串
      * @param timeout       ZooKeeper超时设置
-     * @param watches
+     * @param watches       监听的节点列表
      * @param root          根节点
      * @param module        本地组件模块
      * @param local         本地组件的ID
@@ -75,30 +73,15 @@ public class AxZookeeper {
             zk = new ZooKeeper(connectString, timeout, null);
             AxInnerWatcher watcher = new AxInnerWatcher(root, this.zk, stat, local);
             zk.register(watcher);
-            // 监听节点
+            // 1. 监听节点
             for (String watch : watches) {
                 create(root, watch, watcher, "".getBytes(), zk, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-//                String[] split = watch.split("/");
-//                String nodePath = root;
-//                for (int i = 0; i < split.length; i++) {
-//                    nodePath += "/" + split[i];
-//                    if (i < split.length - 1) { // 根节点的父节点不存在时, 创建父节点
-//                        if (zk.exists(nodePath, true) == null) {
-//                            zk.create(nodePath, null, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
-//                        }
-//                    }
-//                    watcher.monitor(zk, nodePath, 1); // TODO: 是否可以移除10层的限制 - 改为监控全部
-//                }
             }
-            // 创建自身节点
+            // 2. 创建自身节点
             String localPath = module + "/" + local;
             create(root, localPath, watcher, JSON.toJSONBytes(info), zk, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-//            zk.create(localPath, JSON.toJSONBytes(info), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
-
-            // 监控全部节点
-//            watcher.monitor(zk, root, 100);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            LOG.error("AxZookeeper initialize failed.", e);
         }
     }
 
@@ -109,7 +92,7 @@ public class AxZookeeper {
                 String nodePath = root;
                 for (int i = 0; i < split.length; i++) {
                     nodePath += "/" + split[i];
-                    System.out.println(nodePath);
+//                    System.out.println(nodePath);
                     if (i < split.length - 1) {
                         if (zk.exists(nodePath, true) == null) {
                             zk.create(nodePath, null, acl, CreateMode.PERSISTENT); // 父节点没有数据
@@ -124,7 +107,7 @@ public class AxZookeeper {
                 }
             }
         } catch (InterruptedException | KeeperException e) {
-            e.printStackTrace();
+            LOG.error("create zookeeper node failed. ", e);
         }
     }
 
