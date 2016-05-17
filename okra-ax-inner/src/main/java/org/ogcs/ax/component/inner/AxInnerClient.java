@@ -53,6 +53,8 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
 
     private static final long DEFAULT_TIME_OUT = 30000;
 
+    private static final Map<Integer, AxCallback<AxOutbound>> callbacks = new ConcurrentHashMap<>();
+
     private final AxCoInfo info;
     private final String module;
     private final long id;
@@ -95,7 +97,35 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         axCoManager.add(module, this);
     }
 
-    private static final Map<Integer, AxCallback<AxOutbound>> callbacks = new ConcurrentHashMap<>();
+    @Override
+    public void messageReceived(ChannelHandlerContext ctx, AxOutbound msg) {
+        AxCallback<AxOutbound> callback = callbacks.remove(msg.getRid());
+        if (callback != null) {
+            callback.run(msg);
+            return;
+        }
+        // 处理没有回调 和 服务方推送消息的情况
+        if (msg.hasError()) {
+            LOG.warn("Ax Inner Exception [ " + msg.getError().getState() + "] : " + msg.getError().getMsg());
+        } else {
+            byte[] bytes = msg.getData().toByteArray();
+            if (msg.getTargetCount() > 0) {
+                connectorManager.pushById(Unpooled.wrappedBuffer(bytes), msg.getTargetList().toArray());
+            } else {
+                connectorManager.pushAll(Unpooled.wrappedBuffer(bytes));
+            }
+        }
+    }
+
+    @Override
+    public void connectionInactive(ChannelHandlerContext ctx) throws Exception {
+        // remove component
+        AxShard axCoShard = axCoManager.getAxCoShard(module);
+        if (axCoShard != null) {
+            axCoManager.removeByModule(module, String.valueOf(id));
+        }
+        super.connectionInactive(ctx);
+    }
 
     public void request(long source, int cmd, ByteString msg, AxCallback<AxOutbound> callback) {
         int rid = REQUEST_ID.getAndIncrement();
@@ -146,37 +176,5 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
                         .setData(msg)
                         .build()
         );
-    }
-
-    @Override
-    public void messageReceived(ChannelHandlerContext ctx, AxOutbound msg) {
-        AxCallback<AxOutbound> callback = callbacks.remove(msg.getRid());
-        if (callback != null) {
-            callback.run(msg);
-            return;
-        }
-        // 处理没有回调 和 服务方推送消息的情况
-        if (msg.hasError()) {
-            LOG.warn("Ax Inner Exception [ " + msg.getError().getState() + "] : " + msg.getError().getMsg());
-        } else {
-            byte[] bytes = msg.getData().toByteArray();
-            if (msg.getTargetCount() > 0) {
-                connectorManager.pushById(Unpooled.wrappedBuffer(bytes), msg.getTargetList().toArray());
-            } else {
-                connectorManager.pushAll(Unpooled.wrappedBuffer(bytes));
-            }
-            System.out.println(msg.toString());
-        }
-    }
-
-    @Override
-    public void connectionInactive(ChannelHandlerContext ctx) throws Exception {
-        // remove component
-        AxShard axCoShard = axCoManager.getAxCoShard(module);
-        if (axCoShard != null) {
-            axCoManager.removeByModule(module, String.valueOf(id));
-        }
-        System.out.println("断开连接");
-        super.connectionInactive(ctx);
     }
 }

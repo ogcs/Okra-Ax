@@ -82,7 +82,6 @@ public class AxInnerCoManager {
     }
 
     public AxInnerClient removeByModule(String module, String id) {
-        System.out.println("REMOVE - 移除组件");
         clients.remove(id);
         AxShard<AxInnerClient> axCoShard = remotes.get(module);
         if (axCoShard != null) {
