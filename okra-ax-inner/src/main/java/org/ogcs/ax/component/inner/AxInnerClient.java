@@ -25,17 +25,19 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
+import org.ogcs.app.Session;
 import org.ogcs.ax.component.*;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
 import org.ogcs.ax.component.manager.AxShard;
 import org.ogcs.ax.component.manager.ConnectorManager;
-import org.ogcs.ax.gpb.OkraAx;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 /**
  * Gate connect to Remote
@@ -56,6 +58,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     private static final long DEFAULT_TIME_OUT = 30000;
 
     private static final Map<Integer, AxCallback<AxOutbound>> callbacks = new ConcurrentHashMap<>();
+    private static final Executor executor = Executors.newCachedThreadPool();
 
     private final AxCoInfo info;
     private final String module;
@@ -137,15 +140,23 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
 //        transport(rid, cmd, source, msg);
 //    }
 
-    // TODO: 处理异常
+    // TODO: 处理异常  - 线程数量过大是否会导致的oom的BUG？
 
     public void request(long source, int cmd, ByteString msg, AxCallback<AxOutbound> callback) {
-        Channel channel = session().ctx().channel();
-        if (channel.isActive()) {
-            channel.eventLoop().execute(()->{
+        Session session = session();
+        if (session.isOnline()) {
+            executor.execute(()->{
                 callback.run(request(source, cmd, msg));
             });
         }
+
+
+//        Channel channel = session().ctx().channel();
+//        if (channel.isActive()) {
+//            channel.eventLoop().execute(()->{
+//
+//            });
+//        }
     }
 
     public AxOutbound request(long source, int cmd, ByteString msg) {
