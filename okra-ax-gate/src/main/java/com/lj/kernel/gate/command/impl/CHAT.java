@@ -2,14 +2,13 @@ package com.lj.kernel.gate.command.impl;
 
 import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
-import com.lj.kernel.gpb.GpbD;
 import com.lj.kernel.gpb.GpbD.Push;
 import com.lj.kernel.gpb.GpbD.Request;
 import com.lj.kernel.gpb.generated.Chat;
 import com.lj.kernel.gpb.generated.Chat.ReqChat;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.GpbReplys;
-import org.ogcs.ax.component.Modules;
+import com.lj.kernel.gate.Modules;
 import org.ogcs.ax.component.inner.AxInnerClient;
 import org.ogcs.ax.component.inner.AxReplys;
 

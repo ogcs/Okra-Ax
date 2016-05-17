@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.ogcs.ax.component;
+package com.lj.kernel.gate;
 
 /**
  * @author : TinyZ.

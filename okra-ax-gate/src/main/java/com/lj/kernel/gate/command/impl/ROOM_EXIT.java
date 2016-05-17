@@ -1,13 +1,13 @@
 package com.lj.kernel.gate.command.impl;
 
 import com.lj.kernel.gate.GenericCallback;
+import com.lj.kernel.gate.Modules;
 import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
 import com.lj.kernel.gpb.GpbD.Request;
 import com.lj.kernel.gpb.generated.GpbRoom.ReqExit;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.GpbReplys;
-import org.ogcs.ax.component.ServerProperties;
 import org.ogcs.ax.component.inner.AxInnerClient;
 
 /**
@@ -23,13 +23,16 @@ public class ROOM_EXIT extends AgentCommand {
             session.writeAndFlush(GpbReplys.error(request.getId(), -1));
             return;
         }
-        long roomId = reqExit.getRoomId() > 0L ? reqExit.getRoomId() : ServerProperties.id(); //  指定房间进入 或者 创建房间
-        AxInnerClient client = components.getByHash(reqExit.getModule(), String.valueOf(roomId));
+        if (user.getRoomId() != reqExit.getRoomId()) { // 不同的房间
+            session.writeAndFlush(GpbReplys.error(request.getId(), -1));
+            return;
+        }
+        String module = Modules.module(reqExit.getModule());
+        AxInnerClient client = components.getByHash(module, String.valueOf(user.getRoomId()));
         if (client == null) {
             session.writeAndFlush(GpbReplys.error(request.getId(), -1));
             return;
         }
-        // TODO: 简化请求流程
         client.request(user.id(), request.getCmd(), request.getData(), new GenericCallback(session, request));
     }
 }

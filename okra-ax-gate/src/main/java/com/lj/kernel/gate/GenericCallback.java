@@ -9,7 +9,9 @@ import org.ogcs.ax.gpb.OkraAx.AxError;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 
 /**
- * Generic callback for send {@link Response} to user.
+ * Asynchronous operation will be invoked when remote service {@link Response} or request timeout.
+ * Send message to user.
+ *
  * @author : TinyZ.
  * @email : tinyzzh815@gmail.com
  * @since 1.0
