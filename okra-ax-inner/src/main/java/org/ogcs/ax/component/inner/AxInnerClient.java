@@ -17,6 +17,7 @@ package org.ogcs.ax.component.inner;
 
 import com.google.protobuf.ByteString;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
@@ -28,6 +29,7 @@ import org.ogcs.ax.component.*;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
 import org.ogcs.ax.component.manager.AxShard;
 import org.ogcs.ax.component.manager.ConnectorManager;
+import org.ogcs.ax.gpb.OkraAx;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
@@ -127,16 +129,30 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         super.connectionInactive(ctx);
     }
 
+    // TODO: 当remote一直无返回，导致callbacks列表溢出
+//    public void request(long source, int cmd, ByteString msg, AxCallback<AxOutbound> callback) {
+//        int rid = REQUEST_ID.getAndIncrement();
+//        if (callback != null)
+//            callbacks.put(rid, callback);
+//        transport(rid, cmd, source, msg);
+//    }
+
+    // TODO: 处理异常
+
     public void request(long source, int cmd, ByteString msg, AxCallback<AxOutbound> callback) {
-        int rid = REQUEST_ID.getAndIncrement();
-        if (callback != null)
-            callbacks.put(rid, callback);
-        transport(rid, cmd, source, msg);
+        Channel channel = session().ctx().channel();
+        if (channel.isActive()) {
+            channel.eventLoop().execute(()->{
+                callback.run(request(source, cmd, msg));
+            });
+        }
     }
 
     public AxOutbound request(long source, int cmd, ByteString msg) {
         BlockingCallback<AxOutbound> callback = new BlockingCallback<>();
-        request(source, cmd, msg, callback);
+        int rid = REQUEST_ID.getAndIncrement();
+        callbacks.put(rid, callback);
+        transport(rid, cmd, source, msg);
         synchronized (callback) {
             while (!callback.isDone()) {
                 try {
@@ -146,7 +162,8 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
                 }
                 if (!callback.isDone()) {
                     Thread.currentThread().interrupt();
-                    break;
+                    //  break;
+                    return AxReplys.error(rid, AxState.STATE_3_REQUEST_TIMEOUT); // 返回请求超时
                 }
             }
         }
