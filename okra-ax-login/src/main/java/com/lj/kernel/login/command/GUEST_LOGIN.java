@@ -7,7 +7,6 @@ import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.Modules;
 import org.ogcs.ax.component.ServerProperties;
 import org.ogcs.ax.component.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerClient;
@@ -29,7 +28,7 @@ public class GUEST_LOGIN implements Command<Session, Map<String, String>> {
         // 登录 返回授权和
         String id = params.get("id");
 
-        AxInnerClient client = components.getByHash(Modules.MODULE_GATE, id);
+        AxInnerClient client = components.getByHash("gate", id); // Modules.GATE
         if (client == null) {
             HttpUtil.response(session, "{\"state\": -1 }");
             return;

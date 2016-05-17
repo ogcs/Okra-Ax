@@ -7,7 +7,6 @@ import com.lj.kernel.module.chess.Chessboard;
 import com.lj.kernel.remote.RemoteCommand;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.AxConnector;
-import org.ogcs.ax.component.Modules;
 import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
@@ -42,8 +41,8 @@ public class ROOM_ENTER extends RemoteCommand {
         room.enter(connector.id(), inbound.getSource());
 
         ResEnter.Builder builder = ResEnter.newBuilder();
-        switch (Modules.module(reqEnter.getModule())) {
-            case Modules.MODULE_CHESS: {
+        switch (reqEnter.getModule()) {
+            case 1: {
                 if (!(room instanceof Chessboard)) {
                     session.writeAndFlush(AxReplys.error(inbound.getRid(), -2));//房间类型错误
                 }

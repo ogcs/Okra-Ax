@@ -1,7 +1,6 @@
 package test;
 
 import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.Modules;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,20 +39,20 @@ public interface AxDatas {
     // remote: 9000+
 
     Map<String, List<AxCoInfo>> map = new HashMap<String, List<AxCoInfo>>() {{
-        put(String.valueOf(Modules.MODULE_CHAT), new ArrayList<AxCoInfo>() {{
+        put(String.valueOf(1), new ArrayList<AxCoInfo>() {{
             add(new AxCoInfo(MODULE_ID_CHAT_0, "192.168.2.29", 9000));
             add(new AxCoInfo(MODULE_ID_CHAT_1, "192.168.2.29", 9001));
         }});
-        put(String.valueOf(Modules.MODULE_CHESS), new ArrayList<AxCoInfo>() {{
+        put(String.valueOf(2), new ArrayList<AxCoInfo>() {{
             add(new AxCoInfo(MODULE_ID_CHESS_0, "192.168.2.29", 9000));
             add(new AxCoInfo(MODULE_ID_CHESS_1, "192.168.2.29", 9001));
             add(new AxCoInfo(MODULE_ID_CHESS_2, "192.168.2.29", 9002));
         }});
-        put(String.valueOf(Modules.MODULE_GATE), new ArrayList<AxCoInfo>() {{
+        put(String.valueOf(3), new ArrayList<AxCoInfo>() {{
             add(new AxCoInfo(MODULE_ID_GATE_0, "192.168.2.29", 8000, 10000));
             add(new AxCoInfo(MODULE_ID_GATE_1, "192.168.2.29", 8001, 10001));
         }});
-        put(String.valueOf(Modules.MODULE_LOGIN), new ArrayList<AxCoInfo>() {{
+        put(String.valueOf(4), new ArrayList<AxCoInfo>() {{
             add(new AxCoInfo(MODULE_ID_LOGIN_0, "192.168.2.29", 7000, 11000));
         }});
     }};

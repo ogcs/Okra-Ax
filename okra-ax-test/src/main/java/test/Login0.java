@@ -1,9 +1,9 @@
 package test;
 
+import com.lj.kernel.gate.Modules;
 import com.lj.kernel.login.HttpServer;
 import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.Modules;
 import org.ogcs.ax.component.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerServer;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
