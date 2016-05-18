@@ -83,6 +83,10 @@ public class AxProperties {
      * 生成全服唯一ID
      */
     public static long id() {
-        return ((AxProperties.axId & 0xFFFF) << 48) | (((System.currentTimeMillis() / 1000) & 0x00000000FFFFFFFFL) << 16) | (ATOMIC_INTEGER.getAndIncrement() & 0x0000FFFF);
+        return (
+                (AxProperties.axId & 0xFFFF) << 48)
+                | (((System.currentTimeMillis() / 1000) & 0x00000000FFFFFFFFL) << 16)
+                | (ATOMIC_INTEGER.getAndIncrement() & 0x0000FFFF
+        );
     }
 }
