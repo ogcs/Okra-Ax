@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.ogcs.ax.component;
+package com.lj.kernel.gpb;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;

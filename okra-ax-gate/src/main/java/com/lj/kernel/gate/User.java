@@ -17,6 +17,8 @@ public class User implements Connector {
 
     private Session session;
     private Long id;//   uid
+
+    private String module;
     private long roomId;   //  角色所在房间
 
     //    private MemAccount memAccount;
@@ -81,14 +83,12 @@ public class User implements Connector {
 
             AxInnerClient client = components.getByHash(Modules.module(4), String.valueOf(roomId));
             if (client != null) {
-                client.session().writeAndFlush(
-                        AxReplys.axInbound(id, -1, 21000,
-                                GpbRoom.ReqExit.newBuilder()
-                                        .setRoomId(1)
-                                        .setRoomId(roomId)
-                                        .build()
-                        )
-                );
+                client.push(this.id, 21000,
+                        GpbRoom.ReqExit.newBuilder()
+                                .setRoomId(1)
+                                .setRoomId(roomId)
+                                .build().toByteString()
+                        );
             }
             roomId = 0;
         }
