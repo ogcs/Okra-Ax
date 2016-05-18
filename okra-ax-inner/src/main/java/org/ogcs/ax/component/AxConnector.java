@@ -24,7 +24,7 @@ import org.ogcs.ax.component.manager.ConnectorManager;
  * Ax connector.
  *
  * @author : TinyZ.
- * @email : ogcs_tinyz@outlook.com
+ * @email : tinyzzh815@gmail.com
  * @since 1.0
  */
 public class AxConnector implements Connector, AxComponent {

@@ -17,7 +17,9 @@
 package org.ogcs.ax.component;
 
 /**
- * Ax回调
+ * Ax callback interface.
+ *
+ * @since 1.0
  */
 public interface AxCallback<T> {
 
