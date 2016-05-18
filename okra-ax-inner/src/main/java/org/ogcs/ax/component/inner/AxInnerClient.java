@@ -17,7 +17,6 @@ package org.ogcs.ax.component.inner;
 
 import com.google.protobuf.ByteString;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
@@ -37,7 +36,6 @@ import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -137,7 +135,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         // remote server gone away. response all request error.
         synchronized (this) {
             Iterator<Map.Entry<Integer, AxCallback<AxOutbound>>> it = callbacks.entrySet().iterator();
-            while (it.hasNext()){
+            while (it.hasNext()) {
                 Map.Entry<Integer, AxCallback<AxOutbound>> next = it.next();
                 next.getValue().run(AxReplys.error(next.getKey(), AxState.STATE_4_SERVER_GONE_AWAY));
                 it.remove();
@@ -146,15 +144,37 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         super.connectionInactive(ctx);
     }
 
+    /**
+     * Async request.
+     * <p>
+     * 使用线程池代理的阻塞request-response模式. 优势:<br/>
+     * 1. 超时管理. 避免异步调用等待时间过长，无响应等问题<br/>
+     * 2. 避免真异步请求的内存泄漏. [服务方无响应时, callbacks列表中回调未处理的导致的OOM]<br/>
+     *
+     * @param source request source's id
+     * @param cmd    remote service command id.
+     * @param msg    request parameter.
+     * @param callback callback function
+     */
     public void request(long source, int cmd, ByteString msg, AxCallback<AxOutbound> callback) {
         Session session = session();
         if (session != null && session.isOnline()) {
-            executor.execute(()->{
+            executor.execute(() -> {
                 callback.run(request(source, cmd, msg));
             });
         }
     }
 
+    /**
+     * 阻塞的Request-Response模式.
+     * <p>
+     * 当发送Request后，阻塞线程进行同步等待，持续到服务方Response或等待超时.
+     *
+     * @param source request source's id
+     * @param cmd    remote service command id.
+     * @param msg    request parameter.
+     * @return Return {@link AxOutbound}.
+     */
     public AxOutbound request(long source, int cmd, ByteString msg) {
         BlockingCallback<AxOutbound> callback = new BlockingCallback<>();
         int rid = REQUEST_ID.getAndIncrement();
@@ -180,9 +200,9 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     /**
      * Push message without callback.
      *
-     * @param source source
-     * @param cmd    remote method.
-     * @param msg    message data.
+     * @param source request source's id
+     * @param cmd    remote service command id.
+     * @param msg    request parameter.
      */
     public void push(long source, int cmd, ByteString msg) {
         transport(REQUEST_ID.getAndIncrement(), cmd, source, msg);
