@@ -34,9 +34,11 @@ import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
 
+import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
@@ -52,14 +54,16 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
 
     private static final ChannelHandler AX_OUTBOUND_DECODER = new ProtobufDecoder(AxOutbound.getDefaultInstance());
 
+    /**
+     * 缺省超时时间: 15s
+     */
+    private static final long DEFAULT_TIME_OUT = 15000;
+    private static final ExecutorService executor = Executors.newCachedThreadPool();
+
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
     private AxInnerCoManager axCoManager = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
 
-    private static final long DEFAULT_TIME_OUT = 30000;
-
-    private static final Map<Integer, AxCallback<AxOutbound>> callbacks = new ConcurrentHashMap<>();
-    private static final Executor executor = Executors.newCachedThreadPool();
-
+    private final Map<Integer, AxCallback<AxOutbound>> callbacks;
     private final AxCoInfo info;
     private final String module;
     private final long id;
@@ -73,6 +77,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         this.id = info.getId();
         this.info = info;
         this.timeout = DEFAULT_TIME_OUT;
+        this.callbacks = new ConcurrentHashMap<>();
     }
 
     public AxCoInfo getInfo() {
@@ -129,34 +134,25 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         if (axCoShard != null) {
             axCoManager.removeByModule(module, String.valueOf(id));
         }
+        // remote server gone away. response all request error.
+        synchronized (this) {
+            Iterator<Map.Entry<Integer, AxCallback<AxOutbound>>> it = callbacks.entrySet().iterator();
+            while (it.hasNext()){
+                Map.Entry<Integer, AxCallback<AxOutbound>> next = it.next();
+                next.getValue().run(AxReplys.error(next.getKey(), AxState.STATE_4_SERVER_GONE_AWAY));
+                it.remove();
+            }
+        }
         super.connectionInactive(ctx);
     }
 
-    // TODO: 当remote一直无返回，导致callbacks列表溢出
-//    public void request(long source, int cmd, ByteString msg, AxCallback<AxOutbound> callback) {
-//        int rid = REQUEST_ID.getAndIncrement();
-//        if (callback != null)
-//            callbacks.put(rid, callback);
-//        transport(rid, cmd, source, msg);
-//    }
-
-    // TODO: 处理异常  - 线程数量过大是否会导致的oom的BUG？
-
     public void request(long source, int cmd, ByteString msg, AxCallback<AxOutbound> callback) {
         Session session = session();
-        if (session.isOnline()) {
+        if (session != null && session.isOnline()) {
             executor.execute(()->{
                 callback.run(request(source, cmd, msg));
             });
         }
-
-
-//        Channel channel = session().ctx().channel();
-//        if (channel.isActive()) {
-//            channel.eventLoop().execute(()->{
-//
-//            });
-//        }
     }
 
     public AxOutbound request(long source, int cmd, ByteString msg) {
@@ -165,7 +161,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         callbacks.put(rid, callback);
         transport(rid, cmd, source, msg);
         synchronized (callback) {
-            while (!callback.isDone()) {
+            if (!callback.isDone()) { // while(!callback.isDone()) {
                 try {
                     callback.wait(this.timeout);
                 } catch (InterruptedException e) {
