@@ -6,9 +6,9 @@ import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
 import com.lj.kernel.gate.command.ReplyCodes;
 import com.lj.kernel.gpb.GpbD.Request;
+import com.lj.kernel.gpb.GpbReplys;
 import com.lj.kernel.gpb.generated.GpbRoom.ReqRoute;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.GpbReplys;
 import org.ogcs.ax.component.inner.AxInnerClient;
 
 /**

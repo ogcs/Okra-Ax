@@ -3,10 +3,10 @@ package com.lj.kernel.gate.command.impl;
 import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
 import com.lj.kernel.gpb.GpbD.Request;
+import com.lj.kernel.gpb.GpbReplys;
 import com.lj.kernel.gpb.generated.Gate.ReqGateAuth;
 import io.netty.channel.ChannelFutureListener;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.GpbReplys;
 
 import static org.ogcs.ax.component.AxState.STATE_2_AUTH_ERROR;
 

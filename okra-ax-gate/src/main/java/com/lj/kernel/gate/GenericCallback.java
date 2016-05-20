@@ -2,9 +2,9 @@ package com.lj.kernel.gate;
 
 import com.lj.kernel.gpb.GpbD.Request;
 import com.lj.kernel.gpb.GpbD.Response;
+import com.lj.kernel.gpb.GpbReplys;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.AxCallback;
-import org.ogcs.ax.component.GpbReplys;
 import org.ogcs.ax.gpb.OkraAx.AxError;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 

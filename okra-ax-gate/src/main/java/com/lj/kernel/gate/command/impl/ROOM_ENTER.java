@@ -5,9 +5,9 @@ import com.lj.kernel.gate.Modules;
 import com.lj.kernel.gate.User;
 import com.lj.kernel.gate.command.AgentCommand;
 import com.lj.kernel.gpb.GpbD.Request;
+import com.lj.kernel.gpb.GpbReplys;
 import com.lj.kernel.gpb.generated.GpbRoom.ReqEnter;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.GpbReplys;
 import org.ogcs.ax.component.ServerProperties;
 import org.ogcs.ax.component.inner.AxInnerClient;
 

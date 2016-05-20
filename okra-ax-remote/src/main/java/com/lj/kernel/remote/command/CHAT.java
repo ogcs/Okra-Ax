@@ -1,12 +1,12 @@
 package com.lj.kernel.remote.command;
 
+import com.lj.kernel.gpb.GpbReplys;
 import com.lj.kernel.gpb.generated.Chat.PushChat;
 import com.lj.kernel.gpb.generated.Chat.ReqChat;
 import com.lj.kernel.remote.RemoteCommand;
 import com.lj.kernel.remote.SpringContext;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.GpbReplys;
 import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.component.manager.ConnectorManager;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
