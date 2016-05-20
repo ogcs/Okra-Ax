@@ -1,6 +1,5 @@
 package com.lj.kernel.module;
 
-import com.lj.kernel.remote.SpringContext;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -10,10 +9,10 @@ import java.util.stream.Collectors;
 
 /**
  * @author : TinyZ.
- * @email : ogcs_tinyz@outlook.com
- * @date : 2016/4/14
+ * @email : tinyzzh815@gmail.com
+ * @since 1.0
  */
-@Service(SpringContext.MODULE_ROOM_MANAGER)
+@Service("roomManager")
 public class RoomManager {
 
     // roomId - room
