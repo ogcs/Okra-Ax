@@ -20,6 +20,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageCodec;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
@@ -32,6 +34,7 @@ import java.util.List;
 @Sharable
 public class AxCodecHandler extends MessageToMessageCodec<ByteBuf, Object> {
 
+    private static final Logger LOG = LogManager.getLogger(AxCodecHandler.class);
     private final AxCodec codec;
 
     public AxCodecHandler(AxCodec codec) {
@@ -40,15 +43,23 @@ public class AxCodecHandler extends MessageToMessageCodec<ByteBuf, Object> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, List<Object> out) throws Exception {
-        ByteBuf encode = codec.encode(msg);
-        if (encode != null)
-            out.add(encode);
+        try {
+            ByteBuf encode = codec.encode(msg);
+            if (encode != null)
+                out.add(encode);
+        } catch (Exception e) {
+            LOG.warn("AxCodecHandler encode error : ", e);
+        }
     }
 
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf msg, List<Object> out) throws Exception {
-        Object decode = codec.decode(msg);
-        if (decode != null)
-            out.add(decode);
+        try {
+            Object decode = codec.decode(msg);
+            if (decode != null)
+                out.add(decode);
+        } catch (Exception e) {
+            LOG.warn("AxCodecHandler decode error : ", e);
+        }
     }
 }
