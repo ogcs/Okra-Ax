@@ -20,8 +20,8 @@ import com.google.protobuf.ExtensionRegistryLite;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ogcs.ax.component.handler.AxCodec;
 
 import static io.netty.buffer.Unpooled.wrappedBuffer;
