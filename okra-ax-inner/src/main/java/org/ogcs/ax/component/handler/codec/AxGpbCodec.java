@@ -17,7 +17,6 @@
 package org.ogcs.ax.component.handler.codec;
 
 import com.google.protobuf.ExtensionRegistryLite;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
 import org.ogcs.ax.component.handler.AxCodec;
@@ -37,7 +36,7 @@ import static io.netty.buffer.Unpooled.wrappedBuffer;
  */
 public class AxGpbCodec implements AxCodec {
 
-    private final MessageLite msg;
+    private final MessageLite prototype;
     private final ExtensionRegistryLite registry;
 
     public AxGpbCodec(MessageLite msg) {
@@ -45,16 +44,29 @@ public class AxGpbCodec implements AxCodec {
     }
 
     public AxGpbCodec(MessageLite msg, ExtensionRegistryLite registry) {
-        this.msg = msg;
+        this.prototype = msg;
         this.registry = registry;
     }
 
     @Override
-    public MessageLite decode(ByteBuf obj) throws InvalidProtocolBufferException {
-        if (this.registry == null) {
-            return msg.getParserForType().parseFrom(obj.array());
+    public MessageLite decode(ByteBuf msg) throws Exception {
+        // fixed error: msg.array() method cause java.lang.UnsupportedOperationException: direct buffer
+        // see: http://stackoverflow.com/questions/25222392/netty-correct-usage-of-a-decoder
+        final byte[] array;
+        final int offset;
+        final int length = msg.readableBytes();
+        if (msg.hasArray()) {
+            array = msg.array();
+            offset = msg.arrayOffset() + msg.readerIndex();
         } else {
-            return msg.getParserForType().parseFrom(obj.array(), this.registry);
+            array = new byte[length];
+            msg.getBytes(msg.readerIndex(), array, 0, length);
+            offset = 0;
+        }
+        if (this.registry == null) {
+            return prototype.getParserForType().parseFrom(array, offset, length);
+        } else {
+            return prototype.getParserForType().parseFrom(array, offset, length, registry);
         }
     }
 
