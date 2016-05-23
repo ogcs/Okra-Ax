@@ -20,12 +20,14 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.*;
+import org.ogcs.ax.component.handler.AxCodec;
+import org.ogcs.ax.component.handler.AxCodecHandler;
+import org.ogcs.ax.component.handler.codec.AxGpbCodec;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
 import org.ogcs.ax.component.manager.AxShard;
 import org.ogcs.ax.component.manager.ConnectorManager;
@@ -49,14 +51,12 @@ import java.util.concurrent.Executors;
 public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent {
 
     private static final Logger LOG = LogManager.getLogger(AxInnerClient.class);
-
-    private static final ChannelHandler AX_OUTBOUND_DECODER = new ProtobufDecoder(AxOutbound.getDefaultInstance());
-
     /**
      * 缺省超时时间: 15s
      */
     private static final long DEFAULT_TIME_OUT = 15000;
     private static final ExecutorService executor = Executors.newCachedThreadPool();
+    private static final AxGpbCodec AX_OUTBOUND_CODEC = new AxGpbCodec(AxOutbound.getDefaultInstance());
 
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
     private AxInnerCoManager axCoManager = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
@@ -68,7 +68,14 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     private final long local;
     private final long timeout;
 
+    private final AxCodec codec;
+    private final ChannelHandler axCodecHandler;
+
     public AxInnerClient(String module, long local, AxCoInfo info) {
+        this(module, local, info, AX_OUTBOUND_CODEC);
+    }
+
+    public AxInnerClient(String module, long local, AxCoInfo info, AxCodec codec) {
         super(info.getHost(), info.getPort(), true);
         this.local = local;
         this.module = module;
@@ -76,6 +83,8 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
         this.info = info;
         this.timeout = DEFAULT_TIME_OUT;
         this.callbacks = new ConcurrentHashMap<>();
+        this.codec = codec;
+        this.axCodecHandler = new AxCodecHandler(codec);
     }
 
     public AxCoInfo getInfo() {
@@ -89,7 +98,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
 
     @Override
     public void addGpbDecoder(ChannelPipeline cp) {
-        cp.addLast("axOutboundDecoder", AX_OUTBOUND_DECODER);
+        cp.addLast("axCodec", axCodecHandler);
     }
 
     @Override

@@ -21,9 +21,10 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import org.ogcs.ax.component.AxComponent;
+import org.ogcs.ax.component.handler.AxCodec;
+import org.ogcs.ax.component.handler.codec.AxGpbCodec;
+import org.ogcs.ax.component.handler.AxCodecHandler;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.netty.impl.TcpProtocolServer;
 
@@ -37,15 +38,22 @@ import org.ogcs.netty.impl.TcpProtocolServer;
 public class AxInnerServer extends TcpProtocolServer implements AxComponent {
 
     private static final ChannelHandler FRAME_PREPENDER = new LengthFieldPrepender(4, false);
-    private static final ChannelHandler GPB_ENCODER = new ProtobufEncoder();
-    private static final ChannelHandler AX_INBOUND_DECODER = new ProtobufDecoder(AxInbound.getDefaultInstance());
     private static final ChannelHandler AX_INNER_HANDLER = new AxInnerHandler();
+    private static final AxGpbCodec AX_INBOUND_CODEC = new AxGpbCodec(AxInbound.getDefaultInstance());
 
     private String id;
+    private AxCodec codec;
+    private final AxCodecHandler axCodecHandler;
 
     public AxInnerServer(String id, int port) {
+        this(id, port, AX_INBOUND_CODEC);
+    }
+
+    public AxInnerServer(String id, int port, AxCodec codec) {
         this.id = id;
         this.port = port;
+        this.codec = codec;
+        this.axCodecHandler = new AxCodecHandler(codec);
     }
 
     @Override
@@ -61,8 +69,7 @@ public class AxInnerServer extends TcpProtocolServer implements AxComponent {
                 ChannelPipeline cp = ch.pipeline();
                 cp.addLast("frame", new LengthFieldBasedFrameDecoder(102400, 0, 4, 0, 4)); // 102400 = 100k
                 cp.addLast("prepender", FRAME_PREPENDER);
-                cp.addLast("axInboundDecoder", AX_INBOUND_DECODER);
-                cp.addLast("pbEncoder", GPB_ENCODER);
+                cp.addLast("axCodec", axCodecHandler);
                 cp.addLast("axHandler", AX_INNER_HANDLER);
             }
         };
