@@ -23,6 +23,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import org.ogcs.ax.component.AxComponent;
 import org.ogcs.ax.component.handler.AxCodec;
+import org.ogcs.ax.component.handler.AxInnerHandler;
 import org.ogcs.ax.component.handler.codec.AxGpbCodec;
 import org.ogcs.ax.component.handler.AxCodecHandler;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ogcs.ax.component.inner;
+package org.ogcs.ax.component.handler;
 
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -23,6 +23,8 @@ import org.ogcs.app.Command;
 import org.ogcs.app.Executor;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.AxState;
+import org.ogcs.ax.component.inner.AxConsole;
+import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.netty.handler.DisruptorAdapterHandler;
 
