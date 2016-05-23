@@ -20,26 +20,22 @@ import com.google.protobuf.ExtensionRegistryLite;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.ogcs.ax.component.handler.AxCodec;
 
 import static io.netty.buffer.Unpooled.wrappedBuffer;
 
 /**
- *
  * required:
  * Google Protocol Buffer 2.5.0 above (exclude 3.x)
  * <p/>
  * see {@link io.netty.handler.codec.protobuf.ProtobufDecoder} and {@link io.netty.handler.codec.protobuf.ProtobufEncoder}
+ *
  * @author : TinyZ.
  * @email : tinyzzh815@gmail.com
  * @date : 2016/5/23
  * @since 1.0
  */
 public class AxGpbCodec implements AxCodec {
-
-    private static final Logger LOG = LogManager.getLogger(AxGpbCodec.class);
 
     private final MessageLite msg;
     private final ExtensionRegistryLite registry;
@@ -54,16 +50,11 @@ public class AxGpbCodec implements AxCodec {
     }
 
     @Override
-    public MessageLite decode(ByteBuf obj) {
-        try {
-            if (this.registry == null) {
-                return msg.getParserForType().parseFrom(obj.array());
-            } else {
-                return msg.getParserForType().parseFrom(obj.array(), this.registry);
-            }
-        } catch (InvalidProtocolBufferException e) {
-            LOG.warn("InvalidProtocolBufferException : ", e);
-            return null;
+    public MessageLite decode(ByteBuf obj) throws InvalidProtocolBufferException {
+        if (this.registry == null) {
+            return msg.getParserForType().parseFrom(obj.array());
+        } else {
+            return msg.getParserForType().parseFrom(obj.array(), this.registry);
         }
     }
 
@@ -73,6 +64,8 @@ public class AxGpbCodec implements AxCodec {
             return wrappedBuffer(((MessageLite) obj).toByteArray());
         } else if (obj instanceof MessageLite.Builder) {
             return wrappedBuffer(((MessageLite.Builder) obj).build().toByteArray());
+        } else if (obj instanceof ByteBuf) {
+            return (ByteBuf) obj;
         }
         return null;
     }

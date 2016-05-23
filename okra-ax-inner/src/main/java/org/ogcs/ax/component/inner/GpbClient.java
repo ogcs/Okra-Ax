@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ogcs.ax.component;
+package org.ogcs.ax.component.inner;
 
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.netty.channel.*;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.DefaultSession;
@@ -41,7 +40,6 @@ public abstract class GpbClient<O> extends TcpProtocolClient {
 
     private static final Logger LOG = LogManager.getLogger(GpbClient.class);
     private static final ChannelHandler FRAME_PREPENDER = new LengthFieldPrepender(4, false);
-    private static final ChannelHandler GPB_ENCODER = new ProtobufEncoder();
     protected static final AtomicInteger REQUEST_ID = new AtomicInteger(1000);
     protected boolean isAutoConnect;
     protected Session session;
@@ -63,10 +61,7 @@ public abstract class GpbClient<O> extends TcpProtocolClient {
                 ChannelPipeline cp = ch.pipeline();
                 cp.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
                 cp.addLast("frameEncoder", FRAME_PREPENDER);
-
-                addGpbDecoder(cp);
-                cp.addLast("gpbEncoder", GPB_ENCODER);
-
+                addCodec(cp);
                 cp.addLast("handler", new SimpleChannelInboundHandler<O>() {
 
                     @Override
@@ -106,7 +101,7 @@ public abstract class GpbClient<O> extends TcpProtocolClient {
         return session;
     }
 
-    public abstract void addGpbDecoder(ChannelPipeline cp);
+    public abstract void addCodec(ChannelPipeline cp);
 
     /**
      * Invoke when channel active {@link ChannelInboundHandler#channelActive}

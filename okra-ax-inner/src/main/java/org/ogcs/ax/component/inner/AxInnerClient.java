@@ -97,7 +97,7 @@ public class AxInnerClient extends GpbClient<AxOutbound> implements AxComponent 
     }
 
     @Override
-    public void addGpbDecoder(ChannelPipeline cp) {
+    public void addCodec(ChannelPipeline cp) {
         cp.addLast("axCodec", axCodecHandler);
     }
 

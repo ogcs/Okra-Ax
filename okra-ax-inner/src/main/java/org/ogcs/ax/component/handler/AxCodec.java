@@ -30,7 +30,7 @@ import io.netty.buffer.ByteBuf;
  */
 public interface AxCodec {
 
-    Object decode(ByteBuf obj);
+    Object decode(ByteBuf obj) throws Exception;
 
-    ByteBuf encode(Object obj);
+    ByteBuf encode(Object obj) throws Exception;
 }

@@ -20,7 +20,7 @@ import com.lj.kernel.gpb.GpbD;
 import com.lj.kernel.gpb.GpbD.Response;
 import com.lj.kernel.gpb.generated.Gate.ReqGateAuth;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
-import org.ogcs.ax.component.GpbClient;
+import org.ogcs.ax.component.inner.GpbClient;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 
@@ -44,7 +44,7 @@ public class C2GClient extends GpbClient<Response> {
     }
 
     @Override
-    public void addGpbDecoder(ChannelPipeline cp) {
+    public void addCodec(ChannelPipeline cp) {
         cp.addLast("gpbDecoder", GPB_RESPONSE_DECODER);
     }
 
