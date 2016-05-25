@@ -9,32 +9,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 网关的控制台.
+ * 用于注册和解析Command.
+ *
+ * <p>使用Spring框架注入的方式注册Command</p>
  * @author : TinyZ.
  * @email : ogcs_tinyz@outlook.com
  * @date : 2016/3/28
  */
-public enum GateCommands {
+public final class GateConsole {
 
-    INSTANCE;
-
-    private final Map<Integer, Command> GAME_COMMAND_MAP;
+    private Map<Integer, Command> console = new HashMap<>();
 
     private static final int[] NON_AUTH_COMMAND = new int[]{1, 2, 1000, 1001, 1002};
 
-    GateCommands() {
-        GAME_COMMAND_MAP = new HashMap<>();
-
-        // Gate
-        GAME_COMMAND_MAP.put(10000, new CHAT());
-        GAME_COMMAND_MAP.put(10001, new GATE_AUTH());
-        // 房间
-        GAME_COMMAND_MAP.put(10003, new ROOM_ROUTE());
-        GAME_COMMAND_MAP.put(10004, new ROOM_ENTER());
-
-        GAME_COMMAND_MAP.put(10005, new ROOM_HALL());
-
-        GAME_COMMAND_MAP.put(10006, new GUEST_LOGIN());
-    }
+//    GateConsole() {
+//        // Gate
+//        console.put(10000, new CHAT());
+//        console.put(10001, new GATE_AUTH());
+//        // 房间
+//        console.put(10003, new ROOM_ROUTE());
+//        console.put(10004, new ROOM_ENTER());
+//
+//        console.put(10005, new ROOM_HALL());
+//
+//        console.put(10006, new GUEST_LOGIN());
+//    }
 
     public void initialize() {
         // 注册Ax内部消息
@@ -49,8 +49,8 @@ public enum GateCommands {
      * Get the command instance.
      */
     public Command interpretCommand(int cmd) throws Exception {
-        if (GAME_COMMAND_MAP.containsKey(cmd)) {
-            return GAME_COMMAND_MAP.get(cmd);
+        if (console.containsKey(cmd)) {
+            return console.get(cmd);
         } else {
             throw new Exception("Unknown command : " + cmd);
         }
@@ -65,10 +65,18 @@ public enum GateCommands {
         return false;
     }
 
+    public Map<Integer, Command> getConsole() {
+        return console;
+    }
+
+    public void setConsole(Map<Integer, Command> console) {
+        this.console = console;
+    }
+
     /**
      * Get the installed commands
      */
     public Map<Integer, Command> getCommandMap() {
-        return GAME_COMMAND_MAP;
+        return console;
     }
 }
