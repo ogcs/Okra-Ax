@@ -30,8 +30,8 @@ import org.ogcs.ax.component.manager.ConnectorManager;
 public class AxConnector implements Connector, AxComponent {
 
     private ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
-    private Session session;
-    private long id;
+    private volatile Session session;
+    private final long id;
 
     public AxConnector(long id, Session session) {
         this.session = session;
