@@ -27,8 +27,8 @@ import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.data.Stat;
 import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.SpringContext;
-import org.ogcs.ax.component.manager.AxInnerCoManager;
+import org.ogcs.ax.config.SpringContext;
+import org.ogcs.ax.component.service.AxInnerCoManager;
 
 import java.util.List;
 

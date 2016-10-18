@@ -1,12 +1,12 @@
 package test;
 
-import com.lj.kernel.gate.AxGate;
-import com.lj.kernel.gate.command.GateCommands;
+import org.ogcs.ax.gate.AxGate;
 import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.config.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerServer;
-import org.ogcs.ax.component.manager.AxInnerCoManager;
+import org.ogcs.ax.component.service.AxInnerCoManager;
+import org.ogcs.ax.gate.command.GateCommands;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**

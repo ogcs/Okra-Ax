@@ -1,12 +1,12 @@
 package test;
 
-import com.lj.kernel.gate.Modules;
-import com.lj.kernel.login.HttpServer;
+import org.ogcs.ax.gate.Modules;
+import org.ogcs.ax.login.HttpServer;
 import org.ogcs.app.AppContext;
 import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.config.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerServer;
-import org.ogcs.ax.component.manager.AxInnerCoManager;
+import org.ogcs.ax.component.service.AxInnerCoManager;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;

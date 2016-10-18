@@ -3,7 +3,7 @@ option optimize_for = SPEED;
 
 //option java_generic_services = true;
 
-option java_package = "com.lj.kernel.gpb";
+option java_package = "org.ogcs.gpb";
 // Gpb分布式
 option java_outer_classname = "GpbD";
 // 请求

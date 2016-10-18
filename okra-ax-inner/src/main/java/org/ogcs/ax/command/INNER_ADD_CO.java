@@ -20,11 +20,10 @@ import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.config.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerClient;
 import org.ogcs.ax.component.inner.AxReplys;
-import org.ogcs.ax.component.manager.AxInnerCoManager;
-import org.ogcs.ax.gpb.OkraAx;
+import org.ogcs.ax.component.service.AxInnerCoManager;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.ax.gpb.OkraAx.AxNodeInfo;
 

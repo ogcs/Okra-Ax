@@ -1,0 +1,27 @@
+// This is default, but it's nice to be explicit
+option optimize_for = SPEED;
+//option java_generic_services = true;
+option java_package = "org.ogcs.gpb.ax";
+
+option java_outer_classname = "NonGenericService";
+
+import "ExtOptions.proto";
+
+
+// 连接授权
+message OnConnectAuth {
+    required int32 num = 1;
+}
+
+message CbConnectAuth {
+    required int32 num = 1;
+}
+
+service NonService {
+    option (serviceId) = 3000;
+
+    rpc auth (OnConnectAuth) returns (CbConnectAuth){ option (methodId) = 998; }
+
+}
+
+

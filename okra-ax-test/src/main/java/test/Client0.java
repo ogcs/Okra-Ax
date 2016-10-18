@@ -1,10 +1,10 @@
 package test;
 
-import com.lj.kernel.gate.client.C2GClient;
-import com.lj.kernel.gpb.GpbD;
-import com.lj.kernel.gpb.GpbD.Request;
-import com.lj.kernel.gpb.GpbD.Response;
-import com.lj.kernel.gpb.generated.Chat;
+import org.ogcs.ax.gate.client.C2GClient;
+import org.ogcs.gpb.GpbD;
+import org.ogcs.gpb.GpbD.Request;
+import org.ogcs.gpb.GpbD.Response;
+import org.ogcs.gpb.generated.Chat;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
