@@ -1,0 +1,24 @@
+// This is default, but it's nice to be explicit
+option optimize_for = SPEED;
+option java_generic_services = true;
+option java_package = "org.ogcs.gpb.ax";
+
+option java_outer_classname = "LogicPublicService";
+
+
+// 连接授权
+message OnConnectAuth {
+    required int32 num = 1;
+}
+
+message CbConnectAuth {
+    required int32 num = 1;
+}
+
+service LogicService {
+
+    rpc auth (OnConnectAuth) returns (CbConnectAuth);
+
+}
+
+

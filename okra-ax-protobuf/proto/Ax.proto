@@ -3,7 +3,7 @@ option optimize_for = SPEED;
 
 //option java_generic_services = true;
 
-option java_package = "org.ogcs.ax.gpb";
+option java_package = "org.ogcs.gpb.ax";
 // Okra-Ax内部协议
 option java_outer_classname = "OkraAx";
 

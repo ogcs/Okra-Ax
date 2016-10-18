@@ -1,8 +1,8 @@
 package test;
 
 import com.google.protobuf.ByteString;
-import com.lj.kernel.gpb.generated.GpbChess;
-import com.lj.kernel.gpb.generated.GpbChess.ReqChessJoin;
+import org.ogcs.gpb.generated.GpbChess;
+import org.ogcs.gpb.generated.GpbChess.ReqChessJoin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

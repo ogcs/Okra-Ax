@@ -1,6 +1,6 @@
 option optimize_for = SPEED;
 
-option java_package = "com.lj.kernel.gpb.generated";
+option java_package = "org.ogcs.gpb.generated";
 
 option java_outer_classname = "GpbLogin";
 

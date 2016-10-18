@@ -22,7 +22,7 @@ import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Command;
 import org.ogcs.app.Executor;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.AxState;
+import org.ogcs.ax.config.AxState;
 import org.ogcs.ax.component.inner.AxConsole;
 import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;

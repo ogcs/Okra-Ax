@@ -27,5 +27,16 @@
             <artifactId>zookeeper</artifactId>
             <version>3.4.8</version>
         </dependency>
+        <dependency>
+            <groupId>org.ogcs</groupId>
+            <artifactId>okra-ax-protobuf</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

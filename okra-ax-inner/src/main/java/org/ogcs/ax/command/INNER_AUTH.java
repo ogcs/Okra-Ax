@@ -21,11 +21,11 @@ import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.AxConnector;
-import org.ogcs.ax.component.AxProperties;
-import org.ogcs.ax.component.SpringContext;
+import org.ogcs.ax.component.inner.AxConnector;
+import org.ogcs.ax.config.AxProperties;
+import org.ogcs.ax.config.SpringContext;
 import org.ogcs.ax.component.inner.AxReplys;
-import org.ogcs.ax.component.manager.ConnectorManager;
+import org.ogcs.ax.component.service.ConnectorManager;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
 

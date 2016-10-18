@@ -1,0 +1,15 @@
+import "google/protobuf/descriptor.proto";
+
+option optimize_for = SPEED;
+
+option java_package = "org.ogcs.gpb.ax";
+option java_outer_classname = "ExtOptions";
+
+//  Service的方法的id[即cmd]
+extend google.protobuf.MethodOptions {
+    optional int32 methodId = 1000;
+}
+//  Service的注册ID - 暂时没用
+extend google.protobuf.ServiceOptions {
+    optional int32 serviceId = 1000;
+}
