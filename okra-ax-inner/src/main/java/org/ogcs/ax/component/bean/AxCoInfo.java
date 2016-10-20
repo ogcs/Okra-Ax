@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.ogcs.ax.component;
+package org.ogcs.ax.component.bean;
 
 /**
  * Ax Component Information.

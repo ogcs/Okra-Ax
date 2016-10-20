@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package org.ogcs.ax.component.inner;
+package org.ogcs.ax.component.bean;
 
-import org.ogcs.ax.component.inner.AxComponent;
+import org.ogcs.ax.component.core.AxComponent;
 import org.ogcs.utilities.math.murmur.Murmur2;
 
 import java.util.*;

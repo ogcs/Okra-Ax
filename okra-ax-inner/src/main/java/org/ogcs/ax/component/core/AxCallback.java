@@ -13,17 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ogcs.ax.component.inner;
+
+package org.ogcs.ax.component.core;
 
 /**
- * Ax component
+ * Ax callback interface.
+ *
+ * @since 1.0
  */
-public interface AxComponent {
+public interface AxCallback<T> {
 
     /**
-     * Component's unique id
+     * 执行Ax回调的逻辑
      *
-     * @return Component's unique id
+     * @param msg 接受的消息
      */
-    String id();
+    void run(T msg);
 }

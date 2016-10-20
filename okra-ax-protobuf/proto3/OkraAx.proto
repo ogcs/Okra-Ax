@@ -1,0 +1,41 @@
+syntax = "proto3";
+option optimize_for = SPEED;
+//option java_generic_services = true;
+option java_package = "org.ogcs.ax.gpb3";
+option java_outer_classname = "OkraAx";
+
+// 向内的请求
+message AxInbound {
+    int32 rid = 1; //  The unique request id (client)  {Request#id}
+    int64 source = 2; //  请求源的标识ID
+    int32 cmd = 3; //    请求调用的服务接口
+    bytes data = 4; //  请求参数
+}
+// 向外的响应
+message AxOutbound {
+    int32 rid = 1; //  The unique request id (client)
+    repeated int64 target = 2; //  发送目标
+    bytes data = 3; //  响应返回
+    AxError error = 4; //  错误
+}
+// 错误
+message AxError {
+    int32 state = 1; // error code
+    string msg = 2; // response special error message. [Nullable].
+}
+// 无内容
+message AxVoid {
+}
+// 授权
+message AxReqAuth {
+    int64 source = 1; //  请求源
+    string key = 2; //  授权密钥
+}
+// 组件信息
+message AxNodeInfo {
+    int32 module = 1; //模块
+    int64 id = 2; //  组件唯一ID
+    string host = 3; //  组件的host地址
+    int32 port = 4; //  组件内部监听端口
+    int32 bind = 5; //  组件绑定外部监听端口
+}

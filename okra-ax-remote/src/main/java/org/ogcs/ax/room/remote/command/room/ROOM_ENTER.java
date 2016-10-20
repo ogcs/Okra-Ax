@@ -7,7 +7,7 @@ import org.ogcs.gpb.generated.GpbRoom.ResEnter;
 import org.ogcs.ax.room.module.chess.Chessboard;
 import org.ogcs.app.Session;
 import org.ogcs.ax.component.inner.AxConnector;
-import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
 /**

@@ -1,6 +1,6 @@
 package test.zk;
 
-import org.ogcs.ax.component.AxCoInfo;
+import org.ogcs.ax.component.bean.AxCoInfo;
 import org.ogcs.ax.config.AxProperties;
 import org.ogcs.ax.component.zookeeper.AxZookeeper;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

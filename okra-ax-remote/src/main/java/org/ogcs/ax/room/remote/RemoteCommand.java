@@ -1,6 +1,6 @@
 package org.ogcs.ax.room.remote;
 
-import org.ogcs.ax.component.service.ConnectorManager;
+import org.ogcs.ax.component.manager.ConnectorManager;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;

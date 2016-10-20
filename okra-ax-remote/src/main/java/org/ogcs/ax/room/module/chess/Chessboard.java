@@ -12,8 +12,8 @@ import org.ogcs.gpb.generated.GpbChess.PushReport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
-import org.ogcs.ax.component.inner.AxReplys;
-import org.ogcs.ax.component.service.ConnectorManager;
+import org.ogcs.ax.utilities.AxReplys;
+import org.ogcs.ax.component.manager.ConnectorManager;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

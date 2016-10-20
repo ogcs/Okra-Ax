@@ -6,9 +6,6 @@ package org.ogcs.ax.component.exception;
  */
 public class CmdRegisteredException extends Exception {
 
-    public CmdRegisteredException() {
-    }
-
     public CmdRegisteredException(String message) {
         super(message);
     }

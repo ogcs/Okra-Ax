@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ogcs.ax.component.inner;
+package org.ogcs.ax.utilities;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.MessageLite;

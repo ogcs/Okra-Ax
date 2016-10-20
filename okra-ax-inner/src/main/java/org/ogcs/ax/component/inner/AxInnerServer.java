@@ -21,6 +21,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
+import org.ogcs.ax.component.core.AxComponent;
 import org.ogcs.ax.component.handler.AxCodec;
 import org.ogcs.ax.component.handler.AxInnerHandler;
 import org.ogcs.ax.component.handler.codec.AxGpbCodec;

@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package org.ogcs.ax.component;
+package org.ogcs.ax.component.inner;
+
+import org.ogcs.ax.component.core.AxCallback;
 
 public class BlockingCallback<T> implements AxCallback<T> {
 

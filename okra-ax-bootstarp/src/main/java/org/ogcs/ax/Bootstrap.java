@@ -3,7 +3,7 @@ package org.ogcs.ax;
 import org.ogcs.ax.gate.AxGate;
 import org.ogcs.ax.gate.command.GateCommands;
 import org.ogcs.ax.login.HttpServer;
-import org.ogcs.ax.component.AxCoInfo;
+import org.ogcs.ax.component.bean.AxCoInfo;
 import org.ogcs.ax.config.AxProperties;
 import org.ogcs.ax.component.inner.AxInnerServer;
 import org.ogcs.ax.component.zookeeper.AxZookeeper;

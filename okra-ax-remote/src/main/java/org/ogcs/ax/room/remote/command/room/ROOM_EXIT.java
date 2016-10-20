@@ -5,7 +5,7 @@ import org.ogcs.ax.room.remote.RemoteCommand;
 import org.ogcs.gpb.generated.GpbRoom.ReqExit;
 import org.ogcs.gpb.generated.GpbRoom.ResExit;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
 /**

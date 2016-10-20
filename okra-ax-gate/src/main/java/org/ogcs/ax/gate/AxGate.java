@@ -8,8 +8,8 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
-import org.ogcs.ax.component.AxCoInfo;
-import org.ogcs.ax.component.inner.AxComponent;
+import org.ogcs.ax.component.bean.AxCoInfo;
+import org.ogcs.ax.component.core.AxComponent;
 import org.ogcs.netty.impl.TcpProtocolServer;
 
 

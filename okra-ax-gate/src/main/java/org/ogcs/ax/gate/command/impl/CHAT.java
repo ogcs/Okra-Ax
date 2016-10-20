@@ -5,7 +5,7 @@ import org.ogcs.GpbReplys;
 import org.ogcs.app.Session;
 import org.ogcs.ax.gate.Modules;
 import org.ogcs.ax.component.inner.AxInnerClient;
-import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.ax.gate.command.AgentCommand;
 import org.ogcs.gpb.GpbD.Request;
 import org.ogcs.gpb.GpbD.Push;

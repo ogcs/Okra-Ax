@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option optimize_for = SPEED;
+option java_package = "org.ogcs.ax.gpb3";
+option java_outer_classname = "AxOptions";
+
+import "protoc/include/google/protobuf/descriptor.proto";
+
+extend google.protobuf.MethodOptions {
+    int32 methodId = 1000;
+}
+
+extend google.protobuf.ServiceOptions {
+    int32 serviceId = 1000;
+}

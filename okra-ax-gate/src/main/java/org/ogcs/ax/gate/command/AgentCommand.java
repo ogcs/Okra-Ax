@@ -1,12 +1,12 @@
 package org.ogcs.ax.gate.command;
 
-import org.ogcs.gpb.GpbD.Request;
+import org.ogcs.ax.gpb3.GpbD.Request;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
 import org.ogcs.ax.config.SpringContext;
-import org.ogcs.ax.component.service.AxInnerCoManager;
-import org.ogcs.ax.component.service.ConnectorManager;
+import org.ogcs.ax.component.manager.AxInnerCoManager;
+import org.ogcs.ax.component.manager.ConnectorManager;
 
 /**
  * @author : TinyZ.

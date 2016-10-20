@@ -1,11 +1,11 @@
 package org.ogcs.ax.room.remote.command;
 
-import com.lj.kernel.gpb.generated.GpbChess.ResChessRoomInfo;
-import com.lj.kernel.gpb.generated.GpbChess.ResChessRoomInfo.RoomInfo;
-import com.lj.kernel.module.Room;
-import com.lj.kernel.remote.RemoteCommand;
+import org.ogcs.ax.room.module.Room;
+import org.ogcs.ax.room.remote.RemoteCommand;
+import org.ogcs.gpb.generated.GpbChess.ResChessRoomInfo;
+import org.ogcs.gpb.generated.GpbChess.ResChessRoomInfo.RoomInfo;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
 import java.util.Set;

@@ -1,73 +1,73 @@
 package org.ogcs.ax.utilities;
 
-import com.google.protobuf.DescriptorProtos.DescriptorProto;
 import com.google.protobuf.DescriptorProtos.MethodOptions;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.google.protobuf.ExtensionRegistryLite;
+import org.ogcs.ax.component.core.AxService;
 import org.ogcs.ax.component.inner.GpbCommand;
-import org.ogcs.gpb.ax.OptionsId;
+import org.ogcs.ax.gpb3.AxOptions;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
- * Gpb service 解析加载工具
- *
  * @author TinyZ
+ * @date 2016-10-18.
  */
-public final class GpbUtil {
+public class GpbUtil {
 
-    private static final Logger LOG = LogManager.getLogger(GpbUtil.class);
+
+//    public static void main(String[] args) throws Exception {
+//        ExGpb.SayHello build = ExGpb.SayHello.newBuilder().setCount(2).build();
+//        ExtensionRegistryLite extensionRegistry = ExtensionRegistry.newInstance();
+//        AxService service = new ExGpbService();
+//        //
+//        Map<Integer, GpbCommand> console = new HashMap<>();
+//        register(ExGpb.class, ExGpbService.class, console, extensionRegistry);
+//        //
+//        GpbCommand gpbCommand = console.get(1995);
+//        gpbCommand.getMtdApi().invoke(service, null, gpbCommand.getMtdParseFrom().invoke(null, build.toByteArray(), gpbCommand.getExtensionRegistry()));
+//
+//        System.out.println();
+//    }
 
     /**
-     * 加载Gpb解析service
-     * @return 返回
-     * @throws IllegalStateException
+     * 注册方法
+     *
+     * @param serviceImpl
+     * @param clzOfGpb
+     * @param extensionRegistry
+     * @throws Exception
      */
-    public static Map<Integer, GpbCommand> loadGpbService(Class clzOfGpb, Class clzOfImpl) throws IllegalStateException {
-        FileDescriptor fileDescriptor = getFileDescriptor(clzOfGpb);
-        if (fileDescriptor == null)
-            return null;
-        Map<Integer, GpbCommand> map = new HashMap<>();
-        List<ServiceDescriptor> services = fileDescriptor.getServices();
-        for (ServiceDescriptor service : services) {
-            Map<String, MethodDescriptor> methodMap = service
-                    .getMethods()
-                    .stream()
-                    .collect(Collectors.toMap(MethodDescriptor::getName, (value) -> value));
-            Method[] methods = clzOfImpl.getDeclaredMethods();
-            for (Method method : methods) {
-                MethodDescriptor methodDescriptor = methodMap.get(method.getName());
-                DescriptorProto inputParamType = methodDescriptor.getInputType().toProto();
-                MethodOptions options = methodDescriptor.getOptions();
-                Integer methodId = options.getExtension(OptionsId.methodId);
-                if (methodId <= 0) {
-                    throw new IllegalStateException("The method's methodId is missing. [service: " + service.getFullName() +
-                            ", method" + methodDescriptor.getFullName() + "]");
+    @SuppressWarnings("unchecked")
+    public static Map<Integer, GpbCommand> register(AxService serviceImpl, Class clzOfGpb, ExtensionRegistryLite extensionRegistry) throws Exception {
+        Map<Integer, GpbCommand> commands = new HashMap<>();
+        Method mtdGetDescriptor = clzOfGpb.getDeclaredMethod("getDescriptor");
+        FileDescriptor fileDescriptor = (FileDescriptor) mtdGetDescriptor.invoke(null);
+        //  register extensions
+        Method mtdRegExtensions = clzOfGpb.getDeclaredMethod("registerAllExtensions", ExtensionRegistryLite.class);
+        mtdRegExtensions.invoke(null, extensionRegistry);
+        for (ServiceDescriptor serviceDescriptor : fileDescriptor.getServices()) {
+            Method[] methods = serviceImpl.getClass().getDeclaredMethods();
+            for (Method mtdApi : methods) {
+                MethodDescriptor methodByName = serviceDescriptor.findMethodByName(mtdApi.getName());
+                if (methodByName == null) {
+                    throw new Exception("Service method [" + mtdApi.getName() + "] is undefined.");
                 }
-                map.put(methodId, new GpbCommand(service, methodDescriptor, inputParamType, method));
+                MethodOptions options = methodByName.getOptions();
+                if (!options.hasExtension(AxOptions.methodId)) {
+                    throw new Exception("Option methodId is missing.");
+                }
+                Integer methodId = options.getExtension(AxOptions.methodId);
+                //  第二个参数是Message
+                Class<?> type = mtdApi.getParameters()[1].getType();
+                Method mtdParseFrom = type.getDeclaredMethod("parseFrom", byte[].class, ExtensionRegistryLite.class);
+                commands.put(methodId, new GpbCommand(methodId, serviceImpl, mtdApi, mtdParseFrom, extensionRegistry));
             }
         }
-        return map;
-    }
-
-    public static FileDescriptor getFileDescriptor(Class clz) {
-        try {
-            Method descriptor = clz.getDeclaredMethod("getDescriptor");
-
-            return (FileDescriptor) descriptor.invoke(null);
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-
-        }
-        return null;
+        return commands;
     }
 }
