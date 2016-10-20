@@ -1,6 +1,6 @@
 package test;
 
-import org.ogcs.ax.component.AxCoInfo;
+import org.ogcs.ax.component.bean.AxCoInfo;
 
 import java.util.ArrayList;
 import java.util.HashMap;

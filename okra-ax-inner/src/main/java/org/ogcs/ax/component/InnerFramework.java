@@ -1,5 +1,6 @@
 package org.ogcs.ax.component;
 
+import org.ogcs.ax.component.bean.AxCoInfo;
 import org.ogcs.ax.component.inner.AxInnerServer;
 import org.ogcs.ax.component.zookeeper.AxZookeeper;
 import org.ogcs.ax.config.AxConfig;

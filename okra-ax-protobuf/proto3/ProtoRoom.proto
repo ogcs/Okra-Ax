@@ -1,0 +1,39 @@
+syntax = "proto3";
+// This is default, but it's nice to be explicit
+option optimize_for = SPEED;
+//option java_generic_services = true;
+option java_package = "org.ogcs.ax.gpb3";
+option java_outer_classname = "RoomProto";
+
+import "protoc/include/google/protobuf/any.proto";
+import "AxOptions.proto";
+
+//  Service
+//  房间服务
+service AxRoomService {
+    option (serviceId) = 11;
+    //  进入房间
+    rpc onEnterRoom (google.protobuf.Any) returns (google.protobuf.Any) {
+        option (methodId) = 11001;
+    }
+    //  退出房间
+    rpc onExitRoom (google.protobuf.Any) returns (google.protobuf.Any) {
+        option (methodId) = 11002;
+    }
+    //  获取大厅列表
+    rpc onGetHallList (google.protobuf.Any) returns (google.protobuf.Any) {
+        option (methodId) = 11003;
+    }
+    //  房间消息路由转发
+    rpc onRoomRoute (google.protobuf.Any) returns (google.protobuf.Any) {
+        option (methodId) = 11004;
+    }
+    //  聊天
+    rpc onChat (google.protobuf.Any) returns (google.protobuf.Any) {
+        option (methodId) = 11005;
+    }
+}
+
+//  Request
+
+//  Response

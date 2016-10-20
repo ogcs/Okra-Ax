@@ -4,7 +4,7 @@ import com.google.protobuf.DescriptorProtos.DescriptorProto;
 import com.google.protobuf.MessageLite;
 import org.junit.Test;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.service.impl.AxLogicServiceImpl;
+import org.ogcs.ax.service.impl.LogicServiceImpl;
 import org.ogcs.ax.component.inner.GpbCommand;
 import org.ogcs.ax.utilities.GpbUtil;
 import org.ogcs.gpb.ax.NonGenericService;
@@ -20,7 +20,7 @@ public class GpbServiceLoaderTest {
 
     @Test
     public void testLoadGpbService() throws Exception {
-        Map<Integer, GpbCommand> map = GpbUtil.loadGpbService(NonGenericService.class, AxLogicServiceImpl.class);
+        Map<Integer, GpbCommand> map = GpbUtil.loadGpbService(NonGenericService.class, LogicServiceImpl.class);
         DescriptorProto descriptorProto = map.get(998).getInputParamType();
         NonGenericService.OnConnectAuth build = NonGenericService.OnConnectAuth.newBuilder()
                 .setNum(4567)
@@ -43,13 +43,13 @@ public class GpbServiceLoaderTest {
                 .setNum(4567)
                 .build();
         //
-        Map<Integer, GpbCommand> map = GpbUtil.loadGpbService(NonGenericService.class, AxLogicServiceImpl.class);
+        Map<Integer, GpbCommand> map = GpbUtil.loadGpbService(NonGenericService.class, LogicServiceImpl.class);
         GpbCommand cmd = map.get(998);
 
         MessageLite descriptorProto = cmd.getInputParamType().getParserForType().parseFrom(build.toByteArray());
 
         MessageLite msg = cmd.getInputParamType().newBuilderForType().mergeFrom(build.toByteArray()).build();
-        AxLogicServiceImpl service = new AxLogicServiceImpl();
+        LogicServiceImpl service = new LogicServiceImpl();
 
 //        service.auth(null, NonGenericService.OnConnectAuth.parseFrom(build.toByteArray()));
 

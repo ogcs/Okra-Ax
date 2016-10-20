@@ -7,8 +7,8 @@ import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
 import org.ogcs.ax.config.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerClient;
-import org.ogcs.ax.component.service.AxInnerCoManager;
-import org.ogcs.ax.component.service.ConnectorManager;
+import org.ogcs.ax.component.manager.AxInnerCoManager;
+import org.ogcs.ax.component.manager.ConnectorManager;
 import org.ogcs.gpb.generated.GpbRoom;
 
 /**

@@ -1,61 +1,81 @@
 package org.ogcs.ax.component.inner;
 
-import com.google.protobuf.DescriptorProtos.DescriptorProto;
-import com.google.protobuf.Descriptors.MethodDescriptor;
-import com.google.protobuf.Descriptors.ServiceDescriptor;
+import com.google.protobuf.ExtensionRegistryLite;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.ogcs.app.Session;
+import org.ogcs.ax.component.core.AxService;
+import org.ogcs.ax.gpb.OkraAx.AxInbound;
 
 import java.lang.reflect.Method;
 
 /**
  * @author TinyZ
- * @date 2016-10-16.
+ * @date 2016-10-17.
  */
 public class GpbCommand {
 
-    private ServiceDescriptor serviceDescriptor;
-    private MethodDescriptor methodDescriptor;
-    private DescriptorProto inputParamType;
-    private Method method;
-    private Class clzOfGpb;
-    private Method parseFrom;
+    private static final Logger LOG = LogManager.getLogger(GpbCommand.class);
+    private int id;
+    private AxService service;
+    private Method mtdApi;
+    private Method mtdParseFrom;
+    private ExtensionRegistryLite extensionRegistry;
 
-    public GpbCommand(ServiceDescriptor serviceDescriptor, MethodDescriptor methodDescriptor,
-                      DescriptorProto inputParamType, Method method) {
-        this.serviceDescriptor = serviceDescriptor;
-        this.methodDescriptor = methodDescriptor;
-        this.inputParamType = inputParamType;
-        this.method = method;
+    public GpbCommand(int id, AxService service, Method mtdApi, Method mtdParseFrom, ExtensionRegistryLite extensionRegistry) {
+        this.id = id;
+        this.service = service;
+        this.mtdApi = mtdApi;
+        this.mtdParseFrom = mtdParseFrom;
+        this.extensionRegistry = extensionRegistry;
     }
 
-    public ServiceDescriptor getServiceDescriptor() {
-        return serviceDescriptor;
+    public void execute(Session session, AxInbound inBound) {
+        try {
+            Object msg = mtdParseFrom.invoke(null, inBound.toByteArray(), extensionRegistry);
+            mtdApi.invoke(service, session, msg);
+        } catch (Exception e) {
+            LOG.error("Command execute error.", e);
+        }
     }
 
-    public void setServiceDescriptor(ServiceDescriptor serviceDescriptor) {
-        this.serviceDescriptor = serviceDescriptor;
+    public int getId() {
+        return id;
     }
 
-    public MethodDescriptor getMethodDescriptor() {
-        return methodDescriptor;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setMethodDescriptor(MethodDescriptor methodDescriptor) {
-        this.methodDescriptor = methodDescriptor;
+    public AxService getService() {
+        return service;
     }
 
-    public DescriptorProto getInputParamType() {
-        return inputParamType;
+    public void setService(AxService service) {
+        this.service = service;
     }
 
-    public void setInputParamType(DescriptorProto inputParamType) {
-        this.inputParamType = inputParamType;
+    public Method getMtdApi() {
+        return mtdApi;
     }
 
-    public Method getMethod() {
-        return method;
+    public void setMtdApi(Method mtdApi) {
+        this.mtdApi = mtdApi;
     }
 
-    public void setMethod(Method method) {
-        this.method = method;
+    public Method getMtdParseFrom() {
+        return mtdParseFrom;
+    }
+
+    public void setMtdParseFrom(Method mtdParseFrom) {
+        this.mtdParseFrom = mtdParseFrom;
+    }
+
+    public ExtensionRegistryLite getExtensionRegistry() {
+        return extensionRegistry;
+    }
+
+    public void setExtensionRegistry(ExtensionRegistryLite extensionRegistry) {
+        this.extensionRegistry = extensionRegistry;
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.ogcs.ax.component.service;
+package org.ogcs.ax.component.manager;
 
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;

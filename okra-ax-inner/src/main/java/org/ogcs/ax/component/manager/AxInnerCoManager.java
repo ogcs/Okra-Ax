@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package org.ogcs.ax.component.service;
+package org.ogcs.ax.component.manager;
 
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.AxCoInfo;
+import org.ogcs.ax.component.bean.AxCoInfo;
 import org.ogcs.ax.component.inner.AxInnerClient;
-import org.ogcs.ax.component.inner.AxShard;
+import org.ogcs.ax.component.bean.AxShard;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;

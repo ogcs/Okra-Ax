@@ -15,29 +15,26 @@
  */
 package org.ogcs.ax.component.handler;
 
-import com.google.protobuf.DescriptorProtos.DescriptorProto;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler.Sharable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
-import org.ogcs.app.Command;
 import org.ogcs.app.Executor;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.inner.AxConsole;
-import org.ogcs.ax.component.inner.AxReplys;
 import org.ogcs.ax.component.inner.GpbCommand;
-import org.ogcs.ax.component.service.AxConsoleManager;
 import org.ogcs.ax.config.AxState;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
+import org.ogcs.ax.service.GpbServiceManager;
+import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.netty.handler.DisruptorAdapterHandler;
 
 @Sharable
-public class AxGpbInnerHandler extends DisruptorAdapterHandler<AxInbound> {
+public class GpbLogicHandler extends DisruptorAdapterHandler<AxInbound> {
 
-    private static final Logger LOG = LogManager.getLogger(AxGpbInnerHandler.class);
+    private static final Logger LOG = LogManager.getLogger(GpbLogicHandler.class);
 
-    private AxConsoleManager consoleManager = AppContext.getBean("AxConsoleManager", AxConsoleManager.class);
+    private GpbServiceManager serviceManager = AppContext.getBean("GpbServiceManager", GpbServiceManager.class);
 
     @Override
     protected Executor newExecutor(Session session, AxInbound axInbound) {
@@ -47,16 +44,7 @@ public class AxGpbInnerHandler extends DisruptorAdapterHandler<AxInbound> {
             @SuppressWarnings("unchecked")
             public void onExecute() {
                 try {
-                    DescriptorProto descriptor = consoleManager.interpret(axInbound.getCmd());
-//                    descriptor.getName()
-                    GpbCommand cmd = null;
-//                    cmd.get
-
-
-
-
-
-                    Command command = AxConsole.INSTANCE.interpretCommand(axInbound.getCmd());
+                    GpbCommand command = serviceManager.interpret(axInbound.getCmd());
                     command.execute(session, axInbound);
                 } catch (Exception e) {
                     // unknown request id and close channel.

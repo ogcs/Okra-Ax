@@ -1,0 +1,41 @@
+syntax = "proto3";
+// This is default, but it's nice to be explicit
+option optimize_for = SPEED;
+//option java_generic_services = true;
+option java_package = "org.ogcs.ax.gpb3";
+option java_outer_classname = "ComponentProto";
+
+import "protoc/include/google/protobuf/any.proto";
+import "AxOptions.proto";
+
+//  Ax内部组件服务
+service AxComponentService {
+    option (serviceId) = 10;
+    //  组件连接授权
+    rpc onAuth (MsgAuth) returns (google.protobuf.Any) {
+        option (methodId) = 10001;
+    }
+    //  注册组件
+    rpc onRegComponent (MsgNodeInfo) returns (google.protobuf.Any) {
+        option (methodId) = 10002;
+    }
+
+    //  回调组件连接授权
+    rpc callbackAuth (MsgAuth) returns (google.protobuf.Any) {
+        option (methodId) = 10003;
+    }
+
+}
+//  注册授权
+message MsgAuth {
+    int64 source = 1; //  请求源
+    string key = 2; //  授权密钥
+}
+// 组件信息
+message MsgNodeInfo {
+    int32 module = 1; //模块
+    int64 id = 2; //  组件唯一ID
+    string host = 3; //  组件的host地址
+    int32 port = 4; //  组件内部监听端口
+    int32 bind = 5; //  组件绑定外部监听端口
+}

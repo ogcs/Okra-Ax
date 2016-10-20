@@ -24,7 +24,7 @@ import org.ogcs.app.Executor;
 import org.ogcs.app.Session;
 import org.ogcs.ax.config.AxState;
 import org.ogcs.ax.component.inner.AxConsole;
-import org.ogcs.ax.component.inner.AxReplys;
+import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.ax.gpb.OkraAx.AxInbound;
 import org.ogcs.netty.handler.DisruptorAdapterHandler;
 

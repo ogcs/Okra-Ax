@@ -3,10 +3,10 @@ package test;
 import org.ogcs.ax.gate.AxGate;
 import org.ogcs.ax.gate.command.GateCommands;
 import org.ogcs.app.AppContext;
-import org.ogcs.ax.component.AxCoInfo;
+import org.ogcs.ax.component.bean.AxCoInfo;
 import org.ogcs.ax.config.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerServer;
-import org.ogcs.ax.component.service.AxInnerCoManager;
+import org.ogcs.ax.component.manager.AxInnerCoManager;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**

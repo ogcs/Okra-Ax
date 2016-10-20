@@ -18,8 +18,9 @@ package org.ogcs.ax.component.inner;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
+import org.ogcs.ax.component.core.AxComponent;
 import org.ogcs.ax.config.SpringContext;
-import org.ogcs.ax.component.service.ConnectorManager;
+import org.ogcs.ax.component.manager.ConnectorManager;
 
 /**
  * Ax connector.

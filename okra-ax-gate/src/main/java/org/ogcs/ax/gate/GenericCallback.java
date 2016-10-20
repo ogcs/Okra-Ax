@@ -4,7 +4,7 @@ import org.ogcs.gpb.GpbD.Request;
 import org.ogcs.gpb.GpbD.Response;
 import org.ogcs.GpbReplys;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.AxCallback;
+import org.ogcs.ax.component.core.AxCallback;
 import org.ogcs.ax.gpb.OkraAx.AxError;
 import org.ogcs.ax.gpb.OkraAx.AxOutbound;
 
