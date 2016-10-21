@@ -9,6 +9,11 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
 
+    <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+
     <modules>
         <module>okra-ax-gate</module>
         <module>okra-ax-remote</module>
