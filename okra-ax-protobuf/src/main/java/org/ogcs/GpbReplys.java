@@ -18,9 +18,9 @@ package org.ogcs;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
-import org.ogcs.gpb.GpbD;
-import org.ogcs.gpb.GpbD.Response;
-import org.ogcs.gpb.GpbD.Error;
+import org.ogcs.ax.gpb3.GpbD;
+import org.ogcs.ax.gpb3.GpbD.Response;
+import org.ogcs.ax.gpb3.GpbD.Error;
 
 /**
  * @author : TinyZ.

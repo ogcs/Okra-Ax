@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+//package ogcs.gpb3;
+option java_package = "org.ogcs.ax.gpb3";
+option java_outer_classname = "AxAnyProto";
+//option java_multiple_files = true;
+
+//
+//  See {@link google.protobuf.Any}
+//
+//  Example for Java :
+//      Foo foo = ....;
+//      AxAny any = AxAnyUtil.pack(foo);
+//      Foo foo = AxAnyUtil.unpack(any, Foo.class);
+//
+message AxAny {
+    //  Target message's id. this value should be different to other message's id.
+    int64 id = 1;
+    //  Must be a valid serialized protocol buffer of the above specified type.
+    bytes value = 2;
+}
+
+
+

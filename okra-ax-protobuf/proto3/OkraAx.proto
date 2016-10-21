@@ -4,8 +4,18 @@ option optimize_for = SPEED;
 option java_package = "org.ogcs.ax.gpb3";
 option java_outer_classname = "OkraAx";
 
+import "AxAny.proto";
+import "AxOptions.proto";
+
+//  内部调用
+message AxCall {
+    //  可能是[AxInbound:0]或者是[AxOutbound:1]
+    AxAny call = 1;
+}
+
 // 向内的请求
 message AxInbound {
+    option (messageId) = 0;
     int32 rid = 1; //  The unique request id (client)  {Request#id}
     int64 source = 2; //  请求源的标识ID
     int32 cmd = 3; //    请求调用的服务接口
@@ -13,6 +23,7 @@ message AxInbound {
 }
 // 向外的响应
 message AxOutbound {
+    option (messageId) = 1;
     int32 rid = 1; //  The unique request id (client)
     repeated int64 target = 2; //  发送目标
     bytes data = 3; //  响应返回
@@ -26,6 +37,10 @@ message AxError {
 // 无内容
 message AxVoid {
 }
+
+
+//  TODO:两个message转移到专门的Service中
+
 // 授权
 message AxReqAuth {
     int64 source = 1; //  请求源
