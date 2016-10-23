@@ -5,9 +5,7 @@ import org.ogcs.GpbReplys;
 import io.netty.channel.ChannelFutureListener;
 import org.ogcs.app.Session;
 import org.ogcs.ax.gate.command.AgentCommand;
-import org.ogcs.gpb.GpbD;
-import org.ogcs.gpb.GpbD.Request;
-import org.ogcs.gpb.generated.Gate;
+import org.ogcs.ax.gpb3.GpbD.Request;
 import org.ogcs.gpb.generated.Gate.ReqGateAuth;
 
 import static org.ogcs.ax.config.AxState.STATE_2_AUTH_ERROR;

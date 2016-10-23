@@ -4,7 +4,7 @@ import org.ogcs.ax.gate.AuthUtil;
 import org.ogcs.gpb.generated.GpbLogin.ReqLoginAuth;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
+import org.ogcs.ax.gpb3.OkraAx.AxInbound;
 
 /**
  * Login服务器授权用户登录

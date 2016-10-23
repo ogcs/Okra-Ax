@@ -1,11 +1,12 @@
 package org.ogcs.ax.room.module.chess;
 
+import com.google.protobuf.Any;
 import com.google.protobuf.GeneratedMessage;
 import com.google.protobuf.Message;
 import org.ogcs.ax.config.SpringContext;
 import org.ogcs.ax.room.module.Room;
 import org.ogcs.ax.room.module.RoomManager;
-import org.ogcs.gpb.GpbD.Push;
+import org.ogcs.ax.gpb3.GpbD.Push;
 import org.ogcs.gpb.generated.GpbChess.PushChessInit;
 import org.ogcs.gpb.generated.GpbChess.PushChessMove;
 import org.ogcs.gpb.generated.GpbChess.PushReport;
@@ -204,9 +205,14 @@ public class Chessboard implements Room {
                 AxReplys.axOutbound(id,
                         Push.newBuilder()
                                 .setId(id)
-                                .setExtension(extension, message)
+                                .setMsg(Any.pack(message))
                                 .build(),
                         uids),
                 gate4UidsMap.keySet().toArray());
     }
+
+
+
+
+
 }

@@ -2,6 +2,8 @@ package org.ogcs.ax.room.module.chat;
 
 
 
+import org.ogcs.ax.room.module.Room;
+
 import java.util.Set;
 
 /**

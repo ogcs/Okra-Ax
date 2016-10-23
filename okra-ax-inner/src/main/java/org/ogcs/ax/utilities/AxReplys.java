@@ -17,9 +17,9 @@ package org.ogcs.ax.utilities;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.MessageLite;
-import org.ogcs.ax.gpb.OkraAx.AxError;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
-import org.ogcs.ax.gpb.OkraAx.AxOutbound;
+import org.ogcs.ax.gpb3.OkraAx.AxError;
+import org.ogcs.ax.gpb3.OkraAx.AxInbound;
+import org.ogcs.ax.gpb3.OkraAx.AxOutbound;
 
 /**
  * @author : TinyZ.

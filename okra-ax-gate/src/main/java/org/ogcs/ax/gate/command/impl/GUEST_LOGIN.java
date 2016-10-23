@@ -3,7 +3,7 @@ package org.ogcs.ax.gate.command.impl;
 import org.ogcs.ax.gate.AuthUtil;
 import org.ogcs.ax.gate.User;
 import org.ogcs.ax.gate.command.AgentCommand;
-import org.ogcs.gpb.GpbD.Request;
+import org.ogcs.ax.gpb3.GpbD.Request;
 import org.ogcs.gpb.generated.GpbLogin;
 import org.ogcs.gpb.generated.GpbLogin.ReqLoginAuth;
 import io.netty.channel.ChannelFutureListener;

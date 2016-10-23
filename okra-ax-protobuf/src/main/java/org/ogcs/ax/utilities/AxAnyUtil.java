@@ -7,7 +7,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import org.ogcs.ax.gpb3.AxAnyProto.AxAny;
 import org.ogcs.ax.gpb3.AxOptions;
-import org.ogcs.utilities.math.murmur.Murmur3;
+import org.ogcs.utilities.math.murmur.Murmur2;
 
 /**
  * @author TinyZ
@@ -18,7 +18,7 @@ public final class AxAnyUtil {
     public static <T extends Message> AxAny pack(T message) {
         return AxAny
                 .newBuilder()
-                .setId(fetchMsgId(message))
+                .setKey(fetchMsgId(message))
                 .setValue(message.toByteString())
                 .build();
     }
@@ -38,7 +38,7 @@ public final class AxAnyUtil {
         MessageOptions options = descriptorForType.getOptions();
         return options.hasExtension(AxOptions.messageId) ?
                 options.getExtension(AxOptions.messageId) :
-                Murmur3.hash_x86_32(descriptorForType.getFullName());
+                Murmur2.hash(descriptorForType.getFullName());
     }
 
     public static <T extends Message> boolean is(AxAny any, Class<T> clazz) {
@@ -46,6 +46,6 @@ public final class AxAnyUtil {
     }
 
     public static <T extends Message> boolean is(AxAny any, T message) {
-        return any.getId() == fetchMsgId(message);
+        return any.getKey() == fetchMsgId(message);
     }
 }

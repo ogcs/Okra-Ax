@@ -26,8 +26,8 @@ import org.ogcs.ax.config.AxProperties;
 import org.ogcs.ax.config.SpringContext;
 import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.ax.component.manager.ConnectorManager;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
-import org.ogcs.ax.gpb.OkraAx.AxReqAuth;
+import org.ogcs.ax.gpb3.OkraAx.AxInbound;
+import org.ogcs.ax.gpb3.OkraAx.AxReqAuth;
 
 /**
  * @author : TinyZ.

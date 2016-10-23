@@ -6,7 +6,7 @@ import org.ogcs.gpb.generated.GpbRoom.ReqExit;
 import org.ogcs.gpb.generated.GpbRoom.ResExit;
 import org.ogcs.app.Session;
 import org.ogcs.ax.utilities.AxReplys;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
+import org.ogcs.ax.gpb3.OkraAx.AxInbound;
 
 /**
  * 退出房间

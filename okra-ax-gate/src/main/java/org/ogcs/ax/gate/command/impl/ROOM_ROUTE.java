@@ -5,7 +5,7 @@ import org.ogcs.ax.gate.Modules;
 import org.ogcs.ax.gate.User;
 import org.ogcs.ax.gate.command.AgentCommand;
 import org.ogcs.ax.gate.command.ReplyCodes;
-import org.ogcs.gpb.GpbD.Request;
+import org.ogcs.ax.gpb3.GpbD.Request;
 import org.ogcs.GpbReplys;
 import org.ogcs.gpb.generated.GpbRoom.ReqRoute;
 import org.ogcs.app.Session;

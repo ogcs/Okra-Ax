@@ -14,10 +14,18 @@ public interface AxService {
      */
     int id();
 
+    boolean isPublic();
+
     /**
      * 对应的Gpb服务
      *
      * @return 返回对应的Gpb的Service
      */
     Class<?> getGpbService();
+
+    AxService setId(int id);
+
+    AxService setPublic(boolean aPublic);
+
+    AxService setClzOfGpb(Class<?> clzOfGpb);
 }

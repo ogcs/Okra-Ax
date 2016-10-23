@@ -5,13 +5,13 @@ import org.ogcs.ax.gate.Modules;
 import org.ogcs.ax.gate.User;
 import org.ogcs.ax.gate.command.AgentCommand;
 import org.ogcs.ax.gate.command.ReplyCodes;
-import org.ogcs.gpb.GpbD.Request;
+import org.ogcs.ax.gpb3.GpbD.Request;
 import org.ogcs.GpbReplys;
 import org.ogcs.gpb.generated.GpbRoom.ReqEnter;
 import org.ogcs.app.Session;
 import org.ogcs.ax.config.ServerProperties;
 import org.ogcs.ax.component.inner.AxInnerClient;
-import org.ogcs.ax.gpb.OkraAx.AxOutbound;
+import org.ogcs.ax.gpb3.OkraAx.AxOutbound;
 
 /**
  * 进入房间

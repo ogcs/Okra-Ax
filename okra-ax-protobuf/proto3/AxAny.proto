@@ -15,7 +15,7 @@ option java_outer_classname = "AxAnyProto";
 //
 message AxAny {
     //  Target message's id. this value should be different to other message's id.
-    int64 id = 1;
+    int64 key = 1;
     //  Must be a valid serialized protocol buffer of the above specified type.
     bytes value = 2;
 }
