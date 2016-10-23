@@ -20,11 +20,12 @@ import io.netty.channel.ChannelHandler.Sharable;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
+import org.ogcs.app.Command;
 import org.ogcs.app.Executor;
 import org.ogcs.app.Session;
-import org.ogcs.ax.component.inner.GpbCommand;
+import org.ogcs.ax.command.AxCommand;
 import org.ogcs.ax.config.AxState;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
+import org.ogcs.ax.gpb3.OkraAx.AxInbound;
 import org.ogcs.ax.service.GpbServiceManager;
 import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.netty.handler.DisruptorAdapterHandler;
@@ -44,7 +45,12 @@ public class GpbLogicHandler extends DisruptorAdapterHandler<AxInbound> {
             @SuppressWarnings("unchecked")
             public void onExecute() {
                 try {
-                    GpbCommand command = serviceManager.interpret(axInbound.getCmd());
+                    Command command = serviceManager.interpret(axInbound.getCmd());
+                    if (command instanceof AxCommand &&
+                            !((AxCommand)(command)).getService().isPublic()) {
+
+                        return;
+                    }
                     command.execute(session, axInbound);
                 } catch (Exception e) {
                     // unknown request id and close channel.

@@ -7,14 +7,10 @@ import org.ogcs.ax.component.core.AxService;
  * @date 2016-10-20.
  */
 public abstract class AbstractServiceImpl implements AxService {
-    
-    private int id;
-    private Class<?> clzOfGpb;
 
-    public AbstractServiceImpl(int id, Class<?> clzOfGpb) {
-        this.id = id;
-        this.clzOfGpb = clzOfGpb;
-    }
+    private Class<?> clzOfGpb;
+    private int id;
+    private boolean isPublic;
 
     @Override
     public int id() {
@@ -22,8 +18,30 @@ public abstract class AbstractServiceImpl implements AxService {
     }
 
     @Override
+    public boolean isPublic() {
+        return isPublic;
+    }
+
+    @Override
     public Class<?> getGpbService() {
         return clzOfGpb;
     }
 
+    @Override
+    public AxService setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    @Override
+    public AxService setPublic(boolean aPublic) {
+        isPublic = aPublic;
+        return this;
+    }
+
+    @Override
+    public AxService setClzOfGpb(Class<?> clzOfGpb) {
+        this.clzOfGpb = clzOfGpb;
+        return this;
+    }
 }

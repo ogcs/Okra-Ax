@@ -18,9 +18,11 @@ package org.ogcs;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Message;
+import org.ogcs.ax.gpb3.AxAnyProto.AxAny;
 import org.ogcs.ax.gpb3.GpbD;
-import org.ogcs.ax.gpb3.GpbD.Response;
 import org.ogcs.ax.gpb3.GpbD.Error;
+import org.ogcs.ax.gpb3.GpbD.Response;
+import org.ogcs.ax.utilities.AxAnyUtil;
 
 /**
  * @author : TinyZ.
@@ -60,18 +62,42 @@ public final class GpbReplys {
                 .build();
     }
 
-    public static Response response(int id, ByteString data) {
+    public static Response response(int id, AxAny any) {
         return Response.newBuilder()
                 .setId(id)
-                .setData(data)
+                .setData(any)
                 .build();
     }
 
     public static Response response(int id, Message message) {
-        return response(id, message.toByteString());
+        return response(id, any(AxAnyUtil.fetchMsgId(message), message.toByteString()));
     }
 
     public static Response response(int id, Message.Builder builder) {
-        return response(id, builder.build().toByteString());
+        Message msg = builder.build();
+        return response(id, any(AxAnyUtil.fetchMsgId(msg), msg.toByteString()));
+    }
+
+    public static Response response(int id, long msgId, Message message) {
+        return response(id, any(msgId, message.toByteString()));
+    }
+
+    public static Response response(int id, long msgId, Message.Builder builder) {
+        return response(id, any(msgId, builder.build().toByteString()));
+    }
+
+    public static AxAny any(long key, Message.Builder builder) {
+        return any(key, builder.build().toByteString());
+    }
+
+    public static AxAny any(long key, Message msg) {
+        return any(key, msg.toByteString());
+    }
+
+    public static AxAny any(long key, ByteString value) {
+        return AxAny.newBuilder()
+                .setKey(key)
+                .setValue(value)
+                .build();
     }
 }

@@ -24,8 +24,8 @@ import org.ogcs.ax.config.SpringContext;
 import org.ogcs.ax.component.inner.AxInnerClient;
 import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.ax.component.manager.AxInnerCoManager;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
-import org.ogcs.ax.gpb.OkraAx.AxNodeInfo;
+import org.ogcs.ax.gpb3.OkraAx.AxInbound;
+import org.ogcs.ax.gpb3.OkraAx.AxNodeInfo;
 
 /**
  * @author : TinyZ.

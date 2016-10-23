@@ -19,7 +19,7 @@ package org.ogcs.ax.component.handler.codec;
 import com.google.protobuf.ExtensionRegistryLite;
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
-import org.ogcs.ax.component.handler.AxCodec;
+import org.ogcs.ax.component.core.AxCodec;
 
 import static io.netty.buffer.Unpooled.wrappedBuffer;
 

@@ -15,6 +15,10 @@ extend google.protobuf.MethodOptions {
 extend google.protobuf.ServiceOptions {
     //  Service's ID.
     int32 serviceId = 1000;
+    //  Is service public.
+    bool isPublic = 1001;
+    //  Java service reference.
+    string serviceRef = 1002;
 }
 
 extend google.protobuf.MessageOptions {

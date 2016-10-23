@@ -16,7 +16,7 @@
 package org.ogcs.ax.component.manager;
 
 import com.google.protobuf.DescriptorProtos.DescriptorProto;
-import org.ogcs.ax.component.exception.CmdRegisteredException;
+import org.ogcs.ax.component.exception.RegisteredException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -56,7 +56,7 @@ public class AxConsoleManager {
 
     public void register(int id, DescriptorProto descriptor, boolean isAuthorized) throws Exception {
         if (descriptors.containsKey(id)) {
-            throw new CmdRegisteredException("The command code [ " + id + " ] is registered.");
+            throw new RegisteredException("The command code [ " + id + " ] is registered.");
         }
         if (isAuthorized)
             authorized.add(id);

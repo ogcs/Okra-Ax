@@ -10,6 +10,8 @@ import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
 import org.ogcs.ax.component.bean.AxCoInfo;
 import org.ogcs.ax.component.core.AxComponent;
+import org.ogcs.ax.gpb3.GpbD;
+import org.ogcs.ax.gpb3.GpbD.Request;
 import org.ogcs.netty.impl.TcpProtocolServer;
 
 

@@ -6,7 +6,7 @@ import org.ogcs.gpb.generated.GpbChess.ResChessRoomInfo;
 import org.ogcs.gpb.generated.GpbChess.ResChessRoomInfo.RoomInfo;
 import org.ogcs.app.Session;
 import org.ogcs.ax.utilities.AxReplys;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
+import org.ogcs.ax.gpb3.OkraAx.AxInbound;
 
 import java.util.Set;
 

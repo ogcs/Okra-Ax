@@ -18,7 +18,7 @@ package org.ogcs.ax.component.handler.codec;
 
 import com.google.protobuf.MessageLite;
 import io.netty.buffer.ByteBuf;
-import org.ogcs.ax.component.handler.AxCodec;
+import org.ogcs.ax.component.core.AxCodec;
 import org.ogcs.ax.gpb3.AxAnyProto.AxAny;
 import org.ogcs.ax.gpb3.OkraAx.AxInbound;
 import org.ogcs.ax.gpb3.OkraAx.AxOutbound;
@@ -56,7 +56,7 @@ public class GpbCallCodec implements AxCodec {
             offset = 0;
         }
         AxAny call = axCall.getParserForType().parseFrom(array, offset, length);
-        if (call.getId() == 0L) {
+        if (call.getKey() == 0L) {
             return AxAnyUtil.unpack(call, AxInbound.class);
         } else {
             return AxAnyUtil.unpack(call, AxOutbound.class);

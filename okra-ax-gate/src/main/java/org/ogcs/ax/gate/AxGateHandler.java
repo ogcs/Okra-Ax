@@ -8,12 +8,9 @@ import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Command;
 import org.ogcs.app.Executor;
 import org.ogcs.app.Session;
-import org.ogcs.ax.gate.command.GateCommands;
-import org.ogcs.gpb.GpbD;
-import org.ogcs.gpb.GpbD.Request;
+import org.ogcs.ax.config.AxState;
+import org.ogcs.ax.gpb3.GpbD.Request;
 import org.ogcs.netty.handler.DisruptorAdapterHandler;
-
-import static org.ogcs.ax.config.AxState.STATE_1_UNKNOWN_COMMAND;
 
 
 /**
@@ -37,7 +34,7 @@ public class AxGateHandler extends DisruptorAdapterHandler<Request> {
                     throw new NullPointerException("request");
                 }
                 if (!isLogin(session) && !GateCommands.INSTANCE.isCmdWithoutAuth(request.getCmd())) {
-                    session.writeAndFlush(GpbReplys.error(-1, STATE_1_UNKNOWN_COMMAND), ChannelFutureListener.CLOSE);
+                    session.writeAndFlush(GpbReplys.error(-1, AxState.STATE_1_UNKNOWN_COMMAND), ChannelFutureListener.CLOSE);
                     return;
                 }
                 try {
@@ -45,7 +42,7 @@ public class AxGateHandler extends DisruptorAdapterHandler<Request> {
                     command.execute(session, request);
                 } catch (Exception e) {
                     // unknown request id and close channel.
-                    session.writeAndFlush(GpbReplys.error(-1, STATE_1_UNKNOWN_COMMAND), ChannelFutureListener.CLOSE);
+                    session.writeAndFlush(GpbReplys.error(-1, AxState.STATE_1_UNKNOWN_COMMAND), ChannelFutureListener.CLOSE);
                     LOG.info("Unknown command : " + request.getCmd(), e);
                 }
             }

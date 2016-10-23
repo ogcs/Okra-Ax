@@ -22,11 +22,11 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import org.ogcs.ax.component.core.AxComponent;
-import org.ogcs.ax.component.handler.AxCodec;
+import org.ogcs.ax.component.core.AxCodec;
 import org.ogcs.ax.component.handler.AxInnerHandler;
 import org.ogcs.ax.component.handler.codec.AxGpbCodec;
 import org.ogcs.ax.component.handler.AxCodecHandler;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
+import org.ogcs.ax.gpb3.OkraAx.AxInbound;
 import org.ogcs.netty.impl.TcpProtocolServer;
 
 /**

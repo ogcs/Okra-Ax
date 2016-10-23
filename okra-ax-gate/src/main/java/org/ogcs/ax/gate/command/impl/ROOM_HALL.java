@@ -2,7 +2,7 @@ package org.ogcs.ax.gate.command.impl;
 
 import org.ogcs.ax.gate.User;
 import org.ogcs.ax.gate.command.AgentCommand;
-import org.ogcs.gpb.GpbD.Request;
+import org.ogcs.ax.gpb3.GpbD.Request;
 import org.ogcs.app.Session;
 
 /**

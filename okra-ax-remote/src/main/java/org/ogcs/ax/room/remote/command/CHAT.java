@@ -9,8 +9,8 @@ import org.ogcs.app.AppContext;
 import org.ogcs.app.Session;
 import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.ax.component.manager.ConnectorManager;
-import org.ogcs.ax.gpb.OkraAx.AxInbound;
-import org.ogcs.ax.gpb.OkraAx.AxOutbound;
+import org.ogcs.ax.gpb3.OkraAx.AxInbound;
+import org.ogcs.ax.gpb3.OkraAx.AxOutbound;
 
 /**
  * @author : TinyZ.

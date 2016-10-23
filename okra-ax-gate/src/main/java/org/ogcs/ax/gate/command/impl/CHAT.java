@@ -7,8 +7,8 @@ import org.ogcs.ax.gate.Modules;
 import org.ogcs.ax.component.inner.AxInnerClient;
 import org.ogcs.ax.utilities.AxReplys;
 import org.ogcs.ax.gate.command.AgentCommand;
-import org.ogcs.gpb.GpbD.Request;
-import org.ogcs.gpb.GpbD.Push;
+import org.ogcs.ax.gpb3.GpbD.Request;
+import org.ogcs.ax.gpb3.GpbD.Push;
 import org.ogcs.gpb.generated.Chat;
 import org.ogcs.gpb.generated.Chat.ReqChat;
 

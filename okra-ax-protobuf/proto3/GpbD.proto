@@ -4,38 +4,31 @@ option optimize_for = SPEED;
 option java_package = "org.ogcs.ax.gpb3";
 option java_outer_classname = "GpbD";
 
-import "protoc/include/google/protobuf/any.proto";
+import "AxAny.proto";
 
 // 请求
 message Request {
     int32 id = 1; //  The unique request id (client)
-    int32 cmd = 3; //  invoked method
-    bytes data = 4; //  The binary request data
+    AxAny data = 2; //  The binary request data
 }
 // 响应
 message Response {
     int32 id = 1; //  The unique request id (client)
-    Error error = 2;
-    bytes data = 3; //  The binary response data
-    google.protobuf.Any msg = 4;
-    //    extensions 10 to 127;
+    AxAny data = 2;
+    Error error = 3;
 }
 // 错误
 message Error {
     int32 state = 1; // error code
     string msg = 2; // response special error message. [Nullable].
 }
-// 服务器推送
+// 服务端推送到Client
 message Push {
-    int32 id = 1;
-    google.protobuf.Any msg = 4;
-    //    extensions 2 to max; //  推送消息扩展于Push
+    AxAny msg = 1; //  推送消息
 }
-// 客户端通知
-message Notify {
-    int32 id = 1;
-    google.protobuf.Any msg = 2;
-    //    extensions 2 to max; //  通知消息扩展于Notify
+// 客户端拉取通知
+message Pull {
+    AxAny msg = 1; //  通知消息
 }
 // 空返回
 message Void {
