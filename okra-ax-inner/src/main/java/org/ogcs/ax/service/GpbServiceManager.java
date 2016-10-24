@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Command;
 import org.ogcs.ax.command.AxCommand;
 import org.ogcs.ax.command.ClientCommand;
-import org.ogcs.ax.component.core.AxService;
+import org.ogcs.ax.component.core.AxServiceImpl;
 import org.ogcs.ax.component.exception.RegisteredException;
 import org.ogcs.ax.component.exception.UndefinedException;
 import org.ogcs.ax.component.exception.UnknownCmdException;
@@ -32,7 +32,7 @@ import java.util.Map;
 public final class GpbServiceManager {
 
     private static final Logger LOG = LogManager.getLogger(GpbServiceManager.class);
-    private Map<Integer, AxService> services = new HashMap<>();
+    private Map<Integer, AxServiceImpl> services = new HashMap<>();
     private Map<Integer, Command> commands = new HashMap<>();
     private ExtensionRegistryLite extensionRegistry = ExtensionRegistry.getEmptyRegistry();
 
@@ -42,7 +42,7 @@ public final class GpbServiceManager {
      * @return
      * @throws UndefinedException
      */
-    public AxService getService(int serviceId) throws UndefinedException {
+    public AxServiceImpl getService(int serviceId) throws UndefinedException {
         if (services.containsKey(serviceId)) {
             return services.get(serviceId);
         } else {
@@ -75,15 +75,15 @@ public final class GpbServiceManager {
                 throw new UndefinedException("Option [serviceRef] is undefined.");
             }
             Class<?> clzOfImpl = Class.forName(clzOfJavaService);
-            if (!AxService.class.isAssignableFrom(clzOfImpl)) {
-                throw new IllegalStateException("The class [" + clzOfImpl.getName() + "] is not AxService.");
+            if (!AxServiceImpl.class.isAssignableFrom(clzOfImpl)) {
+                throw new IllegalStateException("The class [" + clzOfImpl.getName() + "] is not AxServiceImpl.");
             }
             Integer serviceId = serviceOptions.getExtension(AxOptions.serviceId);
             Boolean isPublic = serviceOptions.getExtension(AxOptions.isPublic);
             if (services.containsKey(serviceId)) {
                 throw new RegisteredException("The service is registered.");
             }
-            AxService service = (AxService) clzOfImpl.newInstance();
+            AxServiceImpl service = (AxServiceImpl) clzOfImpl.newInstance();
             service.setId(serviceId).setPublic(isPublic);
             //  register all methods
             Method[] methods = clzOfImpl.getDeclaredMethods();
@@ -110,7 +110,7 @@ public final class GpbServiceManager {
         }
     }
 
-    protected Command newCommand(int id, AxService service, Method mtdApi, Method mtdReqParseFrom, ExtensionRegistryLite extensionRegistry) {
+    protected Command newCommand(int id, AxServiceImpl service, Method mtdApi, Method mtdReqParseFrom, ExtensionRegistryLite extensionRegistry) {
         if (service.isPublic()) {
             return new ClientCommand(id, service, mtdApi, mtdReqParseFrom, extensionRegistry);
         } else {
