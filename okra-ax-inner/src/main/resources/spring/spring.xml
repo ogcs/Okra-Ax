@@ -11,12 +11,15 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 	<!-- Configure all properties files here, wildcards like *.properties are also allowed -->
-	<!--<context:property-placeholder location="file:conf/conf.properties" />-->
+	<context:property-placeholder location="file:conf/ax.properties" />
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.lj.kernel" />
 	<context:component-scan base-package="org.ogcs.ax" />
 
-	<bean id="appContext" class="org.ogcs.app.AppContext"></bean>
+	<bean id="appContext" class="org.ogcs.app.AppContext"/>
+
+	<bean id="axConfig" class="org.ogcs.ax.config.AxConfig">
+		<property name="id" value="${ax.id}"/>
+	</bean>
 
 </beans>
