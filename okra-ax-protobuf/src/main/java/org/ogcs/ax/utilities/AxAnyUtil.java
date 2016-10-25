@@ -34,11 +34,14 @@ public final class AxAnyUtil {
     }
 
     public static long fetchMsgId(Message message) {
-        Descriptor descriptorForType = message.getDescriptorForType();
-        MessageOptions options = descriptorForType.getOptions();
+        return fetchMsgId(message.getDescriptorForType());
+    }
+
+    public static long fetchMsgId(Descriptor descriptor) {
+        MessageOptions options = descriptor.getOptions();
         return options.hasExtension(AxOptions.messageId) ?
                 options.getExtension(AxOptions.messageId) :
-                Murmur2.hash(descriptorForType.getFullName());
+                Murmur2.hash(descriptor.getFullName());
     }
 
     public static <T extends Message> boolean is(AxAny any, Class<T> clazz) {

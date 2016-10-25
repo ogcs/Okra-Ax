@@ -68,7 +68,7 @@ public class AxZookeeper {
         this.info = info;
     }
 
-    public void init() {
+    public void init() throws Exception {
         try {
             zk = new ZooKeeper(connectString, timeout, null);
             AxInnerWatcher watcher = new AxInnerWatcher(root, this.zk, stat, local);
@@ -82,10 +82,19 @@ public class AxZookeeper {
             create(root, localPath, watcher, JSON.toJSONBytes(info), zk, ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
         } catch (Exception e) {
             LOG.error("AxZookeeper initialize failed.", e);
+            throw e;
         }
     }
 
-    public void create(String root, String path, AxInnerWatcher watcher, byte[] data, ZooKeeper zk, List<ACL> acl, CreateMode createMode) {
+    public void close() {
+        try {
+            zk.close();
+        } catch (InterruptedException e) {
+            LOG.error("AxZookeeper close error.", e);
+        }
+    }
+
+    public void create(String root, String path, AxInnerWatcher watcher, byte[] data, ZooKeeper zk, List<ACL> acl, CreateMode createMode) throws Exception {
         try {
             String[] split = path.split("/");
             if (split.length > 0) {
@@ -108,6 +117,7 @@ public class AxZookeeper {
             }
         } catch (InterruptedException | KeeperException e) {
             LOG.error("create zookeeper node failed. ", e);
+            throw e;
         }
     }
 

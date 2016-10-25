@@ -1,12 +1,12 @@
 package org.ogcs.ax.service;
 
-import org.ogcs.ax.component.core.AxService;
+import org.ogcs.ax.component.core.AxServiceImpl;
 
 /**
  * @author TinyZ
  * @date 2016-10-20.
  */
-public abstract class AbstractServiceImpl implements AxService {
+public abstract class AbstractServiceImpl implements AxServiceImpl {
 
     private Class<?> clzOfGpb;
     private int id;
@@ -28,19 +28,19 @@ public abstract class AbstractServiceImpl implements AxService {
     }
 
     @Override
-    public AxService setId(int id) {
+    public AxServiceImpl setId(int id) {
         this.id = id;
         return this;
     }
 
     @Override
-    public AxService setPublic(boolean aPublic) {
-        isPublic = aPublic;
+    public AxServiceImpl setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
         return this;
     }
 
     @Override
-    public AxService setClzOfGpb(Class<?> clzOfGpb) {
+    public AxServiceImpl setClzOfGpb(Class<?> clzOfGpb) {
         this.clzOfGpb = clzOfGpb;
         return this;
     }

@@ -5,7 +5,7 @@ package org.ogcs.ax.component.core;
  * @date 2016-10-16.
  * @since 1.0
  */
-public interface AxService {
+public interface AxServiceImpl {
 
     /**
      * 获取服务的注册ID
@@ -23,9 +23,9 @@ public interface AxService {
      */
     Class<?> getGpbService();
 
-    AxService setId(int id);
+    AxServiceImpl setId(int id);
 
-    AxService setPublic(boolean aPublic);
+    AxServiceImpl setPublic(boolean aPublic);
 
-    AxService setClzOfGpb(Class<?> clzOfGpb);
+    AxServiceImpl setClzOfGpb(Class<?> clzOfGpb);
 }

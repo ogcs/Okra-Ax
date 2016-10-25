@@ -17,13 +17,17 @@ public class InnerFramework {
     private AxCoInfo info;
 
     public void start() {
-        //  zookeeper service
-        zookeeper = new AxZookeeper(AxProperties.axZkConnectString, AxProperties.axZkTimeout, AxProperties.axZkWatches, AxProperties.axZkRootPath, AxProperties.axModule, AxProperties.axId, info);
-        zookeeper.init();
-        //  inner service
-        String id = String.valueOf(AxProperties.axId);
-        inner = new AxInnerServer(id, AxProperties.axPort);
-        inner.start();
+        try {
+            //  zookeeper service
+            zookeeper = new AxZookeeper(AxProperties.axZkConnectString, AxProperties.axZkTimeout, AxProperties.axZkWatches, AxProperties.axZkRootPath, AxProperties.axModule, AxProperties.axId, info);
+            zookeeper.init();
+            //  inner service
+            String id = String.valueOf(AxProperties.axId);
+            inner = new AxInnerServer(id, AxProperties.axPort);
+            inner.start();
+        } catch (Exception e) {
+            zookeeper.close();
+        }
     }
 
     public void stop() {

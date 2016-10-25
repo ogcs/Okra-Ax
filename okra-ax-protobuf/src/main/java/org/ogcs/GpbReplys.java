@@ -26,7 +26,7 @@ import org.ogcs.ax.utilities.AxAnyUtil;
 
 /**
  * @author : TinyZ.
- * @email : ogcs_tinyz@outlook.com
+ * @email : tinyzzh815@gmail.com
  * @since 1.0
  */
 public final class GpbReplys {

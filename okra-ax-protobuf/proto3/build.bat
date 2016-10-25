@@ -1,9 +1,9 @@
 @echo off
 
-SET PROTOC_PATH=E:\C\Git\okra-ax\okra-ax-protobuf\proto3\protoc\bin\protoc.exe
+SET PROTOC_PATH=E:\WD\GitHub\Okra-Ax\okra-ax-protobuf\proto3\protoc\bin\protoc.exe
 SET GPB_INCLUDE_PATH=%~dp0protoc\include\google\protobuf\
 SET ROOT_PATH=%~dp0
-SET JAVA_OUT_PATH=E:\C\Git\okra-ax\okra-ax-protobuf\src\main\java\
+SET JAVA_OUT_PATH=E:\WD\GitHub\Okra-Ax\okra-ax-protobuf\src\main\java\
 REM SET JAVA_OUT_PATH=%ROOT_PATH%JAVA_OUT
 
 setlocal ENABLEDELAYEDEXPANSION

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- Configure all properties files here, wildcards like *.properties are also allowed -->
+    <!--<context:property-placeholder location="file:conf/conf.properties" />-->
+
+    <context:annotation-config/>
+    <context:component-scan base-package="org.ogcs.ax"/>
+
+    <bean id="appContext" class="org.ogcs.app.AppContext"/>
+
+    <!-- Register Service -->
+    <bean id="serviceManager" class="org.ogcs.ax.service.GpbServiceManager" init-method="initialize">
+        <property name="clzOfServiceList">
+            <list value-type="java.lang.Class">
+                <value>org.ogcs.ax.gpb3.LogicPublicProto</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>
