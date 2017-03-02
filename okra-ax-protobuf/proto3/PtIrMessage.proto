@@ -1,0 +1,11 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.beans";
+option java_outer_classname = "PtIrMessage";
+option java_multiple_files = true;
+
+//  组件授权
+message ReqAuth {
+    string key = 1; //  授权密钥
+}

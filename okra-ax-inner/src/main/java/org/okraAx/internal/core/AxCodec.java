@@ -24,8 +24,7 @@ import io.netty.buffer.ByteBuf;
  * implement special protocol's  encode and decode.
  *
  * @author : TinyZ.
- * @email : tinyzzh815@gmail.com
- * @date : 2016/5/23
+ * @version 2017.03.03
  * @since 1.0
  */
 public interface AxCodec {

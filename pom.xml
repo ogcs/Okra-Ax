@@ -23,6 +23,7 @@
         <module>okra-ax-login</module>
         <module>okra-ax-bootstarp</module>
         <module>okra-ax-logic</module>
+        <module>okra-ax-common</module>
     </modules>
 
     <dependencies>

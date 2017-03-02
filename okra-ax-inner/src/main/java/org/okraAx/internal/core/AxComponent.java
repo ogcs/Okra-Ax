@@ -17,6 +17,8 @@ package org.okraAx.internal.core;
 
 /**
  * Ax component
+ * @version 2017.03.03
+ * @since 1.0
  */
 public interface AxComponent {
 

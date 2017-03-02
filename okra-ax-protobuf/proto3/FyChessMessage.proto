@@ -1,0 +1,56 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.chess.beans";
+option java_outer_classname = "FyChessMi";
+option java_multiple_files = true;
+
+
+// 移动棋子
+message MsgChessMove {
+    int32 fromX = 1; //  移动前x坐标轴
+    int32 fromY = 2;
+    int32 toX = 3;
+    int32 toY = 4;
+}
+// [api:1000] - 请求加入棋局
+message ReqChessJoin {
+    string name = 1; //  昵称
+    int64 roomId = 2; //  房间唯一ID
+}
+// 响应加入棋局
+message ResChessJoin {
+    int32 side = 1; //  阵营
+}
+
+// 响应棋子移动
+message ResChessMove {
+    bool movable = 1; //  是否可以移动
+}
+// [api:1002] - 获取房间信息
+message ReqChessRoomInfo {
+}
+// 响应获取房间列表
+message ResChessRoomInfo {
+    repeated RoomInfo infos = 1;
+
+    message RoomInfo {
+        int32 id = 1; //  房间ID
+        repeated string players = 2; //
+    }
+}
+
+// [push:101] - 推送棋子移动
+message PushChessMove {
+    int32 fromX = 1;
+    int32 fromY = 2;
+    int32 toX = 3;
+    int32 toY = 4;
+}
+// [push:102] - 推送胜负
+message PushReport {
+    int32 side = 1; //  胜利方
+}
+// [push:103] - 推送房间初始化
+message PushChessInit {
+}

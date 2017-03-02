@@ -1,0 +1,19 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.callback";
+option java_outer_classname = "PtIrCallback";
+//option java_generic_services = true;
+
+import "AxRpcV3.proto";
+import "AxOptions.proto";
+
+//  Ax内部服务
+service IrCallbackService {
+    option (serviceId) = 13;
+    option (serviceRef) = "org.okraAx.service.IrCallbackService";
+    option (isPublic) = true;
+    //  pong
+    rpc pong (RpcVoid) returns (RpcVoid) { option (methodId) = 13001; }
+
+}

@@ -1,0 +1,39 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.room.services";
+option java_outer_classname = "FyRoomSi";
+//option java_generic_services = true;
+
+import "AxAny.proto";
+import "Gpc.proto";
+import "FyRoomMessage.proto";
+
+//  global room service.
+service RoomService {
+    //  ping-pong
+    rpc ping (GpcVoid) returns (GpcVoid);
+    //  创建房间
+    rpc onCreateRoom (GpcVoid) returns (GpcVoid);
+    //  进入房间
+    rpc onEnterRoom (MsgEnterRoom) returns (GpcVoid);
+    //  退出房间
+    rpc onExitRoom (GpcVoid) returns (GpcVoid);
+    //  获取大厅列表
+    rpc onShowHall (AxAny) returns (GpcVoid);
+    //  准备或取消准备游戏
+    rpc onGetReady (MsgGetReady) returns (GpcVoid);
+    //  游戏开始
+    rpc onGameStart (GpcVoid) returns (GpcVoid);
+    //  游戏结束
+    rpc onGameEnd (GpcVoid) returns (GpcVoid);
+    //  聊天
+    rpc onChat (GpcVoid) returns (GpcVoid);
+}
+//  global room callback.
+service PyRoomCallback {
+
+    rpc callbackChat (GpcVoid) returns (GpcVoid);
+
+
+}

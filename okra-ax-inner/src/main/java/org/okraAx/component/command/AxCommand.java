@@ -5,7 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
-import org.okraAx.internal.core.InnerService;
+import org.okraAx.internal.v3.GpbService;
 import org.okraAx.v3.OkraAx.AxInbound;
 import org.okraAx.v3.OkraAx.AxOutbound;
 
@@ -19,13 +19,13 @@ public class AxCommand implements Command<Session, AxInbound> {
 
     private static final Logger LOG = LogManager.getLogger(AxCommand.class);
     private int id;
-    private InnerService service;
+    private GpbService service;
     private Method mtdApi;
     private Method mtdReqParseFrom;
     private Method mtdResParseFrom;
     private ExtensionRegistryLite extensionRegistry;
 
-    public AxCommand(int id, InnerService service, Method mtdApi, Method mtdReqParseFrom, ExtensionRegistryLite extensionRegistry) {
+    public AxCommand(int id, GpbService service, Method mtdApi, Method mtdReqParseFrom, ExtensionRegistryLite extensionRegistry) {
         this.id = id;
         this.service = service;
         this.mtdApi = mtdApi;
@@ -61,11 +61,11 @@ public class AxCommand implements Command<Session, AxInbound> {
         this.id = id;
     }
 
-    public InnerService getService() {
+    public GpbService getService() {
         return service;
     }
 
-    public void setService(InnerService service) {
+    public void setService(GpbService service) {
         this.service = service;
     }
 

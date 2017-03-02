@@ -1,0 +1,23 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+//option java_generic_services = true;
+option java_package = "org.okraAx.v3";
+option java_outer_classname = "Gpc";
+option java_multiple_files = true;
+
+import "AxAny.proto";
+
+//  RPC
+message GpcCall {
+    string method = 1; //  Remote call produce name.
+    bytes params = 2; //  请求参数. 允许任意pb类型的message成为参数
+}
+//  Rpc错误
+message GpcError {
+    int32 state = 1; // error code
+    string msg = 2; // response special error message. [Nullable].
+}
+//  Void
+message GpcVoid {
+}

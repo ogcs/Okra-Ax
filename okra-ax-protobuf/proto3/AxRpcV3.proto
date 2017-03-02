@@ -1,0 +1,26 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+//option java_generic_services = true;
+option java_package = "org.okraAx.v3";
+option java_outer_classname = "AxRpc";
+option java_multiple_files = true;
+
+import "AxAny.proto";
+import "AxOptions.proto";
+
+//  RPC
+message Rpc {
+    int32 id = 1; //  The unique request id.
+    int32 api = 2; //    调用的服务接口id
+    AxAny data = 3; //  请求参数. 允许任意pb类型的message成为参数
+}
+// Rpc错误
+message RpcError {
+    option (messageId) = 1;
+    int32 state = 1; // error code
+    string msg = 2; // response special error message. [Nullable].
+}
+// Rpc的Void参数
+message RpcVoid {
+}

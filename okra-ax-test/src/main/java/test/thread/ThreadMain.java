@@ -1,6 +1,6 @@
 package test.thread;
 
-import org.ogcs.ax.component.inner.BlockingCallback;
+import org.okraAx.internal.inner.BlockingCallback;
 
 /**
  * @author : TinyZ.
