@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
-import org.okraAx.internal.core.InnerService;
+import org.okraAx.internal.v3.GpbService;
 import org.okraAx.v3.OkraAx.AxInbound;
 import org.okraAx.v3.OkraAx.AxOutbound;
 
@@ -24,13 +24,13 @@ public class DynamicGpbCommand implements Command<Session, AxInbound> {
 
     private static final Logger LOG = LogManager.getLogger(DynamicGpbCommand.class);
     private int id;
-    private InnerService service;
+    private GpbService service;
     private Method mtdApi;
     private Descriptor input;
     private Descriptor output;
     private ExtensionRegistryLite extensionRegistry;
 
-    public DynamicGpbCommand(int id, InnerService service, Method mtdApi, Descriptor input, Descriptor output, ExtensionRegistryLite extensionRegistry) {
+    public DynamicGpbCommand(int id, GpbService service, Method mtdApi, Descriptor input, Descriptor output, ExtensionRegistryLite extensionRegistry) {
         this.id = id;
         this.service = service;
         this.mtdApi = mtdApi;
@@ -73,11 +73,11 @@ public class DynamicGpbCommand implements Command<Session, AxInbound> {
         this.id = id;
     }
 
-    public InnerService getService() {
+    public GpbService getService() {
         return service;
     }
 
-    public void setService(InnerService service) {
+    public void setService(GpbService service) {
         this.service = service;
     }
 

@@ -1,0 +1,30 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.services";
+option java_outer_classname = "PtIr";
+//option java_generic_services = true;
+
+import "AxRpcV3.proto";
+import "AxOptions.proto";
+import "PtIrMessage.proto";
+
+//  Ax内部服务
+service IrService {
+    option (serviceId) = 12;
+    option (serviceRef) = "org.okraAx.service.IrService";
+    option (isPublic) = true;
+    //  ping
+    rpc ping (RpcVoid) returns (RpcVoid) { option (methodId) = 12001; }
+    //  注册组件
+    rpc register (ReqAuth) returns (RpcVoid) { option (methodId) = 12002; }
+
+}
+
+
+
+
+
+
+
+

@@ -13,7 +13,7 @@
 	<!-- Configure all properties files here, wildcards like *.properties are also allowed -->
 	<!--<context:property-placeholder location="file:conf/conf.properties" />-->
 
-	<context:annotation-config />
+	<context:annotation-zkConfig />
 	<context:component-scan base-package="org.ogcs" />
 
 	<bean id="appContext" class="org.ogcs.app.AppContext"></bean>

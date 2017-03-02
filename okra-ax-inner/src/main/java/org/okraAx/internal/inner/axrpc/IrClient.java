@@ -2,6 +2,7 @@ package org.okraAx.internal.inner.axrpc;
 
 import io.netty.channel.ChannelHandler;
 import org.okraAx.internal.inner.AutoClient;
+import org.okraAx.internal.v3.FyChannelInitializer;
 
 /**
  * @author TinyZ
@@ -15,7 +16,7 @@ public class IrClient extends AutoClient {
 
     @Override
     protected ChannelHandler newChannelInitializer() {
-        return new IrChannelInitializer();
+        return new FyChannelInitializer();
     }
 
 

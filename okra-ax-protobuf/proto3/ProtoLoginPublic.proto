@@ -1,8 +1,8 @@
 syntax = "proto3";
-// This is default, but it's nice to be explicit
+package org.okraAx.v3;
 option optimize_for = SPEED;
 //option java_generic_services = true;
-option java_package = "org.ogcs.ax.gpb3";
+option java_package = "org.okraAx.v3";
 option java_outer_classname = "LoginPublicProto";
 
 import "protoc/include/google/protobuf/any.proto";

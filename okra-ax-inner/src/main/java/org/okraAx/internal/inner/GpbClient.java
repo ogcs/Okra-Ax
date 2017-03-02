@@ -109,7 +109,7 @@ public abstract class GpbClient<O> extends TcpProtocolClient {
      * @param ctx {@link ChannelHandlerContext}
      */
     public void connectionActive(ChannelHandlerContext ctx) {
-        session = new NetSession(ctx);
+        session = new NetSession(ctx.channel());
     }
 
     /**

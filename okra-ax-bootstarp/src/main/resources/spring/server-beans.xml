@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 	<import resource="service-beans.xml"></import>
-	<context:annotation-config />
+	<context:annotation-zkConfig />
 
 	<!-- Configure all properties files here, wildcards like *.properties are also allowed -->
 	<context:property-placeholder location="file:conf/conf.properties" />

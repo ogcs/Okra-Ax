@@ -9,5 +9,5 @@ Class-Path: lib/aopalliance-1.0.jar lib/spring-beans-4.2.2.RELEASE.jar
  b/fastjson-1.1.45.jar lib/zookeeper-3.4.8.jar lib/jline-0.9.94.jar li
  b/commons-logging-1.2.jar lib/commons-pool2-2.3.jar lib/protobuf-java
  -2.6.1.jar lib/Okra-1.0.0.jar
-Main-Class: org.ogcs.ax.Bootstrap
+Main-Class: Bootstrap
 

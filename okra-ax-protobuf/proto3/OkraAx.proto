@@ -1,7 +1,8 @@
 syntax = "proto3";
+package org.okraAx.v3;
 option optimize_for = SPEED;
 //option java_generic_services = true;
-option java_package = "org.ogcs.ax.gpb3";
+option java_package = "org.okraAx.v3";
 option java_outer_classname = "OkraAx";
 
 import "AxAny.proto";

@@ -18,7 +18,7 @@ package org.okraAx.internal.core;
 
 /**
  * Ax callback interface.
- *
+ * @version 2017.03.03
  * @since 1.0
  */
 public interface AxCallback<T> {

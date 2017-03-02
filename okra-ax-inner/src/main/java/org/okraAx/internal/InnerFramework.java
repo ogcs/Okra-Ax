@@ -1,18 +1,19 @@
-package org.ogcs.ax.component;
+package org.okraAx.internal;
 
-import org.ogcs.ax.component.bean.AxCoInfo;
-import org.ogcs.ax.component.inner.AxInnerServer;
-import org.ogcs.ax.component.zookeeper.AxZookeeper;
-import org.ogcs.ax.config.AxConfig;
-import org.ogcs.ax.config.AxProperties;
+import org.okraAx.internal.bean.AxCoInfo;
+import org.okraAx.internal.config.AxProperties;
+import org.okraAx.internal.bean.AxConfig;
+import org.okraAx.internal.inner.axrpc.IrServer;
+import org.okraAx.internal.zookeeper.AxZookeeper;
 
 /**
  * @author TinyZ
+ * @since 1.1
  */
 public class InnerFramework {
 
     private AxZookeeper zookeeper;
-    private AxInnerServer inner;
+    private IrServer irServer;
     private AxConfig config;
     private AxCoInfo info;
 
@@ -23,7 +24,7 @@ public class InnerFramework {
             zookeeper.init();
             //  inner service
             String id = String.valueOf(AxProperties.axId);
-            inner = new AxInnerServer(id, AxProperties.axPort);
+            inner = new IrServer(id, AxProperties.axPort);
             inner.start();
         } catch (Exception e) {
             zookeeper.close();
@@ -31,8 +32,8 @@ public class InnerFramework {
     }
 
     public void stop() {
-        if (inner != null)
-            inner.stop();
+        if (irServer != null)
+            irServer.stop();
     }
 
 }
