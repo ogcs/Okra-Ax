@@ -29,7 +29,7 @@
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<!-- <property name="configLocation" value="file:conf/mybatis-config.xml" /> -->
+		<!-- <property name="configLocation" value="file:conf/mybatis-zkConfig.xml" /> -->
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 

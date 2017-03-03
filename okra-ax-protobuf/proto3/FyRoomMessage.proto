@@ -1,0 +1,28 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.room.beans";
+option java_outer_classname = "FyRoomMi";
+//option java_generic_services = true;
+option java_multiple_files = true;
+
+//  搜索房间
+message ReqLookupRoom {
+    int32 type = 1;
+}
+//  加入房间
+message MsgEnterRoom {
+    int32 roomId = 1;   //  房间
+    int32 seat = 2;     //  座位号
+    int64 uid = 3;      //  玩家
+    string name = 4;    //  玩家名称
+}
+//  准备或取消准备
+message MsgGetReady {
+    int64 uid = 1; //  唯一uid
+    bool ready = 2; //  准备/取消准备
+}
+//  离开房间
+message ReqRoomExit {
+    int32 roomId = 1;
+}

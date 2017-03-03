@@ -1,0 +1,25 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.chess.services";
+option java_outer_classname = "FyChessSi";
+//option java_generic_services = true;
+
+import "AxAny.proto";
+import "Gpc.proto";
+import "FyChessMessage.proto";
+
+//  Chess服务
+service ChessService {
+    //  显示房间装备
+    rpc onShowRoomStatus (GpcVoid) returns (GpcVoid);
+    //  移动棋子
+    rpc onMoveChess (MsgChessMove) returns (GpcVoid);
+}
+
+//  Chess服务回调
+service PyChessCallback {
+    //  移动棋子
+    rpc callbackMoveChess (MsgChessMove) returns (GpcVoid);
+
+}

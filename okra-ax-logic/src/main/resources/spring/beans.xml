@@ -12,7 +12,7 @@
 
 	<!-- Configure all properties files here, wildcards like *.properties are also allowed -->
 	<context:property-placeholder location="file:conf/conf.properties" />
-	
+
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
 		<property name="driverClass" value="${bonecp.driverClass}" />
 		<property name="jdbcUrl" value="${bonecp.jdbcUrl}" />
@@ -27,7 +27,7 @@
 		<property name="statementsCacheSize" value="${bonecp.statementsCacheSize}" />
 		<property name="releaseHelperThreads" value="${bonecp.releaseHelperThreads}" />
 	</bean>
-	
+
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- <property name="configLocation" value="file:conf/mybatis-config.xml" /> -->
 		<property name="dataSource" ref="dataSource" />
@@ -38,18 +38,18 @@
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 	<bean id="txTemplate" class="org.springframework.transaction.support.TransactionTemplate">
 		<property name="transactionManager" ref="txManager"></property>
 		<property name="propagationBehaviorName" value="PROPAGATION_REQUIRED"></property>
 	</bean>
-	
+
 	<context:annotation-config />
 	<context:component-scan base-package="dev.kyia.gameserver" />
-	
+
 	<!-- Persistence mappers -->
 	<import resource="mybatis-beans.xml"></import>
-	
+
 	<!-- Server beans -->
 	<import resource="server-beans.xml"></import>
 	
