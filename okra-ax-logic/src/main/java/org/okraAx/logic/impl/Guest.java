@@ -6,8 +6,8 @@ import org.ogcs.app.AppContext;
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
 import org.okraAx.internal.inner.AxInnerClient;
-import org.okraAx.component.manager.AxInnerCoManager;
-import org.okraAx.component.manager.ConnectorManager;
+import org.okraAx.internal.component.AxInnerCoManager;
+import org.okraAx.internal.component.ConnectorManager;
 import org.okraAx.internal.SpringContext;
 import org.okraAx.v3.LogicPublicProto.ReqExitRoom;
 

@@ -13,7 +13,7 @@
 //import org.apache.logging.log4j.Logger;
 //import org.ogcs.app.AppContext;
 //import org.okraAx.utilities.AxReplys;
-//import org.okraAx.component.manager.ConnectorManager;
+//import org.okraAx.room.manager.ConnectorManager;
 //import org.okraAx.v3.GpbD;
 //
 //import java.util.*;

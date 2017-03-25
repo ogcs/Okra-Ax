@@ -4,10 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.gpb.generated.PushChessInit;
 import org.ogcs.gpb.generated.PushReport;
+import org.okraAx.room.Player;
 import org.okraAx.room.module.AbstractTable;
 import org.okraAx.room.module.Api;
 import org.okraAx.v3.chess.beans.MsgChessMove;
-import org.okraAx.v3.room.beans.MsgGetReady;
+import org.okraAx.v3.room.beans.VoGetReady;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,6 +40,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author : TinyZ.
  * @email : ogcs_tinyz@outlook.com
+ * @since 1.0
+ * @version 2017.03.05
  */
 public final class ChineseChess extends AbstractTable {
 
@@ -124,13 +127,15 @@ public final class ChineseChess extends AbstractTable {
         return count == 2 && uids[(round % 2)].equals(uid);
     }
 
-    public void onReady(long uid, boolean ready) {
+    @Override
+    public void onReady(Player player, boolean ready) {
+        final long uid = player.id();
         if (ready) {
             readys.put(uid, true);
         } else if (readys.containsKey(uid)) {
             readys.remove(uid);
         }
-        broadcast(Api.CALLBACK_20005_GET_READY, MsgGetReady.newBuilder()
+        broadcast(VoGetReady.newBuilder()
                 .setUid(uid)
                 .setReady(ready)
                 .build());
@@ -149,7 +154,7 @@ public final class ChineseChess extends AbstractTable {
     }
 
     public void onGameEnd(int side) {
-        broadcast(1, PushReport.newBuilder()
+        broadcast(PushReport.newBuilder()
                 .setSide(side)
                 .build());
 //        roomManager.destroy(id());
@@ -172,7 +177,7 @@ public final class ChineseChess extends AbstractTable {
             chessboard[toX][toY] = fromCell;
             chessboard[fromX][fromY] = null;
             // Push
-            broadcast(20006, MsgChessMove.newBuilder()
+            broadcast(MsgChessMove.newBuilder()
                     .setFromX(fromX).setFromY(fromY)
                     .setToX(toX).setToY(toY)
                     .build());

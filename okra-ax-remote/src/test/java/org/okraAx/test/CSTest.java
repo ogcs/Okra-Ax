@@ -3,15 +3,16 @@ package org.okraAx.test;
 import io.netty.channel.Channel;
 import org.junit.Test;
 import org.ogcs.app.AppContext;
-import org.okraAx.internal.v3.GpbMethodComponent;
-import org.okraAx.internal.inner.axrpc.IrClient;
-import org.okraAx.internal.inner.axrpc.IrServer;
-import org.okraAx.internal.v3.interfaces.FyChessService;
-import org.okraAx.internal.v3.interfaces.FyRoomService;
-import org.okraAx.room.fy.impl.FyChessServiceImpl;
-import org.okraAx.room.fy.impl.FyRoomServiceImpl;
+import org.okraAx.common.RoomPublicService;
+import org.okraAx.common.modules.FyChessService;
+import org.okraAx.internal.component.GpbMethodComponent;
+import org.okraAx.internal.inner.IrClient;
+import org.okraAx.internal.inner.IrServer;
+import org.okraAx.room.fy.impl.FyChessImpl;
+import org.okraAx.room.fy.impl.RoomPublicImpl;
 import org.okraAx.v3.GpcCall;
 import org.okraAx.v3.GpcVoid;
+import org.okraAx.v3.room.services.FyRoomSi;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -31,8 +32,12 @@ public class CSTest {
 //        FyChessServiceImpl chessService = AppContext.getBean(FyChessServiceImpl.class);
 
         //
-        methodComponent.registerMethod(new FyRoomServiceImpl(), FyRoomService.class);
-        methodComponent.registerMethod(new FyChessServiceImpl(), FyChessService.class);
+        methodComponent.registerMethod(new RoomPublicImpl(), RoomPublicService.class);
+        methodComponent.registerMethod(new FyChessImpl(), FyChessService.class);
+        methodComponent.registerMethodDesc(FyRoomSi.getDescriptor().findServiceByName("PyRoomCallback"));
+        methodComponent.registerMethodDesc(FyRoomSi.getDescriptor().getServices());
+
+
         //
         IrServer server = new IrServer("1", 9005);
         server.start();
@@ -46,7 +51,7 @@ public class CSTest {
                 .setMethod("ping")
                 .setParams(GpcVoid.getDefaultInstance().toByteString())
                 .build());
-
+//
         while(true) {
             try {
                 Thread.sleep(100L);

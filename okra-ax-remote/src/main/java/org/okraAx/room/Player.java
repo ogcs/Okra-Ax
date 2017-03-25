@@ -2,7 +2,6 @@ package org.okraAx.room;
 
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
-import org.okraAx.internal.inner.axrpc.IrSession;
 import org.okraAx.room.module.Room;
 
 /**

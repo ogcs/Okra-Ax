@@ -5,9 +5,8 @@ import org.ogcs.app.Session;
 import org.ogcs.event.Event;
 import org.ogcs.event.EventDispatcher;
 import org.ogcs.event.MultiListenerEventDispatcher;
-import org.okraAx.internal.inner.axrpc.IrSession;
+import org.okraAx.internal.inner.IrSession;
 import org.okraAx.room.Player;
-import org.okraAx.v3.AxOptions;
 
 import java.util.Map;
 import java.util.Set;
@@ -67,16 +66,13 @@ public abstract class AbstractTable implements Room {
 
     /**
      * Send message to every player on table.
+     *
      * @param message The message send to player.
      */
-    protected void broadcast(int api, Message message) {
+    protected void broadcast(Message message) {
         for (Session session : sessions.values()) {
             if (session.isOnline()) {
-                if (session instanceof IrSession) {
-                    ((IrSession) session).push(-1, api, message);
-                } else {
-                    session.writeAndFlush(message);
-                }
+                session.writeAndFlush(message);
             }
         }
     }

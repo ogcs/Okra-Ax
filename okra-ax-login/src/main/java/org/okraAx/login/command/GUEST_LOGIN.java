@@ -10,7 +10,7 @@
 //import org.okraAx.internal.SpringContext;
 //import org.okraAx.internal.inner.AxInnerClient;
 //import org.okraAx.utilities.AxReplys;
-//import org.okraAx.component.manager.AxInnerCoManager;
+//import org.okraAx.room.manager.AxInnerCoManager;
 //
 //import java.util.HashMap;
 //import java.util.Map;

@@ -55,6 +55,12 @@ public interface Room {
     void onEnter(Player player);
 
     /**
+     * Player get ready or unready.
+     * @param ready If true means player is get ready, otherwise false.
+     */
+    void onReady(Player player, boolean ready);
+
+    /**
      * Player exit game.
      */
     void onExit(Long uid);

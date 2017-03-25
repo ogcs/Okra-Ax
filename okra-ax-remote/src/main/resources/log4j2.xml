@@ -26,11 +26,7 @@
         <AsyncRoot level="WARN" includeLocation="true">
             <AppenderRef ref="DailyFileAppender"/>
         </AsyncRoot>
-        <AsyncLogger name="com.lj.kernel" level="DEBUG" includeLocation="true" additivity="false">
-            <AppenderRef ref="ConsoleAppender"/>
-            <AppenderRef ref="DailyFileAppender"/>
-        </AsyncLogger>
-        <AsyncLogger name="org.ogcs" level="INFO">
+        <AsyncLogger name="org.okraAx" level="INFO" includeLocation="true" additivity="false">
             <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="DailyFileAppender"/>
         </AsyncLogger>

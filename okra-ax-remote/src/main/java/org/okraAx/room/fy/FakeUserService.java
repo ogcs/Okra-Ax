@@ -1,6 +1,6 @@
 package org.okraAx.room.fy;
 
-import org.okraAx.internal.v3.callback.PlayerCallback;
+import org.okraAx.common.PlayerCallback;
 
 /**
  * @author TinyZ
@@ -10,5 +10,15 @@ public class FakeUserService implements PlayerCallback {
     @Override
     public void pong() {
         System.out.println("pin : " + 99);
+    }
+
+    @Override
+    public void callbackLogin() {
+
+    }
+
+    @Override
+    public void callbackSyncTime(long timestamp) {
+
     }
 }

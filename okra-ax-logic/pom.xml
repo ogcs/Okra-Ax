@@ -16,14 +16,13 @@
             <artifactId>okra-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.ogcs</groupId>
-            <artifactId>okra-ax-inner</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.ogcs</groupId>
+            <artifactId>okra-ax-common</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

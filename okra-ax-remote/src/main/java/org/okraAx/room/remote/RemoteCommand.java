@@ -1,6 +1,6 @@
 package org.okraAx.room.remote;
 
-import org.okraAx.component.manager.ConnectorManager;
+import org.okraAx.internal.component.ConnectorManager;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;
 import org.ogcs.app.Session;
