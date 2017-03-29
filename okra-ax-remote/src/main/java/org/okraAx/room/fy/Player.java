@@ -1,4 +1,4 @@
-package org.okraAx.room;
+package org.okraAx.room.fy;
 
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
@@ -24,8 +24,8 @@ public class Player implements Connector {
     }
 
     @Override
-    public boolean isConnected() {
-        return session != null && session.isOnline();
+    public boolean isOnline() {
+        return session != null && session.isActive();
     }
 
     @Override
@@ -39,7 +39,12 @@ public class Player implements Connector {
     }
 
     @Override
-    public void disconnect() {
+    public void sessionActive() {
+
+    }
+
+    @Override
+    public void sessionInactive() {
         if (session != null) {
             session.close();
             this.session = null;

@@ -82,6 +82,9 @@ public enum MtdDescUtil {
     }
 
     public void registerMethodDesc(GpbMethodDesc desc) {
+        if (DESC_MAP.containsKey(desc.getName())) {
+            LOG.error("[Gpb] the method [" + desc.getName() + "] already registered.");
+        }
         DESC_MAP.put(desc.getName(), desc);
     }
 }

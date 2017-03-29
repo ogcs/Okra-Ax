@@ -36,8 +36,8 @@ public class Guest implements Connector {
     }
 
     @Override
-    public boolean isConnected() {
-        return session != null && session.isOnline();
+    public boolean isOnline() {
+        return session != null && session.isActive();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Guest implements Connector {
     }
 
     @Override
-    public void disconnect() {
+    public void sessionInactive() {
         exitRoom();
         connectorManager.remove(session);
         LOG.info("Session : {} disconnect.", session.toString());

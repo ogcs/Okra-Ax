@@ -33,7 +33,7 @@ public class FySession extends NetSession implements ProxySingleCallback<PlayerC
     }
 
     @Override
-    public PlayerCallback callback() {
+    public PlayerCallback invoker() {
         return callback;
     }
 

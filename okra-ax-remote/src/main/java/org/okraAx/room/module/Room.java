@@ -1,7 +1,7 @@
 package org.okraAx.room.module;
 
 
-import org.okraAx.room.Player;
+import org.okraAx.room.fy.Player;
 
 import java.util.Set;
 

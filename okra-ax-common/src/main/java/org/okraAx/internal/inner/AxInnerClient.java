@@ -171,7 +171,7 @@ public class AxInnerClient extends GpbClient<OkraAx.AxOutbound> implements AxCom
      */
     public void request(long source, int cmd, ByteString msg, AxCallback<OkraAx.AxOutbound> callback) {
         Session session = session();
-        if (session != null && session.isOnline()) {
+        if (session != null && session.isActive()) {
             executor.execute(() -> {
                 callback.run(request(source, cmd, msg));
             });

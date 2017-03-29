@@ -22,6 +22,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Executor;
+import org.ogcs.app.NetSession;
 import org.ogcs.app.Session;
 import org.ogcs.netty.handler.DisruptorAdapterHandler;
 import org.okraAx.internal.component.GpbMethodComponent;
@@ -35,9 +36,9 @@ import org.okraAx.v3.GpcCall;
  * @since 1.0
  */
 @Sharable
-public class FyLogicHandler extends DisruptorAdapterHandler<GpcCall> {
+public class GpbProxyHandler extends DisruptorAdapterHandler<GpcCall> {
 
-    private static final Logger LOG = LogManager.getLogger(FyLogicHandler.class);
+    private static final Logger LOG = LogManager.getLogger(GpbProxyHandler.class);
 
     private GpbMethodComponent methodComponent = AppContext.getBean(GpbMethodComponent.class);
 
@@ -50,6 +51,9 @@ public class FyLogicHandler extends DisruptorAdapterHandler<GpcCall> {
             public void onExecute() {
                 try {
                     GpbCommand command = methodComponent.interpret(call.getMethod());
+                    //  TODO:command是否允许外部访问
+
+
                     command.execute(session, call);
                 } catch (Exception e) {
                     LOG.info("Unknown command : " + call.getMethod(), e);
@@ -70,6 +74,6 @@ public class FyLogicHandler extends DisruptorAdapterHandler<GpcCall> {
 
     @Override
     protected Session newSession(Channel channel) {
-        return new FySession(channel);
+        return new NetSession(channel);
     }
 }

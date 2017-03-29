@@ -4,7 +4,7 @@ import org.ogcs.app.Connector;
 import org.ogcs.app.ProxySingleCallback;
 import org.ogcs.app.Session;
 import org.okraAx.common.PlayerCallback;
-import org.okraAx.internal.v3.AxInvocationHandler;
+import org.okraAx.internal.v3.GpbInvocationHandler;
 
 import java.lang.reflect.Proxy;
 
@@ -17,24 +17,24 @@ import java.lang.reflect.Proxy;
 public final class UserClient implements Connector, ProxySingleCallback<PlayerCallback> {
 
     private final PlayerCallback callback;
-    private Session session;
+    private volatile Session session;
 
     public UserClient(Session session) {
         this.session = session;
         this.callback = (PlayerCallback) Proxy.newProxyInstance(
                 this.getClass().getClassLoader(),
-                new Class[]{PlayerCallback.class}, new AxInvocationHandler(session)
+                new Class[]{PlayerCallback.class}, new GpbInvocationHandler(session)
         );
     }
 
     @Override
-    public PlayerCallback callback() {
+    public PlayerCallback invoker() {
         return this.callback;
     }
 
     @Override
-    public boolean isConnected() {
-        return session != null && session.isOnline();
+    public boolean isOnline() {
+        return session != null && session.isActive();
     }
 
     @Override
@@ -48,7 +48,12 @@ public final class UserClient implements Connector, ProxySingleCallback<PlayerCa
     }
 
     @Override
-    public void disconnect() {
+    public void sessionActive() {
+
+    }
+
+    @Override
+    public void sessionInactive() {
         if (session != null) {
             session.close();
             this.session = null;

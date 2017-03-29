@@ -13,11 +13,11 @@ import org.okraAx.v3.GpcCall;
 /**
  * @author TinyZ
  */
-public final class FyChannelInitializer extends ChannelInitializer<NioSocketChannel> {
+public final class GpbChannelInitializer extends ChannelInitializer<NioSocketChannel> {
 
     private static final ChannelHandler FRAME_PREPENDER = new LengthFieldPrepender(4, false);
     private static final AxCodecHandler CODEC_HANDLER = new AxCodecHandler(new AxGpbCodec(GpcCall.getDefaultInstance()));
-    private static final FyLogicHandler LOGIC_HANDLER = new FyLogicHandler();
+    private static final GpbProxyHandler LOGIC_HANDLER = new GpbProxyHandler();
 
     @Override
     protected void initChannel(NioSocketChannel ch) throws Exception {

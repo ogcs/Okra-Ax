@@ -74,7 +74,7 @@ public class ConnectorManager {
         }
         for (Object id : ids) {
             Connector connector = connectors.get(id);
-            if (connector != null && connector.isConnected())
+            if (connector != null && connector.isOnline())
                 connector.session().writeAndFlush(data);
         }
     }
@@ -85,14 +85,14 @@ public class ConnectorManager {
         }
         for (Object id : ids) {
             Connector connector = connectors.get(id);
-            if (connector != null && connector.isConnected())
+            if (connector != null && connector.isOnline())
                 connector.session().writeAndFlush(data);
         }
     }
 
     public void pushAll(Object data) {
         connectors.forEach((obj, connector) -> {
-            if (connector.isConnected())
+            if (connector.isOnline())
                 connector.session().writeAndFlush(data);
         });
     }

@@ -91,7 +91,7 @@ public class AxInnerCoManager {
             if (remove != null) {
                 remove.setAutoConnect(false);   //  取消断线重连
                 Session session = remove.session();
-                if (session != null && session.isOnline())
+                if (session != null && session.isActive())
                     session.channel().close();
             }
             return remove;

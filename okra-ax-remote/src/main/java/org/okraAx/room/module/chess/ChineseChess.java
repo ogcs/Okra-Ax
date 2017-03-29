@@ -4,9 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.gpb.generated.PushChessInit;
 import org.ogcs.gpb.generated.PushReport;
-import org.okraAx.room.Player;
+import org.okraAx.room.fy.Player;
 import org.okraAx.room.module.AbstractTable;
-import org.okraAx.room.module.Api;
 import org.okraAx.v3.chess.beans.MsgChessMove;
 import org.okraAx.v3.room.beans.VoGetReady;
 

@@ -1,8 +1,7 @@
 package org.okraAx.internal.inner;
 
 import io.netty.channel.ChannelHandler;
-import org.okraAx.internal.inner.AutoClient;
-import org.okraAx.internal.v3.FyChannelInitializer;
+import org.okraAx.internal.v3.GpbChannelInitializer;
 
 /**
  * @author TinyZ
@@ -16,7 +15,7 @@ public class IrClient extends AutoClient {
 
     @Override
     protected ChannelHandler newChannelInitializer() {
-        return new FyChannelInitializer();
+        return new GpbChannelInitializer();
     }
 
 

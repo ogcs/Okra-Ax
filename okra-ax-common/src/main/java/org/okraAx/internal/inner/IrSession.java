@@ -53,7 +53,7 @@ public class IrSession extends NetSession implements ProxySingleCallback<String>
     }
 
     @Override
-    public String callback() {
+    public String invoker() {
         return null;
     }
 }

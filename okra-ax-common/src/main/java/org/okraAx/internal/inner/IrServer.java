@@ -18,7 +18,7 @@ package org.okraAx.internal.inner;
 import io.netty.channel.ChannelHandler;
 import org.ogcs.netty.impl.TcpProtocolServer;
 import org.okraAx.internal.core.AxComponent;
-import org.okraAx.internal.v3.FyChannelInitializer;
+import org.okraAx.internal.v3.GpbChannelInitializer;
 
 /**
  * 内部组件 - Server模块
@@ -43,6 +43,6 @@ public class IrServer extends TcpProtocolServer implements AxComponent {
 
     @Override
     protected ChannelHandler newChannelInitializer() {
-        return new FyChannelInitializer();
+        return new GpbChannelInitializer();
     }
 }
