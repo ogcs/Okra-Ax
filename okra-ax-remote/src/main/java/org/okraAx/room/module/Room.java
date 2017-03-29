@@ -1,7 +1,7 @@
 package org.okraAx.room.module;
 
 
-import org.okraAx.room.Player;
+import org.okraAx.room.fy.Player;
 
 import java.util.Set;
 
@@ -53,6 +53,12 @@ public interface Room {
      * Player join game.
      */
     void onEnter(Player player);
+
+    /**
+     * Player get ready or unready.
+     * @param ready If true means player is get ready, otherwise false.
+     */
+    void onReady(Player player, boolean ready);
 
     /**
      * Player exit game.

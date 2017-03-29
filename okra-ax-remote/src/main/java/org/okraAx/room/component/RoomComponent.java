@@ -1,7 +1,9 @@
 package org.okraAx.room.component;
 
-import org.okraAx.room.Player;
+import org.okraAx.room.fy.Player;
 import org.okraAx.room.module.Room;
+import org.okraAx.room.module.chess.ChineseChess;
+import org.okraAx.utilities.SessionHelper;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -61,6 +63,36 @@ public class RoomComponent {
         if (room != null) {
             room.onExit(uid);
         }
+    }
+
+    public void onEnterRoom(int roomId, int seat, long uid, String name) {
+        Player player = SessionHelper.curPlayer();
+        if (player == null) return;
+        Room room = player.getRoom();
+        if (room == null) {
+            room = lookupRoom(1);
+            if (room == null) {
+                room = new ChineseChess(roomId);
+                playerJoin(player.id(), player.getRoom());
+            }
+        }
+        room.onEnter(player);
+    }
+
+    public void onExitRoom() {
+        Player player = SessionHelper.curPlayer();
+        if (player == null) return;
+        Room room = player.getRoom();
+        if (room == null) return;
+        room.onExit(player.id());
+    }
+
+    public void onGetReady(long uid, boolean ready) {
+        Player player = SessionHelper.curPlayer();
+        if (player == null) return;
+        Room room = player.getRoom();
+        if (room == null) return;
+        room.onReady(player, ready);
     }
 
 }

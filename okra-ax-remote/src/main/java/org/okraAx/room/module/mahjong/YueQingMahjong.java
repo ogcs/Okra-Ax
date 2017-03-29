@@ -1,5 +1,6 @@
 package org.okraAx.room.module.mahjong;
 
+import org.okraAx.room.fy.Player;
 import org.okraAx.room.module.AbstractTable;
 
 import java.util.ArrayList;
@@ -8,8 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author TinyZ
- * @date 2017-02-13.
+ * @author TinyZ.
+ * @since 2.0
+ * @version  2017.02.13.
  */
 public class YueQingMahjong extends AbstractTable {
 
@@ -33,6 +35,11 @@ public class YueQingMahjong extends AbstractTable {
     @Override
     public int maxPlayer() {
         return 4;
+    }
+
+    @Override
+    public void onReady(Player player, boolean ready) {
+
     }
 
     @Override

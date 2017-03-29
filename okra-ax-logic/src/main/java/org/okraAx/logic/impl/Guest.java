@@ -6,8 +6,8 @@ import org.ogcs.app.AppContext;
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
 import org.okraAx.internal.inner.AxInnerClient;
-import org.okraAx.component.manager.AxInnerCoManager;
-import org.okraAx.component.manager.ConnectorManager;
+import org.okraAx.internal.component.AxInnerCoManager;
+import org.okraAx.internal.component.ConnectorManager;
 import org.okraAx.internal.SpringContext;
 import org.okraAx.v3.LogicPublicProto.ReqExitRoom;
 
@@ -36,8 +36,8 @@ public class Guest implements Connector {
     }
 
     @Override
-    public boolean isConnected() {
-        return session != null && session.isOnline();
+    public boolean isOnline() {
+        return session != null && session.isActive();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class Guest implements Connector {
     }
 
     @Override
-    public void disconnect() {
+    public void sessionInactive() {
         exitRoom();
         connectorManager.remove(session);
         LOG.info("Session : {} disconnect.", session.toString());

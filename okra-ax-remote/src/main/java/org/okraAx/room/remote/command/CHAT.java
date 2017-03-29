@@ -8,7 +8,7 @@
 //import org.ogcs.app.AppContext;
 //import org.ogcs.app.Session;
 //import org.okraAx.utilities.AxReplys;
-//import org.okraAx.component.manager.ConnectorManager;
+//import org.okraAx.room.manager.ConnectorManager;
 //import org.okraAx.v3.OkraAx;
 //
 ///**

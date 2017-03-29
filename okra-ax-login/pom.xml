@@ -22,5 +22,10 @@
             <artifactId>okra-ax-protobuf</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.ogcs</groupId>
+            <artifactId>okra-ax-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

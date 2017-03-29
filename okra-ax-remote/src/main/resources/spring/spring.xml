@@ -17,8 +17,7 @@
 
 	<context:annotation-config />
 	<!--<context:component-scan base-package="org.okraAx" />-->
-	<context:component-scan base-package="org.okraAx.internal.v3" />
-	<context:component-scan base-package="org.okraAx.room.component" />
+	<context:component-scan base-package="org.okraAx.internal" />
 	<context:component-scan base-package="org.okraAx.room.fy.impl" />
 
 

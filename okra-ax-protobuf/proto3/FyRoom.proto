@@ -14,15 +14,15 @@ service RoomService {
     //  ping-pong
     rpc ping (GpcVoid) returns (GpcVoid);
     //  创建房间
-    rpc onCreateRoom (GpcVoid) returns (GpcVoid);
+    rpc onCreateRoom (VoCreateRoom) returns (GpcVoid);
     //  进入房间
-    rpc onEnterRoom (MsgEnterRoom) returns (GpcVoid);
+    rpc onEnterRoom (VoEnterRoom) returns (GpcVoid);
     //  退出房间
     rpc onExitRoom (GpcVoid) returns (GpcVoid);
     //  获取大厅列表
     rpc onShowHall (AxAny) returns (GpcVoid);
     //  准备或取消准备游戏
-    rpc onGetReady (MsgGetReady) returns (GpcVoid);
+    rpc onGetReady (VoGetReady) returns (GpcVoid);
     //  游戏开始
     rpc onGameStart (GpcVoid) returns (GpcVoid);
     //  游戏结束
@@ -33,6 +33,8 @@ service RoomService {
 //  global room callback.
 service PyRoomCallback {
 
+    //  ping-pong
+    rpc pong (GpcVoid) returns (GpcVoid);
     rpc callbackChat (GpcVoid) returns (GpcVoid);
 
 

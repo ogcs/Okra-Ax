@@ -2,7 +2,7 @@ package org.okraAx.logic.component;
 
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Procedure;
-import org.okraAx.internal.inner.axrpc.IrSession;
+import org.okraAx.internal.inner.IrSession;
 import org.okraAx.internal.v3.AbstractGpbService;
 
 /**
