@@ -1,4 +1,4 @@
-package org.ogcs.ax.logic.component;
+package org.okraAx.logic.component;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -17,6 +17,10 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Gpb(Google Protocol Buffer) message descriptor manage util.
  * <p> 1. Must register message descriptor before server bootstrap. </p>
+ * <zh-cn>
+ * GPB方法文件描述管理工具. 管理GPB文件产生的方法描述.
+ * 当异步远程过程调用(ARPC)时，解析消息体(Call)
+ * </zh-cn>
  *
  * @author TinyZ.
  * @version 2017.03.24
@@ -28,8 +32,16 @@ public enum MtdDescUtil {
 
     private static final Logger LOG = LogManager.getLogger(MtdDescUtil.class);
 
-    private final Map<String, GpbMethodDesc> DESC_MAP = new ConcurrentHashMap<>();
+    /**
+     * GPB方法描述符映射键值对
+     */
+    private final Map<String /* method's name*/, GpbMethodDesc> DESC_MAP = new ConcurrentHashMap<>();
 
+    /**
+     * pack the java type args to an gpb message.
+     *
+     * @return the gpb message used by async remote produce call.
+     */
     public GpcCall pack(Method method, Object[] args) {
         GpbMethodDesc methodDesc = getMethodDesc(method.getName());
         if (methodDesc == null) {
@@ -43,6 +55,11 @@ public enum MtdDescUtil {
                 .build();
     }
 
+    /**
+     * unpack the async remote produce call message to java type args.
+     *
+     * @return java type method's args.
+     */
     public Object[] unpack(GpcCall call) {
         return unpack(call.getMethod(), call.getParams());
     }

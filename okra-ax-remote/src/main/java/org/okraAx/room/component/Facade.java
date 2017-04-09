@@ -3,10 +3,12 @@ package org.okraAx.room.component;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
+import org.ogcs.app.NetSession;
+import org.ogcs.app.Session;
 import org.okraAx.common.RoomPublicService;
 import org.okraAx.common.RoomService;
 import org.okraAx.common.modules.FyChessService;
-import org.okraAx.internal.v3.FySession;
+import org.okraAx.room.fy.Player;
 import org.okraAx.utilities.SessionHelper;
 
 /**
@@ -26,14 +28,21 @@ public enum Facade implements RoomService, RoomPublicService, FyChessService {
 
     @Override
     public void ping() {
-        FySession session = SessionHelper.currentSession();
-        if (session != null)
-            session.invoker().pong();
+        Player player = SessionHelper.curPlayer();
+        if (player != null)
+            player.userClient().pong();
         LOG.info("xxxxx");
     }
 
     @Override
     public void onPlayerConnect(long security) {
+        NetSession session = SessionHelper.currentSession();
+        if (session == null || !session.isActive()) return;
+        // TODO: verify security code from login server.
+
+        Player player = new Player(-1L, session);
+        player.userClient().pong();
+
 
     }
 
@@ -85,6 +94,11 @@ public enum Facade implements RoomService, RoomPublicService, FyChessService {
     @Override
     public void onMoveChess(int fromX, int fromY, int toX, int toY) {
         chessComponent.onMoveChess(fromX, fromY, toX, toY);
+    }
+
+    @Override
+    public void enterChannel() {
+
     }
 
     @Override

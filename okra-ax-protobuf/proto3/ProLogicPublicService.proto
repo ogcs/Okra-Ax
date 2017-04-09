@@ -1,0 +1,19 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.services";
+option java_outer_classname = "ProLogicPublicService";
+//option java_generic_services = true;
+
+import "Gpc.proto";
+
+
+service LogicPublicService {
+    rpc onLogin (GpcVoid) returns (GpcVoid);
+    rpc onSyncTime (GpcVoid) returns (GpcVoid);
+    rpc onShowChannelList (GpcVoid) returns (GpcVoid);
+    rpc onEnterChannel (GpcVoid) returns (GpcVoid);
+
+
+}
+

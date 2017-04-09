@@ -3,17 +3,20 @@ package org.okraAx.login.component;
 import org.okraAx.common.LogicForRoomService;
 import org.okraAx.common.LogicPublicService;
 import org.okraAx.internal.v3.ProxySession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author TinyZ.
  * @version 2017.03.26
  */
-public enum Facade implements LogicPublicService, LogicForRoomService {
+@Service
+public class Facade implements LogicPublicService, LogicForRoomService {
 
-    INSTANCE;
-
-    private LoginComponent loginComponent = new LoginComponent();
-    private RoomComponent roomComponent = new RoomComponent();
+    @Autowired
+    private LoginComponent loginComponent;
+    @Autowired
+    private RoomComponent roomComponent;
 
     @Override
     public void onLogin(String openId) {

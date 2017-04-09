@@ -16,69 +16,65 @@
 
 package org.okraAx.internal.config;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.io.*;
+import java.util.Properties;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * 服务器参数配置
- *
- * @author Tiny&zzh 2014-4-8
+ * 服务器配置
  */
-public class ServerProperties {
+public final class ServerProperties {
 
-    private static String fileName = "server.properties";
-    // --------------------------------------------------------------------------------------
-    public static int serverId = 1;
+    private static final Logger LOG = LogManager.getLogger(AxProperties.class);
 
-    private static String policyFile = "flash-policy.xml";
+    private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger(0);
+    private static final String filePath = new File("").getAbsolutePath() + "/conf/" + File.separator + "ax.properties";
+    private static boolean initialized = false;
 
-    public static String gameRedisHost = "127.0.0.1";
-    public static int gameRedisPort = 6379;
-    public static int gameRedisDB = 5;
-    public static String gameRedisPwd = null;
-    public static byte[] AES_KEY_BYTE = "".getBytes();
-    public static String AES_KEY = "";
-    public static int LOGIC_SERVER_PORT = 9008;
+    // 组件配置
+    public volatile static long axId = 1;
+    public volatile static String axHost = "127.0.0.1";
+    public volatile static int axPort = 9000;
+    public volatile static int axBind = 0;
+    public volatile static String axInnerAuth = "";
+    public volatile static int axLoginPort = 0;
 
-    public static String OP_API_URL = "http://127.0.0.1/";
-
-    public static String SYSTEM_SERVER_IDENTIFY = ""; // 系统访问权限
-
-
-    public static String API_KEY = "LINGJINGLINGJING";
-
-    // --------------------------------------------------------------------------------------
-
-//    static {
-//        String filePath = new File("").getAbsolutePath() + "/conf/" + File.separator + fileName;
-//
-//        // Load properties
-//        Properties props = new Properties();
-//        try {
-//            InputStream in = new BufferedInputStream(new FileInputStream(filePath));
-//            props.load(in);
-//            serverId = Integer.parseInt(props.getProperty("server.id", String.valueOf(serverId)));
-//            policyFile = props.getProperty("flash.policy.file.path", policyFile);
-//            LOG.info("Server properties load success.");
-//        } catch (IOException e) {
-//            LOG.warn("Server properties load failed.");
-//            e.printStackTrace();
-//        }
-//    }
-
-    public static void load() {
-        // System.setProperties();
-        //System.setProperty("jet.lanes", jetLanes);
-        System.setProperty("flash.policy.file.path", policyFile);
+    static {
+        if (!initialized) {
+            load();
+            initialized = true;
+        }
     }
 
-    // --------------------------------------------------------------------------------------
+    public static void load() {
+        Properties props = new Properties();
+        try {
+            InputStream in = new BufferedInputStream(new FileInputStream(filePath));
+            props.load(in);
+            // set
+            axId = Long.valueOf(props.getProperty("ax.id", String.valueOf(axId)));
+            axHost = props.getProperty("ax.host", axHost).toLowerCase();
+            axPort = Integer.parseInt(props.getProperty("ax.port", String.valueOf(axPort)));
+            axBind = Integer.parseInt(props.getProperty("ax.bind", String.valueOf(axBind)));
+            axInnerAuth = props.getProperty("ax.inner.auth", axInnerAuth).toLowerCase();
+            axLoginPort = Integer.parseInt(props.getProperty("ax.login.port", String.valueOf(axLoginPort)));
 
-    private static AtomicInteger ids = new AtomicInteger(0);
+            LOG.info("server properties load success.");
+        } catch (IOException e) {
+            LOG.warn("server properties load failed.", e);
+        }
+    }
 
     /**
      * 生成全服唯一ID
      */
     public static long id() {
-        return (((long) (ServerProperties.serverId & 0xFFFF)) << 48) | (((System.currentTimeMillis() / 1000) & 0x00000000FFFFFFFFL) << 16) | (ids.getAndIncrement() & 0x0000FFFF);
+        return ((AxProperties.axId & 0xFFFF) << 48)
+                | (((System.currentTimeMillis() / 1000) & 0x00000000FFFFFFFFL) << 16)
+                | (ATOMIC_INTEGER.getAndIncrement() & 0x0000FFFF
+        );
     }
 }

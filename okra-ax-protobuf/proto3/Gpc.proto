@@ -6,18 +6,34 @@ option java_package = "org.okraAx.v3";
 option java_outer_classname = "Gpc";
 option java_multiple_files = true;
 
-import "AxAny.proto";
-
-//  RPC
+//  Gpc Call Message.
+//  Async remote produce call based on GPB(Google Protocol Buffers).
 message GpcCall {
-    string method = 1; //  Remote call produce name.
-    bytes params = 2; //  请求参数. 允许任意pb类型的message成为参数
+    //  the remote call produce name.
+    string method = 1;
+    //  the request param message. the message must be gpb message.
+    //  the gpb param message will be covert to args array for java method.
+    //  example:
+    //      take the {@link GpcError} in this proto file as an example.
+    //  define the gpb service:
+    //  ...
+    //  service  XXXService {
+    //      rpc doAction (GpcError) returns (GpcVoid);
+    //      ... define any more rpc.
+    //  }
+    //
+    //  map the java method:
+    //      void doAction(int state, String msg).
+    //
+    bytes params = 2;
 }
-//  Rpc错误
+//  Gpc Void Message.
+//  the vold param or returns.
+message GpcVoid {
+}
+//  Gpc Error Message.
+//  the normal error message callback by remote service.
 message GpcError {
     int32 state = 1; // error code
     string msg = 2; // response special error message. [Nullable].
-}
-//  Void
-message GpcVoid {
 }

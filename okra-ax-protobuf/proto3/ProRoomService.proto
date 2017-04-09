@@ -1,0 +1,19 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.services";
+option java_outer_classname = "ProRoomService";
+//option java_generic_services = true;
+
+import "Gpc.proto";
+
+//  room service for internal component.
+service RoomService {
+    //  ping-pong
+    rpc enterChannel (GpcVoid) returns (GpcVoid);
+    rpc callbackVerifyPlayerAuth (GpcVoid) returns (GpcVoid);
+    rpc callbackRegister (GpcVoid) returns (GpcVoid);
+
+
+}
+

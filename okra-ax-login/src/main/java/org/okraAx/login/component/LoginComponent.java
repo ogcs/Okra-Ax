@@ -1,6 +1,7 @@
 package org.okraAx.login.component;
 
 import org.ogcs.app.Session;
+import org.okraAx.login.mybatis.UserClient;
 import org.okraAx.utilities.SessionHelper;
 
 /**
@@ -12,9 +13,9 @@ public class LoginComponent {
 
     public void onLogin(String openId) {
         Session session = SessionHelper.currentSession();
-        //  授权验证
-        UserClient userClient = new UserClient(session);
+        //  TODO: 授权验证
 
+        UserClient userClient = new UserClient(session);
         userClient.invoker().callbackLogin();
     }
 

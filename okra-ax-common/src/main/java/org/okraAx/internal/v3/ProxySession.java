@@ -24,7 +24,7 @@ public class ProxySession<I> extends NetSession implements ProxySingleCallback<I
         super(channel);
         this.invoker = (I) Proxy.newProxyInstance(
                 this.getClass().getClassLoader(),
-                new Class[]{clz}, new GpbInvocationHandler(this)
+                new Class[]{clz}, new SessionInvocationHandler(this)
         );
     }
 

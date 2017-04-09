@@ -1,17 +1,35 @@
 package org.okraAx.room.fy;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Connector;
+import org.ogcs.app.ProxySingleCallback;
 import org.ogcs.app.Session;
+import org.okraAx.common.PlayerRoomCallback;
+import org.okraAx.internal.v3.SessionInvocationHandler;
 import org.okraAx.room.module.Room;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
+
 /**
- * @author TinyZ
- * @date 2017-02-12.
+ * @author TinyZ.
+ * @since 2.0
+ * @version  2017.02.12
  */
-public class Player implements Connector {
+public final class Player implements Connector, ProxySingleCallback<PlayerRoomCallback> {
+
+    private static final Logger LOG = LogManager.getLogger(LogicClient.class);
+
+    private static final PlayerRoomCallback EMPTY = newProxyInstance((proxy, method, args) -> {
+        //  no-op
+        LOG.info("Empty proxy instance invoked by [{}]", method.getName());
+        return null;
+    });
 
     private long uid;
     private volatile Session session;
+    private final PlayerRoomCallback callback;
     /**
      * 玩家所在的房间.
      * 玩家只能在一个房间中
@@ -21,6 +39,7 @@ public class Player implements Connector {
     public Player(long uid, Session session) {
         this.uid = uid;
         this.session = session;
+        this.callback = newProxyInstance(new SessionInvocationHandler(session));
     }
 
     @Override
@@ -61,5 +80,26 @@ public class Player implements Connector {
 
     public void setRoom(Room room) {
         this.room = room;
+    }
+
+    /**
+     *
+     */
+    public PlayerRoomCallback userClient() {
+        if (session == null || !session.isActive() || invoker() == null)
+            return EMPTY;
+        return invoker();
+    }
+
+    @Override
+    public PlayerRoomCallback invoker() {
+        return this.callback;
+    }
+
+    private static PlayerRoomCallback newProxyInstance(InvocationHandler handler) {
+        return (PlayerRoomCallback) Proxy.newProxyInstance(
+                LogicClient.class.getClassLoader(),
+                new Class[]{PlayerRoomCallback.class},
+                handler);
     }
 }
