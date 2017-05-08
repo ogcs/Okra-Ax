@@ -1,0 +1,17 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.services";
+option java_outer_classname = "ProRoomService";
+//option java_generic_services = true;
+
+import "Gpc.proto";
+
+//  room component invoke logic service.
+service RoomService {
+    rpc registerChannel (GpcVoid) returns (GpcVoid);
+    rpc callbackEnterChannel (GpcVoid) returns (GpcVoid);
+
+
+}
+

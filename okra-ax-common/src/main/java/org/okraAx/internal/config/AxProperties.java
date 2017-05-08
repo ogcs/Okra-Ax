@@ -29,29 +29,32 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author TinyZ
  * @since 1.0
  */
-public class AxProperties {
+public final class AxProperties {
 
     private static final Logger LOG = LogManager.getLogger(AxProperties.class);
 
     private static final AtomicInteger ATOMIC_INTEGER = new AtomicInteger(0);
     private static final String filePath = new File("").getAbsolutePath() + "/conf/" + File.separator + "ax.properties";
+    private boolean initialized = false;
 
     //  zookeeper setting
-    public static String axZkConnectString = "127.0.0.1:2181";
-    public static int axZkTimeout = 5000;
-    public static String axZkRootPath = "/ax";
-    public static String[] axZkWatches = new String[]{};
-
+    public volatile static String axZkConnectString = "127.0.0.1:2181";
+    public volatile static int axZkTimeout = 5000;
+    public volatile static String axZkRootPath = "/ax";
+    public volatile static String[] axZkWatches = new String[]{};
     // 组件配置
-    public static String axModule = "remote/chess";
-    public static long axId = 1;
-    public static String axHost = "127.0.0.1";
-    public static int axPort = 9000;
-    public static int axBind = 0;
-    public static String axInnerAuth = "password";
-    public static int axLoginPort = 0;
+    public volatile static String axModule = "remote/chess";
+    public volatile static long axId = 1;
+    public volatile static String axHost = "127.0.0.1";
+    public volatile static int axPort = 9000;
+    public volatile static int axBind = 0;
+    public volatile static String axInnerAuth = "";
+    public volatile static int axLoginPort = 0;
 
-    static {
+
+
+    public void load() {
+        if (initialized) return;
         Properties props = new Properties();
         try {
             InputStream in = new BufferedInputStream(new FileInputStream(filePath));
@@ -73,9 +76,10 @@ public class AxProperties {
             axInnerAuth = props.getProperty("ax.inner.auth", axInnerAuth).toLowerCase();
             axLoginPort = Integer.parseInt(props.getProperty("ax.login.port", String.valueOf(axLoginPort)));
 
-            LOG.info("Okra-Ax properties load success.");
+            LOG.info("server properties load success.");
+            this.initialized = true;
         } catch (IOException e) {
-            LOG.warn("Okra-Ax properties load failed.", e);
+            LOG.warn("server properties load failed.", e);
         }
     }
 
@@ -83,8 +87,7 @@ public class AxProperties {
      * 生成全服唯一ID
      */
     public static long id() {
-        return (
-                (AxProperties.axId & 0xFFFF) << 48)
+        return ((AxProperties.axId & 0xFFFF) << 48)
                 | (((System.currentTimeMillis() / 1000) & 0x00000000FFFFFFFFL) << 16)
                 | (ATOMIC_INTEGER.getAndIncrement() & 0x0000FFFF
         );

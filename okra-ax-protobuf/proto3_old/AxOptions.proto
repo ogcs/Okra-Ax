@@ -1,0 +1,28 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3";
+option java_outer_classname = "AxOptions";
+
+import "protoc/include/google/protobuf/descriptor.proto";
+
+extend google.protobuf.MethodOptions {
+    //  Method's ID.
+    int32 methodId = 1000;
+}
+
+extend google.protobuf.ServiceOptions {
+    //  Service's ID.
+    int32 serviceId = 1000;
+    //  Is service public.
+    bool isPublic = 1001;
+    //  Java service reference.
+    string serviceRef = 1002;
+}
+
+extend google.protobuf.MessageOptions {
+    //  Message's ID.
+    int32 messageId = 1000;
+    //  Java Bean Class
+    string messageRef = 1001;
+}

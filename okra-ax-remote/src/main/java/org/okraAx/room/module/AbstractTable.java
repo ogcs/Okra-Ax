@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author TinyZ
- * @date 2017-02-13.
+ * @since 2.0
  */
 public abstract class AbstractTable implements Room {
 

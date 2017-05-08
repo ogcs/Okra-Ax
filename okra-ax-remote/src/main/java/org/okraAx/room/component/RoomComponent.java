@@ -1,5 +1,6 @@
 package org.okraAx.room.component;
 
+import org.okraAx.room.bean.RoomInfoBean;
 import org.okraAx.room.fy.Player;
 import org.okraAx.room.module.Room;
 import org.okraAx.room.module.chess.ChineseChess;
@@ -63,6 +64,17 @@ public class RoomComponent {
         if (room != null) {
             room.onExit(uid);
         }
+    }
+
+
+    public RoomInfoBean createRoom(int type, boolean normal) {
+        RoomInfoBean roomInfo = new RoomInfoBean();
+        //  roomId
+        //
+        if (normal) {
+            //  join room
+        }
+        return roomInfo;
     }
 
     public void onEnterRoom(int roomId, int seat, long uid, String name) {

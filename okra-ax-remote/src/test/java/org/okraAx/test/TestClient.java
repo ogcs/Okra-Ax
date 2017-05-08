@@ -8,8 +8,6 @@ import org.okraAx.common.RoomPublicService;
 import org.okraAx.common.modules.FyChessService;
 import org.okraAx.internal.component.GpbMethodComponent;
 import org.okraAx.internal.inner.IrClient;
-import org.okraAx.room.fy.impl.FyChessImpl;
-import org.okraAx.room.fy.impl.RoomPublicImpl;
 import org.okraAx.v3.GpcCall;
 import org.okraAx.v3.GpcVoid;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

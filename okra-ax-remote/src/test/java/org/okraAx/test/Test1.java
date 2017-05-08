@@ -2,7 +2,6 @@ package org.okraAx.test;
 
 import org.junit.Test;
 import org.ogcs.app.Procedure;
-import org.okraAx.room.fy.impl.FyChessImpl;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -15,16 +14,16 @@ public class Test1 {
 
     @Test
     public void test1() {
-        Method[] methods = FyChessImpl.class.getMethods();
-        for (Method method : methods) {
-            if (method.getName().equals("onShowRoomStatus")) {
-                Annotation[] annotations = method.getAnnotations();
-                Procedure annotation = method.getAnnotation(Procedure.class);
-
-                System.out.println();
-
-            }
-        }
+//        Method[] methods = FyChessImpl.class.getMethods();
+//        for (Method method : methods) {
+//            if (method.getName().equals("onShowRoomStatus")) {
+//                Annotation[] annotations = method.getAnnotations();
+//                Procedure annotation = method.getAnnotation(Procedure.class);
+//
+//                System.out.println();
+//
+//            }
+//        }
 
 
     }
