@@ -3,11 +3,13 @@ package org.okraAx.login.component;
 import org.ogcs.app.Session;
 import org.okraAx.login.mybatis.UserClient;
 import org.okraAx.utilities.SessionHelper;
+import org.springframework.stereotype.Component;
 
 /**
  * @author TinyZ.
  * @version 2017.03.25
  */
+@Component
 public class LoginComponent {
 
 

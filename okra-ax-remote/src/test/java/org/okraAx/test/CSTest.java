@@ -35,8 +35,8 @@ public class CSTest {
 
 
         //
-        IrServer server = new IrServer("1", 9005);
-        server.start();
+//        IrServer server = new IrServer("1", 9005);
+//        server.start();
 
         IrClient client = new IrClient("127.0.0.1", 9005);
         client.start();
@@ -44,7 +44,8 @@ public class CSTest {
 
         //
         channel.writeAndFlush(GpcCall.newBuilder()
-                .setMethod("ping")
+//                .setMethod("ping")
+                .setMethod("onSyncTime")
                 .setParams(GpcVoid.getDefaultInstance().toByteString())
                 .build());
 //

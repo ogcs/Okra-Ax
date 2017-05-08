@@ -42,8 +42,6 @@ public enum Facade implements RoomService, RoomPublicService, FyChessService {
 
         Player player = new Player(-1L, session);
         player.userClient().pong();
-
-
     }
 
     @Override
@@ -112,8 +110,5 @@ public enum Facade implements RoomService, RoomPublicService, FyChessService {
     }
 
 
-    //  internal service
-
-    //  internal service callback
 
 }

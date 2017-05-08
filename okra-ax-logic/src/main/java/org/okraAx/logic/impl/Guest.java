@@ -19,20 +19,14 @@ public class Guest implements Connector {
 
     private static final Logger LOG = LogManager.getLogger(Guest.class);
 
-    protected AxInnerCoManager components = (AxInnerCoManager) AppContext.getBean(SpringContext.MANAGER_AX_COMPONENT);
-    protected ConnectorManager connectorManager = (ConnectorManager) AppContext.getBean(SpringContext.MANAGER_CONNECTOR);
-    protected Session session;
-    protected long uid;    //   用户的唯一ID
-    protected String module;  //  房间模块
-    protected long roomId;   //  房间id
+    private Session session;
 
-    public Guest(Session session, long uid) {
+    public Guest(Session session) {
         this.session = session;
-        this.uid = uid;
     }
 
     public long id() {
-        return uid;
+        return -1L;
     }
 
     @Override
@@ -51,9 +45,13 @@ public class Guest implements Connector {
     }
 
     @Override
+    public void sessionActive() {
+
+    }
+
+    @Override
     public void sessionInactive() {
         exitRoom();
-        connectorManager.remove(session);
         LOG.info("Session : {} disconnect.", session.toString());
     }
 
@@ -64,43 +62,13 @@ public class Guest implements Connector {
      * @param roomId the unique room id.
      */
     public void enterRoom(String module, long roomId) {
-        this.module = module;
-        this.roomId = roomId;
+
     }
 
     /**
      * Exit room.
      */
     public void exitRoom() {
-        if (module == null || module.equals("") || roomId <= 0) {
-            return;
-        }
-        AxInnerClient client = components.getByHash(module, String.valueOf(roomId));
-        if (client != null) {
-            client.push(uid, 21000,
-                    ReqExitRoom.newBuilder()
-                            .setModule(1)// module
-                            .setRoomId(roomId)
-                            .build().toByteString()
-            );
-            this.module = null;
-            this.roomId = 0;
-        }
-    }
 
-    public String getModule() {
-        return module;
-    }
-
-    public void setModule(String module) {
-        this.module = module;
-    }
-
-    public long getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(long roomId) {
-        this.roomId = roomId;
     }
 }
