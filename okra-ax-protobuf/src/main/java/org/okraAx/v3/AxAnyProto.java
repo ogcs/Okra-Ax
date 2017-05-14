@@ -38,11 +38,15 @@ public final class AxAnyProto {
   }
   /**
    * <pre>
-   *  See {&#64;link google.protobuf.Any}
+   *  See {&#64;link google.protobuf.Any}.
+   *  the message full name's hash code is the message default unique id.
+   *  and you can obviously specify the message unique id by {&#64;link org.okraAx.v3.AxOptions#messageId} option.
+   *  &lt;pre&gt;
    *  Example for Java :
    *      Foo foo = ....;
    *      AxAny any = AxAnyUtil.pack(foo);
    *      Foo foo = AxAnyUtil.unpack(any, Foo.class);
+   *  &lt;/pre&gt;
    * </pre>
    *
    * Protobuf type {@code org.okraAx.v3.AxAny}
@@ -296,11 +300,15 @@ public final class AxAnyProto {
     }
     /**
      * <pre>
-     *  See {&#64;link google.protobuf.Any}
+     *  See {&#64;link google.protobuf.Any}.
+     *  the message full name's hash code is the message default unique id.
+     *  and you can obviously specify the message unique id by {&#64;link org.okraAx.v3.AxOptions#messageId} option.
+     *  &lt;pre&gt;
      *  Example for Java :
      *      Foo foo = ....;
      *      AxAny any = AxAnyUtil.pack(foo);
      *      Foo foo = AxAnyUtil.unpack(any, Foo.class);
+     *  &lt;/pre&gt;
      * </pre>
      *
      * Protobuf type {@code org.okraAx.v3.AxAny}

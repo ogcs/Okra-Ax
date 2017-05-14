@@ -2,7 +2,7 @@ package org.okraAx.internal.v3;
 
 import io.netty.channel.Channel;
 import org.ogcs.app.NetSession;
-import org.ogcs.app.ProxySingleCallback;
+import org.ogcs.app.ServiceProxy;
 
 import java.lang.reflect.Proxy;
 
@@ -13,7 +13,7 @@ import java.lang.reflect.Proxy;
  * @version 2017.02.17.
  * @since 2.0
  */
-public class ProxySession<I> extends NetSession implements ProxySingleCallback<I> {
+public class ProxySession<I> extends NetSession implements ServiceProxy<I> {
 
     /**
      * The proxy class instance for the specified interfaces.
@@ -24,7 +24,7 @@ public class ProxySession<I> extends NetSession implements ProxySingleCallback<I
         super(channel);
         this.invoker = (I) Proxy.newProxyInstance(
                 this.getClass().getClassLoader(),
-                new Class[]{clz}, new SessionInvocationHandler(this)
+                new Class[]{clz}, new GpbInvocationHandler(this)
         );
     }
 
@@ -32,7 +32,7 @@ public class ProxySession<I> extends NetSession implements ProxySingleCallback<I
      * @return The proxy class instance for the specified interfaces.
      */
     @Override
-    public I invoker() {
+    public I proxy() {
         return invoker;
     }
 }

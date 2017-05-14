@@ -1,8 +1,8 @@
-package org.okraAx.login.mybatis;
+package org.okraAx.login.role.mybatis;
 
-import org.ogcs.app.ProxyMultiCallback;
+import org.ogcs.app.MultiServiceProxy;
 import org.ogcs.app.Session;
-import org.okraAx.internal.v3.SessionInvocationHandler;
+import org.okraAx.internal.v3.GpbInvocationHandler;
 
 import java.lang.reflect.Proxy;
 import java.util.Map;
@@ -15,13 +15,13 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 2.0
  * @version 2017.03.25
  */
-public class MultiClient implements ProxyMultiCallback {
+public class MultiClient implements MultiServiceProxy {
 
     private Map<Class<?>, Object> callbacks = new ConcurrentHashMap<>();
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T callback(Class<T> clz) {
+    public <T> T proxy(Class<T> clz) {
         if (this.callbacks.containsKey(clz)) {
             return (T) this.callbacks.get(clz);
         }
@@ -29,10 +29,10 @@ public class MultiClient implements ProxyMultiCallback {
     }
 
     @Override
-    public void registerCallback(Class<?> clz, Session session) {
+    public void registerService(Class<?> clz, Session session) {
         Object callback = Proxy.newProxyInstance(
                 this.getClass().getClassLoader(),
-                new Class[]{clz}, new SessionInvocationHandler(session)
+                new Class[]{clz}, new GpbInvocationHandler(session)
         );
         callbacks.put(clz, callback);
     }

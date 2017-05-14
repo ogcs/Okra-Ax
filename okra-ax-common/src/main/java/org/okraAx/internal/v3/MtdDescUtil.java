@@ -35,7 +35,7 @@ public enum MtdDescUtil {
     /**
      * GPB方法描述符映射键值对
      */
-    private final Map<String /* method's name*/, GpbMethodDesc> DESC_MAP = new ConcurrentHashMap<>();
+    private final Map<String /* method's name*/, GpbMessageDesc> DESC_MAP = new ConcurrentHashMap<>();
 
     /**
      * pack the java type args to an gpb message.
@@ -43,7 +43,7 @@ public enum MtdDescUtil {
      * @return the gpb message used by async remote produce call.
      */
     public GpcCall pack(Method method, Object[] args) {
-        GpbMethodDesc methodDesc = getMethodDesc(method.getName());
+        GpbMessageDesc methodDesc = getMethodDesc(method.getName());
         if (methodDesc == null) {
             LOG.error("[Gpb] unregister method : " + method.getName());
             return null;
@@ -65,7 +65,7 @@ public enum MtdDescUtil {
     }
 
     public Object[] unpack(String mathod, ByteString data) {
-        GpbMethodDesc methodDesc = getMethodDesc(mathod);
+        GpbMessageDesc methodDesc = getMethodDesc(mathod);
         if (methodDesc == null) return null;
         try {
             Message message = methodDesc.unpack(data);
@@ -76,7 +76,7 @@ public enum MtdDescUtil {
         return null;
     }
 
-    public GpbMethodDesc getMethodDesc(String methodName) {
+    public GpbMessageDesc getMethodDesc(String methodName) {
         return DESC_MAP.get(methodName);
     }
 
@@ -95,10 +95,10 @@ public enum MtdDescUtil {
     }
 
     public void registerMethodDesc(MethodDescriptor methodDescriptor) {
-        registerMethodDesc(new GpbMethodDesc(methodDescriptor));
+        registerMethodDesc(new GpbMessageDesc(methodDescriptor));
     }
 
-    public void registerMethodDesc(GpbMethodDesc desc) {
+    public void registerMethodDesc(GpbMessageDesc desc) {
         if (DESC_MAP.containsKey(desc.getName())) {
             LOG.error("[Gpb] the method [" + desc.getName() + "] already registered.");
         }

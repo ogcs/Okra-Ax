@@ -1,6 +1,5 @@
 package org.okraAx.internal.v3;
 
-import com.google.protobuf.Message;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Command;
@@ -9,7 +8,6 @@ import org.okraAx.utilities.SessionHelper;
 import org.okraAx.v3.GpcCall;
 
 import java.lang.reflect.Method;
-import java.util.Collection;
 
 /**
  * <pre>通过AxAny的实现动态解析message</pre>
@@ -22,10 +20,10 @@ public class GpbCommand implements Command<Session, GpcCall> {
     private static final Logger LOG = LogManager.getLogger(GpbCommand.class);
     private final Object instance;
     private final Method methodImpl;
-    private GpbMethodDesc methodDesc;
+    private GpbMessageDesc methodDesc;
     private GpbServerContext context;
 
-    public GpbCommand(Object instance, Method methodImpl, GpbMethodDesc methodDesc) {
+    public GpbCommand(Object instance, Method methodImpl, GpbMessageDesc methodDesc) {
         this.instance = instance;
         this.methodImpl = methodImpl;
         this.methodDesc = methodDesc;
@@ -46,7 +44,7 @@ public class GpbCommand implements Command<Session, GpcCall> {
             SessionHelper.setSession(session);
             methodImpl.invoke(instance, context.unpack(call));
         } catch (Exception e) {
-            LOG.error("[Gpb] RPC invoke error.", e);
+            LOG.error("[Gpb] RPC invoke error. method :" + call.getMethod() + ", call:" + call.toString(), e);
         } finally {
             SessionHelper.setSession(null);
         }

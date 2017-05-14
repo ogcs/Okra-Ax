@@ -1,0 +1,33 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.player.beans";
+option java_outer_classname = "ProPlayerBeans";
+//option java_generic_services = true;
+option java_multiple_files = true;
+
+//  request bean.
+
+//  创建角色
+message CallbackCreateRoleBean {
+    int32 ret = 1;
+}
+//  同步系统时间
+message CallbackSyncTime {
+    int64 timestamp = 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

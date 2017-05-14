@@ -13,12 +13,27 @@ public class FakeUserService implements PlayerCallback {
     }
 
     @Override
-    public void callbackLogin() {
+    public void callbackCreateRole(int ret) {
+
+    }
+
+    @Override
+    public void callbackLogin(int ret) {
 
     }
 
     @Override
     public void callbackSyncTime(long timestamp) {
+
+    }
+
+    @Override
+    public void registerChannel() {
+
+    }
+
+    @Override
+    public void callbackEnterChannel(int ret) {
 
     }
 }

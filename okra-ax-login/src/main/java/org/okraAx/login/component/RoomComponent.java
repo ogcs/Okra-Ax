@@ -4,8 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.NetSession;
 import org.okraAx.login.bean.ChannelInfo;
-import org.okraAx.login.mybatis.RoomClient;
-import org.okraAx.login.mybatis.UserClient;
+import org.okraAx.login.role.mybatis.RoomClient;
+import org.okraAx.login.role.mybatis.UserClient;
 import org.okraAx.utilities.SessionHelper;
 import org.springframework.stereotype.Component;
 

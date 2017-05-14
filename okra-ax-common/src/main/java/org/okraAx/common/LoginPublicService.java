@@ -6,7 +6,9 @@ import org.ogcs.app.Procedure;
  * @author TinyZ
  * @version 2017.03.12
  */
-public interface LogicPublicService {
+public interface LoginPublicService {
+
+    void onCreateRole(String openId, String name, int figure);
 
     @Procedure
     void onLogin(String openId);

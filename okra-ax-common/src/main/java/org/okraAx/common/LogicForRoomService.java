@@ -14,8 +14,8 @@ public interface LogicForRoomService {
      */
     void registerChannel();
 
-
     //  callback
+
 
     void callbackEnterChannel(int ret);
 

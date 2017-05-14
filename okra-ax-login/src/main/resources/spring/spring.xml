@@ -11,11 +11,18 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
 	<!-- Configure all properties files here, wildcards like *.properties are also allowed -->
+	<context:property-placeholder location="file:./config/config.properties"/>
+
+	<!-- Configure all properties files here, wildcards like *.properties are also allowed -->
 	<!--<context:property-placeholder location="file:conf/conf.properties" />-->
 
 	<!-- The Spring application context -->
 	<bean class="org.ogcs.app.AppContext"/>
 
+
+	<import resource="mybatis.xml"/>
+
+	<!--  -->
 	<context:annotation-config />
 	<!--<context:component-scan base-package="org.okraAx" />-->
 	<context:component-scan base-package="org.okraAx.internal" />

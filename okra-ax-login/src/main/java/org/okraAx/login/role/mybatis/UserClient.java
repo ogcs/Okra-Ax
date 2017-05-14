@@ -1,10 +1,10 @@
-package org.okraAx.login.mybatis;
+package org.okraAx.login.role.mybatis;
 
 import org.ogcs.app.Connector;
-import org.ogcs.app.ProxySingleCallback;
+import org.ogcs.app.ServiceProxy;
 import org.ogcs.app.Session;
 import org.okraAx.common.PlayerCallback;
-import org.okraAx.internal.v3.SessionInvocationHandler;
+import org.okraAx.internal.v3.GpbInvocationHandler;
 
 import java.lang.reflect.Proxy;
 
@@ -14,7 +14,7 @@ import java.lang.reflect.Proxy;
  * @since 2.0
  * @version 2017.03.25
  */
-public final class UserClient implements Connector, ProxySingleCallback<PlayerCallback> {
+public final class UserClient implements Connector, ServiceProxy<PlayerCallback> {
 
     private final PlayerCallback callback;
     private volatile Session session;
@@ -23,12 +23,12 @@ public final class UserClient implements Connector, ProxySingleCallback<PlayerCa
         this.session = session;
         this.callback = (PlayerCallback) Proxy.newProxyInstance(
                 this.getClass().getClassLoader(),
-                new Class[]{PlayerCallback.class}, new SessionInvocationHandler(session)
+                new Class[]{PlayerCallback.class}, new GpbInvocationHandler(session)
         );
     }
 
     @Override
-    public PlayerCallback invoker() {
+    public PlayerCallback proxy() {
         return this.callback;
     }
 
