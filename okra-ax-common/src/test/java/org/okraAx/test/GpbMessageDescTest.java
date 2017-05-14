@@ -5,16 +5,15 @@ import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import org.junit.Test;
-import org.okraAx.internal.v3.GpbMethodDesc;
+import org.okraAx.internal.v3.GpbMessageDesc;
 import org.okraAx.v3.chess.services.FyChessSi;
-import org.okraAx.v3.room.beans.FyRoomMi;
 import org.okraAx.v3.room.beans.VoEnterRoom;
 
 /**
  * @author TinyZ
  * @date 2017-02-28.
  */
-public class GpbMethodDescTest {
+public class GpbMessageDescTest {
 
 
     public static void main(String[] args) throws InvalidProtocolBufferException {
@@ -26,7 +25,7 @@ public class GpbMethodDescTest {
         for (Descriptors.ServiceDescriptor serviceDescriptor : FyChessSi.getDescriptor().getServices()) {
             MethodDescriptor methodByName = serviceDescriptor.findMethodByName("onEnterRoom");
             if (methodByName != null) {
-                GpbMethodDesc method = new GpbMethodDesc(methodByName);
+                GpbMessageDesc method = new GpbMessageDesc(methodByName);
                 //
                 VoEnterRoom message = VoEnterRoom.newBuilder()
                         .setRoomId(999)

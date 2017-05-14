@@ -5,12 +5,15 @@ option java_outer_classname = "AxAnyProto";
 //option java_multiple_files = true;
 
 //
-//  See {@link google.protobuf.Any}
-//
+//  See {@link google.protobuf.Any}.
+//  the message full name's hash code is the message default unique id.
+//  and you can obviously specify the message unique id by {@link org.okraAx.v3.AxOptions#messageId} option.
+//  <pre>
 //  Example for Java :
 //      Foo foo = ....;
 //      AxAny any = AxAnyUtil.pack(foo);
 //      Foo foo = AxAnyUtil.unpack(any, Foo.class);
+//  </pre>
 //
 message AxAny {
     //  Target message's id. this value should be different to other message's id.

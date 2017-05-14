@@ -1,0 +1,41 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.login.beans";
+option java_outer_classname = "ProLoginBeans";
+//option java_generic_services = true;
+option java_multiple_files = true;
+
+//  request bean.
+
+//  创建角色
+message CreateRoleBean {
+     string openId = 1;
+     string name = 2;
+     int32 figure = 3;
+}
+message LoginBean {
+    string openId = 1;
+}
+
+
+//  callback
+//  Simple callback bean
+message RetBean {
+    int32 ret = 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

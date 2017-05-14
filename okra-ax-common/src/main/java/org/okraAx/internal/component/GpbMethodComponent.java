@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.okraAx.internal.exception.UnknownCmdException;
 import org.okraAx.internal.v3.GpbCommand;
-import org.okraAx.internal.v3.GpbMethodDesc;
+import org.okraAx.internal.v3.GpbMessageDesc;
 import org.okraAx.internal.v3.GpbService;
 import org.springframework.stereotype.Component;
 
@@ -27,10 +27,10 @@ public class GpbMethodComponent {
     /**
      *
      */
-    private final Map<String, GpbMethodDesc> methodDescMap = new HashMap<>();
+    private final Map<String, GpbMessageDesc> methodDescMap = new HashMap<>();
     private final Map<String, GpbCommand> methods = new HashMap<>();
 
-    public GpbMethodDesc getMethodDescriptor(String methodName) {
+    public GpbMessageDesc getMethodDescriptor(String methodName) {
         return this.methodDescMap.get(methodName);
     }
 
@@ -45,7 +45,7 @@ public class GpbMethodComponent {
             if (methodDescMap.containsKey(methodDescriptor.getName())) {
                 LOG.warn("[Gpb] re-register method [" + methodDescriptor.getName() + "].");
             }
-            methodDescMap.put(methodDescriptor.getName(), new GpbMethodDesc(methodDescriptor));
+            methodDescMap.put(methodDescriptor.getName(), new GpbMessageDesc(methodDescriptor));
         }
     }
 
@@ -58,7 +58,7 @@ public class GpbMethodComponent {
             MethodDescriptor methodDescriptor = serviceDescriptor.findMethodByName(method.getName());
             if (methodDescriptor == null)
                 throw new IllegalStateException("[Gpb] Undefined method [" + method.getName() + "].");
-            GpbMethodDesc methodDesc = new GpbMethodDesc(methodDescriptor);
+            GpbMessageDesc methodDesc = new GpbMessageDesc(methodDescriptor);
             registerMethodDesc(methodDesc);
             GpbCommand command = new GpbCommand(obj, method, methodDesc);
             methods.put(method.getName(), command);
@@ -80,10 +80,10 @@ public class GpbMethodComponent {
     }
 
     public void registerMethodDesc(MethodDescriptor methodDescriptor) {
-        methodDescMap.put(methodDescriptor.getName(), new GpbMethodDesc(methodDescriptor));
+        methodDescMap.put(methodDescriptor.getName(), new GpbMessageDesc(methodDescriptor));
     }
 
-    public void registerMethodDesc(GpbMethodDesc desc) {
+    public void registerMethodDesc(GpbMessageDesc desc) {
         methodDescMap.put(desc.getName(), desc);
     }
 

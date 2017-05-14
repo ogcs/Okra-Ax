@@ -1,0 +1,34 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.services";
+option java_outer_classname = "ProPlayerCallback";
+//option java_generic_services = true;
+
+import "Gpc.proto";
+import "PlayerBeans.proto";
+
+//  room component invoke logic service.
+service PlayerCallbackService {
+
+    rpc callbackCreateRole (CallbackCreateRoleBean) returns (GpcVoid);
+    rpc callbackSyncTime (CallbackSyncTime) returns (GpcVoid);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+

@@ -1,9 +1,12 @@
 package org.okraAx.internal.v3;
 
-import com.google.protobuf.*;
+import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
+import com.google.protobuf.DynamicMessage;
+import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.Message;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -11,21 +14,23 @@ import java.util.List;
 
 /**
  * @author TinyZ
- * @date 2017-02-28.
+ * @version 2017.05.14.
  */
-public final class GpbMethodDesc {
+public final class GpbMessageDesc {
 
-    private static final Logger LOG = LogManager.getLogger(GpbMethodDesc.class);
+    private static final Logger LOG = LogManager.getLogger(GpbMessageDesc.class);
     /**
-     * Method Descriptor.
-     * <pre>
-     *     Google Protocol Buffer Service.
-     * </pre>
+     * Google Protocol Buffer Message Descriptor.
      */
-    private final MethodDescriptor descriptor;
+    private final Descriptor descriptor;
 
-    public GpbMethodDesc(MethodDescriptor descriptor) {
+    public GpbMessageDesc(Descriptor descriptor) {
         this.descriptor = descriptor;
+    }
+
+    @Deprecated
+    public GpbMessageDesc(MethodDescriptor descriptor) {
+        this.descriptor = descriptor.getInputType();
     }
 
     public String getName() {
@@ -34,22 +39,21 @@ public final class GpbMethodDesc {
 
     public Message unpack(ByteString byteString) throws InvalidProtocolBufferException {
         return DynamicMessage
-                .newBuilder(descriptor.getInputType())
+                .newBuilder(descriptor)
                 .mergeFrom(byteString)
                 .build();
     }
 
     public Message unpack(byte[] bytes) throws InvalidProtocolBufferException {
         return DynamicMessage
-                .newBuilder(descriptor.getInputType())
+                .newBuilder(descriptor)
                 .mergeFrom(bytes)
                 .build();
     }
 
     public Message pack(Object[] args) {
-        Descriptor inputType = descriptor.getInputType();
-        DynamicMessage.Builder builder = DynamicMessage.newBuilder(inputType);
-        List<FieldDescriptor> fields = inputType.getFields();
+        DynamicMessage.Builder builder = DynamicMessage.newBuilder(descriptor);
+        List<FieldDescriptor> fields = descriptor.getFields();
         if (!fields.isEmpty() && fields.size() == args.length) {
             for (int i = 0; i < fields.size(); i++) {
                 try {

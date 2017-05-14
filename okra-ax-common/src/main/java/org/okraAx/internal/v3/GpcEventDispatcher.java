@@ -5,14 +5,15 @@ import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Executor;
 import org.ogcs.app.Session;
 import org.ogcs.netty.handler.DisruptorAdapterBy41xHandler;
-import org.okraAx.internal.v3.GpbCommand;
-import org.okraAx.internal.v3.GpbServerContext;
 import org.okraAx.v3.GpcCall;
+
+import static io.netty.channel.ChannelHandler.Sharable;
 
 /**
  * @author TinyZ.
  * @version 2017.05.08
  */
+@Sharable
 public class GpcEventDispatcher extends DisruptorAdapterBy41xHandler<GpcCall> {
 
     private static final Logger LOG = LogManager.getLogger(GpbServerContext.class);

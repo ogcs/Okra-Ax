@@ -9,21 +9,21 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>okra-ax-org.okraAx.test</artifactId>
+    <artifactId>okra-ax-test</artifactId>
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.ogcs</groupId>
-            <artifactId>okra-ax-remote</artifactId>
+            <artifactId>okra-ax-protobuf</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.ogcs</groupId>
-            <artifactId>okra-ax-inner</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.ogcs</groupId>
-            <artifactId>okra-ax-gate</artifactId>
+            <artifactId>okra-ax-common</artifactId>
             <version>1.0.0</version>
         </dependency>
         <dependency>

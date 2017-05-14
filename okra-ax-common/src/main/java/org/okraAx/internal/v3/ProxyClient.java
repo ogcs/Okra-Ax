@@ -19,7 +19,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ogcs.app.ProxySingleCallback;
+import org.ogcs.app.ServiceProxy;
 import org.ogcs.netty.impl.TcpProtocolClient;
 
 import java.util.concurrent.TimeUnit;
@@ -31,11 +31,11 @@ import java.util.concurrent.TimeUnit;
  * @author TinyZ
  * @since 2.0
  */
-public abstract class ProxyClient<P> extends TcpProtocolClient implements ProxySingleCallback<P> {
+public abstract class ProxyClient<P> extends TcpProtocolClient implements ServiceProxy<P> {
 
     private static final Logger LOG = LogManager.getLogger(ProxyClient.class);
     /**
-     * 当成功建立连接后, 通过{@link #newOutputProxy()}实例化一个{@link ProxySingleCallback}.
+     * 当成功建立连接后, 通过{@link #newOutputProxy()}实例化一个{@link ServiceProxy}.
      * notes : 在连接建立之前session值为null.
      */
     private volatile P output;
@@ -100,7 +100,7 @@ public abstract class ProxyClient<P> extends TcpProtocolClient implements ProxyS
     public abstract P newOutputProxy();
 
     @Override
-    public P invoker() {
+    public P proxy() {
         if (output == null) {
 
         }

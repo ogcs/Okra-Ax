@@ -6,6 +6,8 @@ option java_package = "org.okraAx.v3";
 option java_outer_classname = "Gpc";
 option java_multiple_files = true;
 
+import "AxAny.proto";
+
 //  Gpc Call Message.
 //  Async remote produce call based on GPB(Google Protocol Buffers).
 message GpcCall {
@@ -30,6 +32,12 @@ message GpcCall {
 //  Gpc Void Message.
 //  the vold param or returns.
 message GpcVoid {
+}
+//  Gpc relay message.
+//  GpcRelay message use to forward the message data to other target without any logic.
+message GpcRelay {
+    AxAny source = 1;   //  the forward target.
+    bytes data = 2;     //  the relay message.
 }
 //  Gpc Error Message.
 //  the normal error message callback by remote service.

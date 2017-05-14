@@ -3,10 +3,10 @@ package org.okraAx.room.fy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Connector;
-import org.ogcs.app.ProxySingleCallback;
+import org.ogcs.app.ServiceProxy;
 import org.ogcs.app.Session;
 import org.okraAx.common.PlayerRoomCallback;
-import org.okraAx.internal.v3.SessionInvocationHandler;
+import org.okraAx.internal.v3.GpbInvocationHandler;
 import org.okraAx.room.module.Room;
 
 import java.lang.reflect.InvocationHandler;
@@ -17,7 +17,7 @@ import java.lang.reflect.Proxy;
  * @since 2.0
  * @version  2017.02.12
  */
-public final class Player implements Connector, ProxySingleCallback<PlayerRoomCallback> {
+public final class Player implements Connector, ServiceProxy<PlayerRoomCallback> {
 
     private static final Logger LOG = LogManager.getLogger(LogicClient.class);
 
@@ -39,7 +39,7 @@ public final class Player implements Connector, ProxySingleCallback<PlayerRoomCa
     public Player(long uid, Session session) {
         this.uid = uid;
         this.session = session;
-        this.callback = newProxyInstance(new SessionInvocationHandler(session));
+        this.callback = newProxyInstance(new GpbInvocationHandler(session));
     }
 
     @Override
@@ -86,13 +86,13 @@ public final class Player implements Connector, ProxySingleCallback<PlayerRoomCa
      *
      */
     public PlayerRoomCallback userClient() {
-        if (session == null || !session.isActive() || invoker() == null)
+        if (session == null || !session.isActive() || proxy() == null)
             return EMPTY;
-        return invoker();
+        return proxy();
     }
 
     @Override
-    public PlayerRoomCallback invoker() {
+    public PlayerRoomCallback proxy() {
         return this.callback;
     }
 

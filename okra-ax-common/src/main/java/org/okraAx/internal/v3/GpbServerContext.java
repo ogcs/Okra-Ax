@@ -1,6 +1,7 @@
 package org.okraAx.internal.v3;
 
 import com.google.protobuf.ByteString;
+import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
@@ -18,9 +19,14 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.ogcs.app.Session;
 import org.okraAx.v3.GpcCall;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -28,6 +34,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author TinyZ.
  * @version 2017.04.28
  */
+@Service
 public class GpbServerContext {
 
     private static final Logger LOG = LogManager.getLogger(GpbServerContext.class);
@@ -52,7 +59,8 @@ public class GpbServerContext {
 
     //  Google protocol buffers
     private final Map<String, GpbCommand> methods = new ConcurrentHashMap<>();
-    private final Map<String /* method's name*/, GpbMethodDesc> mtdDescMap = new ConcurrentHashMap<>();
+    private final Map<String /* method */, String /* message */> methodInputTypeMap = new ConcurrentHashMap<>();
+    private final Map<String /* message */, GpbMessageDesc> gpbMsgDescMap = new ConcurrentHashMap<>();
 
     public void start(int port) {
         try {
@@ -174,24 +182,30 @@ public class GpbServerContext {
         }
     }
 
-    public void registerMsgDesc(FileDescriptor fileDescriptor) {
+    public GpbCommand getMethod(String methodName) {
+        return methods.get(methodName);
+    }
+
+    public void registerGpbMsgDesc(FileDescriptor fileDescriptor) {
         if (fileDescriptor == null) return;
+        //  service
         for (ServiceDescriptor service : fileDescriptor.getServices()) {
             for (MethodDescriptor method : service.getMethods()) {
-                if (mtdDescMap.containsKey(method.getName())) {
+                if (gpbMsgDescMap.containsKey(method.getName())) {
                     LOG.error("[Gpb] the method [" + method.getName() + "] already registered.");
                 }
-                mtdDescMap.put(method.getName(), new GpbMethodDesc(method));
+                registerGpbMessage(method.getInputType());
+                methodInputTypeMap.put(method.getName(), method.getInputType().getName());
             }
+        }
+        //  message
+        for (Descriptor descriptor : fileDescriptor.getMessageTypes()) {
+            registerGpbMessage(descriptor);
         }
     }
 
-    public GpbMethodDesc getMethodDesc(String methodName) {
-        return mtdDescMap.get(methodName);
-    }
-
-    public GpbCommand getMethod(String methodName) {
-        return methods.get(methodName);
+    public void registerGpbMessage(Descriptor descriptor) {
+        gpbMsgDescMap.put(descriptor.getName(), new GpbMessageDesc(descriptor));
     }
 
     /**
@@ -200,12 +214,17 @@ public class GpbServerContext {
      * @return the gpb message used by async remote produce call.
      */
     public GpcCall pack(Method method, Object[] args) {
-        GpbMethodDesc methodDesc = getMethodDesc(method.getName());
-        if (methodDesc == null) {
+        String inputTypeName = methodInputTypeMap.get(method.getName());
+        if (inputTypeName == null || inputTypeName.isEmpty()) {
             LOG.error("[Gpb] unregister method : " + method.getName());
             return null;
         }
-        Message message = methodDesc.pack(args);
+        GpbMessageDesc messageDesc = gpbMsgDescMap.get(inputTypeName);
+        if (messageDesc == null) {
+            LOG.error("[Gpb] unregister message : " + inputTypeName);
+            return null;
+        }
+        Message message = messageDesc.pack(args);
         return GpcCall.newBuilder()
                 .setMethod(method.getName())
                 .setParams(message.toByteString())
@@ -223,10 +242,18 @@ public class GpbServerContext {
 
     public Object[] unpack(String method, ByteString data) {
         if (method == null || method.isEmpty() || data == null || data.isEmpty()) return null;
-        GpbMethodDesc methodDesc = getMethodDesc(method);
-        if (methodDesc == null) return null;
+        String inputTypeName = methodInputTypeMap.get(method);
+        if (inputTypeName.isEmpty()) {
+            LOG.error("[Gpb] unregister method : " + method);
+            return null;
+        }
+        GpbMessageDesc messageDesc = gpbMsgDescMap.get(inputTypeName);
+        if (messageDesc == null) {
+            LOG.error("[Gpb] unregister message : " + inputTypeName);
+            return null;
+        }
         try {
-            Message message = methodDesc.unpack(data);
+            Message message = messageDesc.unpack(data);
             return message.getAllFields().values().toArray();
         } catch (InvalidProtocolBufferException e) {
             LOG.error("[Gpb] unpack message error. method name : " + method, e);

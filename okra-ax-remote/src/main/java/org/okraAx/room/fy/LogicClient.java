@@ -57,9 +57,9 @@ public final class LogicClient extends ProxyClient<LogicForRoomService> {
     }
 
     public LogicForRoomService logicClient() {
-        if (invoker() == null || client() == null || !client().isActive())
+        if (proxy() == null || client() == null || !client().isActive())
             return EMPTY;
-        return invoker();
+        return proxy();
     }
 
     @Override
