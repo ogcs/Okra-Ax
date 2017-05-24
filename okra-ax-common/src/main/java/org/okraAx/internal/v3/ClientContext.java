@@ -5,9 +5,8 @@ import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
-import io.netty.channel.epoll.EpollServerSocketChannel;
+import io.netty.channel.epoll.EpollSocketChannel;
 import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
@@ -75,13 +74,12 @@ public class ClientContext extends ServiceContext {
         this.port = port;
         //
         bootstrap = new Bootstrap();
-        bootstrap.channel(NioSocketChannel.class);
         if (Epoll.isAvailable()) {
             this.childGroup = new EpollEventLoopGroup(cThreadCount);
-            this.bootstrap.group(childGroup).channel(EpollServerSocketChannel.class);
+            this.bootstrap.group(childGroup).channel(EpollSocketChannel.class);
         } else {
             this.childGroup = new NioEventLoopGroup(cThreadCount);
-            this.bootstrap.group(childGroup).channel(NioServerSocketChannel.class);
+            this.bootstrap.group(childGroup).channel(NioSocketChannel.class);
         }
         // handlers
         this.prepender = new LengthFieldPrepender(this.lengthFieldLength, false);
@@ -162,6 +160,11 @@ public class ClientContext extends ServiceContext {
     @Override
     public <T> ClientContext registerService(T obj, Class<T> service) {
         return (ClientContext) super.registerService(obj, service);
+    }
+
+    @Override
+    public ClientContext initCmdFactory(CmdFactory factory) {
+        return (ClientContext) super.initCmdFactory(factory);
     }
 
     public ClientContext setChildThread(final int threadCount) {

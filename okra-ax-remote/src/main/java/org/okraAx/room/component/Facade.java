@@ -21,10 +21,15 @@ public enum Facade implements RoomService, RoomPublicService,
 
     private static final Logger LOG = LogManager.getLogger(Facade.class);
 
+    private LoginComponent loginComponent = AppContext.getBean(LoginComponent.class);
     private RoomComponent roomComponent = AppContext.getBean(RoomComponent.class);
     private ChessComponent chessComponent = AppContext.getBean(ChessComponent.class);
 
     //  public procedure invoked by player
+
+    public void initialize() {
+
+    }
 
     @Override
     public void ping() {

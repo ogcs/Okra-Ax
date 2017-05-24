@@ -17,11 +17,6 @@ public final class RoomManager {
         //  2. 建立组件间连接
         //  3. bind端口，对外公开服务
 
-        MtdDescUtil.INSTANCE.registerMethodDesc(FyRoomMi.getDescriptor().getServices());
-
-
-        logicClient = new LogicClient("", 9005, new LogicClientEventHandler());
-        logicClient.start();
 
 
     }

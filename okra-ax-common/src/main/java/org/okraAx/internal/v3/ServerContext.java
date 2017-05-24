@@ -152,6 +152,11 @@ public class ServerContext extends ServiceContext {
         return (ServerContext) super.registerService(obj, service);
     }
 
+    @Override
+    public ServerContext initCmdFactory(CmdFactory factory) {
+        return (ServerContext) super.initCmdFactory(factory);
+    }
+
     /**
      * Add new netty handler after last.
      *

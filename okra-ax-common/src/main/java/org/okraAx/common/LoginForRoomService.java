@@ -7,7 +7,7 @@ package org.okraAx.common;
  * @version 2017.03.12
  * @since 2.0
  */
-public interface LogicForRoomService {
+public interface LoginForRoomService {
 
     /**
      * 注册频道进程
