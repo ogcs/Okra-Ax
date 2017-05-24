@@ -4,14 +4,14 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.okraAx.internal.mybatis.DBOkraAx;
+import org.okraAx.internal.mybatis.OkraAxDB;
 import org.okraAx.login.bean.RoleBean;
 
 /**
  * @author TinyZ.
  * @version 2017.05.12
  */
-@DBOkraAx
+@OkraAxDB
 public interface RoleMapper {
 
     @Select("select * from t_role where uid=#{uid}")

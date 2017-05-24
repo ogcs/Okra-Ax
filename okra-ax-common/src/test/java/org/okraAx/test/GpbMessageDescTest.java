@@ -5,7 +5,7 @@ import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import org.junit.Test;
-import org.okraAx.internal.v3.GpbMessageDesc;
+import org.okraAx.internal.v3.protobuf.GpbMessageDesc;
 import org.okraAx.v3.chess.services.FyChessSi;
 import org.okraAx.v3.room.beans.VoEnterRoom;
 

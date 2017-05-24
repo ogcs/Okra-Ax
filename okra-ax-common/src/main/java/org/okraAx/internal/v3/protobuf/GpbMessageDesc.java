@@ -1,4 +1,4 @@
-package org.okraAx.internal.v3;
+package org.okraAx.internal.v3.protobuf;
 
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.Descriptor;

@@ -5,10 +5,9 @@ import io.netty.channel.ChannelHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.okraAx.common.LogicForRoomService;
-import org.okraAx.internal.v3.GpbChannelInitializer;
 import org.okraAx.internal.v3.MtdDescUtil;
 import org.okraAx.internal.v3.ProxyClient;
-import org.okraAx.internal.v3.ProxyClientEventHandler;
+import org.okraAx.internal.v3.ConnectionEventHandler;
 import org.okraAx.v3.GpcCall;
 
 import java.lang.reflect.InvocationHandler;
@@ -42,7 +41,7 @@ public final class LogicClient extends ProxyClient<LogicForRoomService> {
         super(host, port, true);
     }
 
-    public LogicClient(String host, int port, ProxyClientEventHandler eventHandler) {
+    public LogicClient(String host, int port, ConnectionEventHandler eventHandler) {
         super(host, port, true, eventHandler);
     }
 
@@ -64,7 +63,7 @@ public final class LogicClient extends ProxyClient<LogicForRoomService> {
 
     @Override
     protected ChannelHandler newChannelInitializer() {
-        return new GpbChannelInitializer();
+        return new ;
     }
 
     /**

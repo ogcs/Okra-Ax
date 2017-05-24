@@ -1,7 +1,7 @@
 package org.okraAx.room.fy;
 
 import org.okraAx.internal.v3.MtdDescUtil;
-import org.okraAx.internal.v3.ProxyClientEventHandler;
+import org.okraAx.internal.v3.ConnectionEventHandler;
 import org.okraAx.v3.room.beans.FyRoomMi;
 
 /**
@@ -31,7 +31,7 @@ public final class RoomManager {
     }
 
 
-    private class LogicClientEventHandler implements ProxyClientEventHandler {
+    private class LogicClientEventHandler implements ConnectionEventHandler {
 
         @Override
         public void connected() {

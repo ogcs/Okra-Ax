@@ -3,14 +3,14 @@ package org.okraAx.login.role.mybatis;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.okraAx.internal.mybatis.DBOkraAx;
+import org.okraAx.internal.mybatis.OkraAxDB;
 import org.okraAx.login.bean.AccountBean;
 
 /**
  * @author TinyZ.
  * @version 2017.05.12
  */
-@DBOkraAx
+@OkraAxDB
 public interface AccountMapper {
 
     @Select("select * from t_account where openId=#{openId}")

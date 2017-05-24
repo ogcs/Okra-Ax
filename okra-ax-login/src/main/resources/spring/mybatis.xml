@@ -38,6 +38,6 @@
 	<tx:annotation-driven transaction-manager="txManager"/>
 
 	<!-- Scan -->
-	<mybatis:scan base-package="org.okraAx.login.role.mybatis" annotation="org.okraAx.internal.mybatis.DBOkraAx" factory-ref="sqlSessionFactory"/>
+	<mybatis:scan base-package="org.okraAx.login.role.mybatis" annotation="org.okraAx.internal.mybatis.OkraAxDB" factory-ref="sqlSessionFactory"/>
 
 </beans>

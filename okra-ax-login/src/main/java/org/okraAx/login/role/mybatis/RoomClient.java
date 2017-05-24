@@ -4,7 +4,7 @@ import org.ogcs.app.AppContext;
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
 import org.okraAx.common.RoomService;
-import org.okraAx.internal.v3.GpbInvocationHandler;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.login.bean.ChannelInfo;
 import org.okraAx.login.component.RoomComponent;
 

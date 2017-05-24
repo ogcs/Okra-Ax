@@ -12,7 +12,6 @@ import org.okraAx.login.bean.RoleBean;
 import org.okraAx.login.role.cache.AccountCacheLoader;
 import org.okraAx.login.role.mybatis.AccountMapper;
 import org.okraAx.login.role.mybatis.RoleMapper;
-import org.okraAx.login.role.mybatis.UserClient;
 import org.okraAx.login.server.LoginUser;
 import org.okraAx.login.util.LoginConfig;
 import org.okraAx.utilities.SessionHelper;
@@ -42,7 +41,7 @@ public class LoginComponent {
     @Autowired
     private RoleMapper roleMapper;
 
-    private LoadingCache<String, LoginUser> accountCache = CacheBuilder
+    private LoadingCache<String, LoginUser> loginUserCache = CacheBuilder
             .newBuilder()
             .expireAfterWrite(1L, TimeUnit.HOURS)
             .removalListener(new RemovalListener<String, LoginUser>() {
@@ -58,11 +57,10 @@ public class LoginComponent {
 
     }
 
-
     public void onCreateRole(final Session session, final String openId, final String name,
                              final int figure) {
         try {
-            LoginUser user = accountCache.get(openId);
+            LoginUser user = loginUserCache.get(openId);
             user.setSession(session);
             session.setConnector(user);
             if (user.id() > 0L) {
@@ -93,7 +91,7 @@ public class LoginComponent {
                         //
                         user.setAccountBean(bean);
                         user.setRoleBean(roleBean);
-                        accountCache.put(openId, user);
+                        loginUserCache.put(openId, user);
 
                         user.userClient().callbackCreateRole(0);
                     } catch (Exception e) {
@@ -117,7 +115,7 @@ public class LoginComponent {
         Session session = SessionHelper.currentSession();
         //  TODO: 授权验证
         try {
-            LoginUser user = accountCache.get(openId);
+            LoginUser user = loginUserCache.get(openId);
             user.setSession(session);
             session.setConnector(user);
             if (user.id() < 0L) {
@@ -130,20 +128,14 @@ public class LoginComponent {
         }
     }
 
+    /**
+     * 系统时间
+     */
     public void onSyncTime() {
-        Session session = SessionHelper.currentSession();
-        UserClient user = new UserClient(session);//SessionHelper.curPlayer();
-        if (user.isOnline()) {
+        LoginUser user = SessionHelper.curPlayer();
+        if (user != null && user.isOnline()) {
             user.proxy().callbackSyncTime(System.currentTimeMillis());
         }
-    }
-
-    public void onShowChannelList() {
-
-    }
-
-    public void onEnterChannel() {
-
     }
 
 

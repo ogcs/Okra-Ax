@@ -20,6 +20,10 @@ public enum Framework {
         //  Bootstrap Login Server
         loginServer = new LoginServer();
         loginServer.start();
+        //
+        PublicServer publicServer = new PublicServer();
+        publicServer.start();
+
     }
 
 

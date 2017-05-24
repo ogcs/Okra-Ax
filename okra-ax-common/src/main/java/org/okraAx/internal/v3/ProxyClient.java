@@ -46,7 +46,7 @@ public abstract class ProxyClient<P> extends TcpProtocolClient implements Servic
     /**
      * 连接事件回调.
      */
-    private final ProxyClientEventHandler eventHandler;
+    private final ConnectionEventHandler eventHandler;
 
     public ProxyClient(String host, int port) {
         this(host, port, false);
@@ -58,7 +58,7 @@ public abstract class ProxyClient<P> extends TcpProtocolClient implements Servic
         this.eventHandler = null;
     }
 
-    public ProxyClient(String host, int port, boolean autoConnect, ProxyClientEventHandler eventHandler) {
+    public ProxyClient(String host, int port, boolean autoConnect, ConnectionEventHandler eventHandler) {
         super(host, port);
         this.autoConnect = autoConnect;
         this.eventHandler = eventHandler;

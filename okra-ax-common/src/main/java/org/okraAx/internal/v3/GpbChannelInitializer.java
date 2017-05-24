@@ -8,6 +8,7 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import org.okraAx.internal.handler.AxCodecHandler;
 import org.okraAx.internal.handler.codec.AxGpbCodec;
+import org.okraAx.internal.v3.protobuf.GpcEventDispatcher;
 import org.okraAx.v3.GpcCall;
 
 /**
@@ -17,7 +18,7 @@ public final class GpbChannelInitializer extends ChannelInitializer<NioSocketCha
 
     private static final ChannelHandler FRAME_PREPENDER = new LengthFieldPrepender(4, false);
     private static final AxCodecHandler CODEC_HANDLER = new AxCodecHandler(new AxGpbCodec(GpcCall.getDefaultInstance()));
-    private static final GpbProxyHandler LOGIC_HANDLER = new GpbProxyHandler();
+    private static final GpcEventDispatcher LOGIC_HANDLER = new GpcEventDispatcher(null);
 
     @Override
     protected void initChannel(NioSocketChannel ch) throws Exception {
@@ -27,6 +28,4 @@ public final class GpbChannelInitializer extends ChannelInitializer<NioSocketCha
         cp.addLast("codec", CODEC_HANDLER);
         cp.addLast("handler", LOGIC_HANDLER);
     }
-
-
 }

@@ -1,10 +1,11 @@
-package org.okraAx.internal.v3;
+package org.okraAx.internal.v3.protobuf;
 
 import io.netty.channel.ChannelFutureListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Session;
+import org.okraAx.internal.v3.ServerContext;
 import org.okraAx.v3.GpcCall;
 
 import java.lang.reflect.InvocationHandler;
@@ -16,12 +17,12 @@ import java.lang.reflect.Method;
  *
  * @author TinyZ.
  * @version 2017.03.25
- * @see GpbServerContext
+ * @see ServerContext
  */
 public class GpbInvocationHandler implements InvocationHandler {
 
     private static final Logger LOG = LogManager.getLogger(GpbInvocationHandler.class);
-    private GpbServerContext context = AppContext.getBean(GpbServerContext.class);
+    private GpbMessageContext context = AppContext.getBean(GpbMessageContext.class);
     private final Session session;
 
     public GpbInvocationHandler(Session session) {
