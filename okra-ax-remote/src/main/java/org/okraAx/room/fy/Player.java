@@ -6,7 +6,7 @@ import org.ogcs.app.Connector;
 import org.ogcs.app.ServiceProxy;
 import org.ogcs.app.Session;
 import org.okraAx.common.PlayerRoomCallback;
-import org.okraAx.internal.v3.GpbInvocationHandler;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.room.module.Room;
 
 import java.lang.reflect.InvocationHandler;

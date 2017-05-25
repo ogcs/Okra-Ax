@@ -4,11 +4,10 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.okraAx.common.LogicForRoomService;
-import org.okraAx.internal.v3.GpbChannelInitializer;
+import org.okraAx.common.LoginForRoomService;
 import org.okraAx.internal.v3.MtdDescUtil;
 import org.okraAx.internal.v3.ProxyClient;
-import org.okraAx.internal.v3.ProxyClientEventHandler;
+import org.okraAx.internal.v3.ConnectionEventHandler;
 import org.okraAx.v3.GpcCall;
 
 import java.lang.reflect.InvocationHandler;
@@ -22,13 +21,13 @@ import java.util.concurrent.TimeUnit;
  * @version 2017.03.28
  * @since 2.0
  */
-public final class LogicClient extends ProxyClient<LogicForRoomService> {
+public final class LogicClient extends ProxyClient<LoginForRoomService> {
 
     private static final Logger LOG = LogManager.getLogger(LogicClient.class);
     /**
      * The fake session for real logic.
      */
-    private static final LogicForRoomService EMPTY = newProxyInstance((proxy, method, args) -> {
+    private static final LoginForRoomService EMPTY = newProxyInstance((proxy, method, args) -> {
         //  no-op
         LOG.info("Empty proxy instance invoked by [{}]", method.getName());
         return null;
@@ -42,12 +41,12 @@ public final class LogicClient extends ProxyClient<LogicForRoomService> {
         super(host, port, true);
     }
 
-    public LogicClient(String host, int port, ProxyClientEventHandler eventHandler) {
+    public LogicClient(String host, int port, ConnectionEventHandler eventHandler) {
         super(host, port, true, eventHandler);
     }
 
     @Override
-    public LogicForRoomService newOutputProxy() {
+    public LoginForRoomService newOutputProxy() {
         return newProxyInstance((proxy, method, args) -> {
             if (client() != null && client().isActive()) {
                 writeAndFlush(MtdDescUtil.INSTANCE.pack(method, args), ensure);
@@ -56,7 +55,7 @@ public final class LogicClient extends ProxyClient<LogicForRoomService> {
         });
     }
 
-    public LogicForRoomService logicClient() {
+    public LoginForRoomService logicClient() {
         if (proxy() == null || client() == null || !client().isActive())
             return EMPTY;
         return proxy();
@@ -64,16 +63,16 @@ public final class LogicClient extends ProxyClient<LogicForRoomService> {
 
     @Override
     protected ChannelHandler newChannelInitializer() {
-        return new GpbChannelInitializer();
+        return null ;
     }
 
     /**
-     * Create new proxy instance for {@link LogicForRoomService}.
+     * Create new proxy instance for {@link LoginForRoomService}.
      */
-    private static LogicForRoomService newProxyInstance(InvocationHandler handler) {
-        return (LogicForRoomService) Proxy.newProxyInstance(
+    private static LoginForRoomService newProxyInstance(InvocationHandler handler) {
+        return (LoginForRoomService) Proxy.newProxyInstance(
                 LogicClient.class.getClassLoader(),
-                new Class[]{LogicForRoomService.class},
+                new Class[]{LoginForRoomService.class},
                 handler);
     }
 

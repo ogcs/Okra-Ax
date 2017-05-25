@@ -1,7 +1,7 @@
 package org.okraAx.room.fy;
 
 import org.okraAx.internal.v3.MtdDescUtil;
-import org.okraAx.internal.v3.ProxyClientEventHandler;
+import org.okraAx.internal.v3.ConnectionEventHandler;
 import org.okraAx.v3.room.beans.FyRoomMi;
 
 /**
@@ -17,11 +17,6 @@ public final class RoomManager {
         //  2. 建立组件间连接
         //  3. bind端口，对外公开服务
 
-        MtdDescUtil.INSTANCE.registerMethodDesc(FyRoomMi.getDescriptor().getServices());
-
-
-        logicClient = new LogicClient("", 9005, new LogicClientEventHandler());
-        logicClient.start();
 
 
     }
@@ -31,7 +26,7 @@ public final class RoomManager {
     }
 
 
-    private class LogicClientEventHandler implements ProxyClientEventHandler {
+    private class LogicClientEventHandler implements ConnectionEventHandler {
 
         @Override
         public void connected() {

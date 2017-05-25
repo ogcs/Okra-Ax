@@ -2,9 +2,9 @@ package org.okraAx.room.component;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.okraAx.common.LogicForRoomService;
+import org.okraAx.common.LoginForRoomService;
 import org.okraAx.internal.v3.MtdDescUtil;
-import org.okraAx.internal.v3.ProxyClientEventHandler;
+import org.okraAx.internal.v3.ConnectionEventHandler;
 import org.okraAx.room.fy.LogicClient;
 import org.okraAx.v3.room.beans.FyRoomMi;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public final class LogicComponent {
     private volatile LogicClient logicClient;
 
     public LogicComponent() {
-        init();
+//        init();
     }
 
     private void init() {
@@ -36,11 +36,11 @@ public final class LogicComponent {
         }
     }
 
-    public LogicForRoomService logicClient() {
+    public LoginForRoomService logicClient() {
         return logicClient.logicClient();
     }
 
-    private class LogicClientEventHandler implements ProxyClientEventHandler {
+    private class LogicClientEventHandler implements ConnectionEventHandler {
 
         @Override
         public void connected() {

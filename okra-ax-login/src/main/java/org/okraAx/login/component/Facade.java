@@ -1,7 +1,7 @@
 package org.okraAx.login.component;
 
 import org.ogcs.app.NetSession;
-import org.okraAx.common.LogicForRoomService;
+import org.okraAx.common.LoginForRoomService;
 import org.okraAx.common.LoginPublicService;
 import org.okraAx.internal.v3.ProxySession;
 import org.okraAx.login.server.LoginUser;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @version 2017.03.26
  */
 @Service
-public class Facade implements LoginPublicService, LogicForRoomService {
+public class Facade implements LoginPublicService, LoginForRoomService {
 
     @Autowired
     private LoginComponent loginComponent;
@@ -51,7 +51,7 @@ public class Facade implements LoginPublicService, LogicForRoomService {
         //  TODO: 校验房间信息
 
 
-        ProxySession<LogicForRoomService> session = null;
+        ProxySession<LoginForRoomService> session = null;
 
         player.userClient().callbackEnterChannel(1);
     }
@@ -59,13 +59,14 @@ public class Facade implements LoginPublicService, LogicForRoomService {
 
     //  logic for room
 
+
     public void registerChannel(String security, long version, String host, int roomId, int type, int port) {
         roomComponent.registerChannel(security, version, roomId, type, host, port);
     }
 
     @Override
     public void registerChannel() {
-
+        System.out.println();
     }
 
     @Override

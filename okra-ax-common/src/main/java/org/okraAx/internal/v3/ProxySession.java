@@ -3,6 +3,7 @@ package org.okraAx.internal.v3;
 import io.netty.channel.Channel;
 import org.ogcs.app.NetSession;
 import org.ogcs.app.ServiceProxy;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 
 import java.lang.reflect.Proxy;
 

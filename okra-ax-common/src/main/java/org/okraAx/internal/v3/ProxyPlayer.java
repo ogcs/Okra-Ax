@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Connector;
 import org.ogcs.app.ServiceProxy;
 import org.ogcs.app.Session;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;

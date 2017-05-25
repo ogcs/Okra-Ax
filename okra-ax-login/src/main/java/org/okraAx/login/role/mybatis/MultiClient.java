@@ -2,7 +2,7 @@ package org.okraAx.login.role.mybatis;
 
 import org.ogcs.app.MultiServiceProxy;
 import org.ogcs.app.Session;
-import org.okraAx.internal.v3.GpbInvocationHandler;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 
 import java.lang.reflect.Proxy;
 import java.util.Map;

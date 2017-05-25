@@ -21,8 +21,9 @@ import org.okraAx.login.role.Modules;
 
 /**
  * 抽象模块.
+ *
  * @author TinyZ
- * @date 2017-01-11.
+ * @version 2017.05.18.
  */
 public abstract class AbstractModule implements Module {
 
@@ -48,7 +49,6 @@ public abstract class AbstractModule implements Module {
     public void load() {
         loadFromDB();
     }
-
 
     @Override
     public void dispose() {

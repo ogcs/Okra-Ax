@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
 import org.ogcs.app.NetSession;
-import org.ogcs.app.Session;
 import org.okraAx.common.RoomPublicService;
 import org.okraAx.common.RoomService;
 import org.okraAx.common.modules.FyChessService;
@@ -15,16 +14,22 @@ import org.okraAx.utilities.SessionHelper;
  * @author TinyZ.
  * @version 2017.03.26
  */
-public enum Facade implements RoomService, RoomPublicService, FyChessService {
+public enum Facade implements RoomService, RoomPublicService,
+        FyChessService {
 
     INSTANCE;
 
     private static final Logger LOG = LogManager.getLogger(Facade.class);
 
+    private LoginComponent loginComponent = AppContext.getBean(LoginComponent.class);
     private RoomComponent roomComponent = AppContext.getBean(RoomComponent.class);
     private ChessComponent chessComponent = AppContext.getBean(ChessComponent.class);
 
     //  public procedure invoked by player
+
+    public void initialize() {
+
+    }
 
     @Override
     public void ping() {
@@ -108,7 +113,6 @@ public enum Facade implements RoomService, RoomPublicService, FyChessService {
     public void callbackRegister(int ret) {
 
     }
-
 
 
 }

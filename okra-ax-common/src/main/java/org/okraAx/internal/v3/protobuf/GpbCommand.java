@@ -1,4 +1,4 @@
-package org.okraAx.internal.v3;
+package org.okraAx.internal.v3.protobuf;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,16 +20,14 @@ public class GpbCommand implements Command<Session, GpcCall> {
     private static final Logger LOG = LogManager.getLogger(GpbCommand.class);
     private final Object instance;
     private final Method methodImpl;
-    private GpbMessageDesc methodDesc;
-    private GpbServerContext context;
+    private GpbMessageContext context;
 
     public GpbCommand(Object instance, Method methodImpl, GpbMessageDesc methodDesc) {
         this.instance = instance;
         this.methodImpl = methodImpl;
-        this.methodDesc = methodDesc;
     }
 
-    public GpbCommand(Object instance, Method methodImpl, GpbServerContext context) {
+    public GpbCommand(Object instance, Method methodImpl, GpbMessageContext context) {
         this.instance = instance;
         this.methodImpl = methodImpl;
         this.context = context;
@@ -48,5 +46,14 @@ public class GpbCommand implements Command<Session, GpcCall> {
         } finally {
             SessionHelper.setSession(null);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "GpbCommand{" +
+                "instance=" + instance +
+                ", methodImpl=" + methodImpl +
+                ", context=" + context +
+                '}';
     }
 }

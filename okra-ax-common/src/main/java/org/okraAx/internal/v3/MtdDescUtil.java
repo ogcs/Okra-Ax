@@ -7,6 +7,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.Message;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.okraAx.internal.v3.protobuf.GpbMessageDesc;
 import org.okraAx.v3.GpcCall;
 
 import java.lang.reflect.Method;
