@@ -8,5 +8,6 @@ public interface PlayerRoomCallback {
 
     void pong();
 
+    void callbackEnterTable(int ret);
 
 }

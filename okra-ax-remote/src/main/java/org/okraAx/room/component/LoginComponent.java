@@ -2,9 +2,7 @@ package org.okraAx.room.component;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import org.ogcs.app.AppContext;
 import org.ogcs.app.NetSession;
-import org.okraAx.common.LoginForRoomService;
 import org.okraAx.common.RoomService;
 import org.okraAx.internal.handler.AxCodecHandler;
 import org.okraAx.internal.handler.codec.AxGpbCodec;
@@ -17,7 +15,6 @@ import org.okraAx.v3.GpcCall;
 import org.okraAx.v3.services.ProLoginForRoom;
 import org.okraAx.v3.services.ProRoomForLogin;
 import org.okraAx.v3.services.ProRoomPublic;
-import org.okraAx.v3.services.ProRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +29,7 @@ public class LoginComponent {
 
     @Autowired
     private GpbMessageContext messageContext;
+    
     private LoginClient loginClient;
 
     @PostConstruct
@@ -59,7 +57,6 @@ public class LoginComponent {
     }
 
 
-
     private class ActiveEventHandler extends ChannelInboundHandlerAdapter {
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -74,7 +71,6 @@ public class LoginComponent {
             super.channelInactive(ctx);
         }
     }
-
 
 
 }

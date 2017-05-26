@@ -5,7 +5,7 @@ import org.okraAx.room.fy.Player;
 import org.okraAx.room.module.Room;
 import org.okraAx.room.module.chess.ChineseChess;
 import org.okraAx.utilities.SessionHelper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Set;
@@ -13,11 +13,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
+ * 房间组件
+ *
  * @author TinyZ
- * @date 2017-02-11.
+ * @version 2017.05.25.
  */
-@Component
-public class RoomComponent {
+@Service
+public final class RoomComponent {
 
     private final Map<Long/* roomId */, Room> roomMap = new ConcurrentHashMap<>();
     private final Map<Long/* uid */, Room> uid2RoomMap = new ConcurrentHashMap<>();
@@ -26,6 +28,9 @@ public class RoomComponent {
         return roomMap.get(roomId);
     }
 
+    /**
+     * 搜索房间
+     */
     public Room lookupRoom(int amount) {
         for (Room room : roomMap.values()) {
             if (!room.isFully()) {
@@ -43,9 +48,29 @@ public class RoomComponent {
         return roomMap.values().stream().collect(Collectors.toSet());
     }
 
+    /**
+     * 创建房间
+     */
+    public RoomInfoBean createRoom(int type, boolean normal) {
+        RoomInfoBean roomInfo = new RoomInfoBean();
+        //  roomId
+        //
+        if (normal){
+            //  join room
+        }
+        return roomInfo;
+    }
+
     public void playerJoin(long uid, Room room) {
         roomMap.put(room.id(), room);
         uid2RoomMap.put(uid, room);
+    }
+
+    public void playerExit(long uid) {
+        Room room = uid2RoomMap.remove(uid);
+        if (room != null) {
+            room.onExit(uid);
+        }
     }
 
     public void destroyRoom(long roomId) {
@@ -57,24 +82,6 @@ public class RoomComponent {
             }
             room.onDestroy();
         }
-    }
-
-    public void playerExit(long uid) {
-        Room room = uid2RoomMap.remove(uid);
-        if (room != null) {
-            room.onExit(uid);
-        }
-    }
-
-
-    public RoomInfoBean createRoom(int type, boolean normal) {
-        RoomInfoBean roomInfo = new RoomInfoBean();
-        //  roomId
-        //
-        if (normal) {
-            //  join room
-        }
-        return roomInfo;
     }
 
     public void onEnterRoom(int roomId, int seat, long uid, String name) {

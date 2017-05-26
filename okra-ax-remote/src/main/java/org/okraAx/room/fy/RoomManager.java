@@ -1,8 +1,6 @@
 package org.okraAx.room.fy;
 
-import org.okraAx.internal.v3.MtdDescUtil;
 import org.okraAx.internal.v3.ConnectionEventHandler;
-import org.okraAx.v3.room.beans.FyRoomMi;
 
 /**
  * @author TinyZ.
@@ -16,7 +14,6 @@ public final class RoomManager {
         //  1. 加载配置
         //  2. 建立组件间连接
         //  3. bind端口，对外公开服务
-
 
 
     }

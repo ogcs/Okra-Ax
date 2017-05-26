@@ -40,8 +40,18 @@ public abstract class AbstractTable implements Room {
     }
 
     @Override
-    public void onEnter(Player player) {
-        if (isFully()) return;
+    public synchronized void onEnter(Player player) {
+        if (isFully()) {
+            player.userClient().callbackEnterTable(-1);
+            return;
+        }
+        if (player.getRoom() != null) {
+            player.userClient().callbackEnterTable(-2);
+            return;
+        }
+        //  广播进入房间
+        player.userClient().callbackEnterTable(0);
+        //
         sessions.put(player.id(), player.session());
         player.setRoom(this);
     }
@@ -52,6 +62,8 @@ public abstract class AbstractTable implements Room {
         if (remove != null) {
             Player player = (Player) remove.getConnector();
             player.setRoom(null);
+            //  广播离开房间
+
         }
     }
 
@@ -63,21 +75,25 @@ public abstract class AbstractTable implements Room {
         dispatcher.dispatchEvent(type, this, source);
     }
 
-    /**
-     * Send message to every player on table.
-     *
-     * @param message The message send to player.
-     */
-    protected void broadcast(Message message) {
+    @Override
+    public void onDestroy() {
+        sessions.clear();
+    }
+
+    @Override
+    public void broadcast(Object msg) {
         for (Session session : sessions.values()) {
             if (session.isActive()) {
-                session.writeAndFlush(message);
+                session.writeAndFlush(msg);
             }
         }
     }
 
     @Override
-    public void onDestroy() {
-        sessions.clear();
+    public void push(long uid, Object msg) {
+        Session session = sessions.get(uid);
+        if (session != null) {
+            session.writeAndFlush(msg);
+        }
     }
 }
