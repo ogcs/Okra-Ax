@@ -68,6 +68,11 @@ public final class Player implements Connector, ServiceProxy<PlayerRoomCallback>
             session.close();
             this.session = null;
         }
+        //  断线 - 直接离开房间
+        if (room != null) {
+            room.onExit(id());
+            room = null;
+        }
     }
 
     public long id() {
