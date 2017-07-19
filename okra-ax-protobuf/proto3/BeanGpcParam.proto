@@ -1,0 +1,46 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.beans.gpcParam";
+option java_outer_classname = "GpcBnGpcParam";
+//option java_generic_services = true;
+option java_multiple_files = true;
+
+//  request bean.
+import "AxAny.proto";
+
+//
+//  定义Gpc相关的api中转参数
+//  用于通信传输
+message Info {
+    string version = 1;
+}
+
+//  角色
+message Pb {
+
+    int64 uid = 1; //  角色 唯一ID
+    string name = 2; //  角色名称
+    int32 figure = 3; //  形象
+    AxAny ext = 4; //  扩展数据
+    map<int32, int32> items = 5; //  道具数据
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

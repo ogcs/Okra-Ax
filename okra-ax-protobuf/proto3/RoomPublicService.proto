@@ -6,6 +6,7 @@ option java_outer_classname = "ProRoomPublic";
 //option java_generic_services = true;
 
 import "Gpc.proto";
+import "BeanRoomPub.proto";
 
 //  player invoke room public service.
 service RoomPublicService {

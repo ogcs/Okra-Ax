@@ -1,0 +1,37 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.beans.roomPub";
+option java_outer_classname = "GpcBnPlayerRoom";
+//option java_generic_services = true;
+option java_multiple_files = true;
+option csharp_namespace="Okra.Gpb.Generated";
+
+//  request bean.
+import "AxAny.proto";
+
+//  {@link PlayerRoomCallback}
+message Info {
+    string version = 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

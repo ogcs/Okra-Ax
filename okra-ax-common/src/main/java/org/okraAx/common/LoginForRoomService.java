@@ -14,6 +14,8 @@ public interface LoginForRoomService {
      */
     void registerChannel();
 
+    void verifyPlayerInfo(long uid, long security);
+
     //  callback
 
 

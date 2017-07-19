@@ -122,6 +122,8 @@ public class LoginComponent {
                 user.userClient().callbackLogin(-1);
                 return;
             }
+            //  initialize
+            user.lazyLoad();
             user.userClient().callbackLogin(0);
         } catch (ExecutionException e) {
             LOG.info("[onLogin] exception.", e);

@@ -1,0 +1,70 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.beans.roomPub";
+option java_outer_classname = "GpcBnRoomPub";
+//option java_generic_services = true;
+option java_multiple_files = true;
+
+//  request bean.
+import "AxAny.proto";
+
+//  {@link RoomPublicService}
+message Info {
+    string version = 1;
+}
+//   Service Beans
+//  角色
+message ApiOnPlayerConnect {
+    int64 uid = 1; //  角色唯一ID
+    int64 security = 2; //  秘钥
+}
+message ApiOnEnterRoom {
+    int32 roomId  = 1;
+    int32 seat  = 2;
+    int64 uid  = 3;
+    string name  = 4;
+}
+message ApiOnGetReady {
+    bool ready = 1;
+}
+message ApiOnMoveChess {
+    int32 fromX = 1;
+    int32 fromY = 2;
+    int32 toX = 3;
+    int32 toY = 4;
+}
+message ApiOnChat {
+    MsgOnChat chat = 1;
+}
+//
+message MsgOnChat {
+    int32 channel = 1; //   聊天频道 [0:综合  1:私聊  2:房间]
+    MsgChatUserInfo from = 2; //   发送者
+    AxAny to = 3; // 私聊收信者
+    string content = 4; //   内容
+}
+//   聊天角色基本信息
+message MsgChatUserInfo {
+    int64 uid = 1;
+    string name = 2;
+    int32 lv = 3;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

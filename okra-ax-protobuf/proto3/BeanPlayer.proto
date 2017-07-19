@@ -1,8 +1,8 @@
 syntax = "proto3";
 package org.okraAx.v3;
 option optimize_for = SPEED;
-option java_package = "org.okraAx.v3.player.beans";
-option java_outer_classname = "ProPlayerBeans";
+option java_package = "org.okraAx.v3.beans.player";
+option java_outer_classname = "GpcBnPlayer";
 //option java_generic_services = true;
 option java_multiple_files = true;
 
@@ -11,6 +11,11 @@ option java_multiple_files = true;
 //  创建角色
 message CallbackCreateRoleBean {
     int32 ret = 1;
+}
+//
+message CallbackLoginBean {
+    int32 ret = 1;
+    string openId = 2;
 }
 //  同步系统时间
 message CallbackSyncTime {

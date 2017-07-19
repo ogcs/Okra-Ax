@@ -8,7 +8,9 @@ import org.okraAx.common.RoomPublicService;
 import org.okraAx.common.RoomService;
 import org.okraAx.common.modules.FyChessService;
 import org.okraAx.room.fy.Player;
+import org.okraAx.room.module.Room;
 import org.okraAx.utilities.SessionHelper;
+import org.okraAx.v3.beans.roomPub.MsgOnChat;
 
 /**
  * @author TinyZ.
@@ -40,12 +42,24 @@ public enum Facade implements RoomService, RoomPublicService,
     }
 
     @Override
-    public void onPlayerConnect(long security) {
+    public void onPlayerConnect(long uid, long security) {
         NetSession session = SessionHelper.currentSession();
         if (session == null || !session.isActive()) return;
         // TODO: verify security code from login server.
+        //  login通知
 
-        Player player = new Player(-1L, session);
+        Player player = new Player(uid, session);
+        session.setConnector(player);
+        //  logic校验用户信息
+        lc.service().verifyPlayerInfo(uid, security);
+    }
+
+    public void callbackVerifyPlayerInfo(int ret) {
+        Player player = SessionHelper.curPlayer();
+        if (player == null) return;
+
+        //  set player info
+
         player.userClient().pong();
     }
 
@@ -66,27 +80,24 @@ public enum Facade implements RoomService, RoomPublicService,
 
     @Override
     public void onShowHall() {
-
+        roomComponent.showRoomList();
     }
 
     @Override
-    public void onGetReady(long uid, boolean ready) {
-        roomComponent.onGetReady(uid, ready);
+    public void onGetReady(boolean ready) {
+        roomComponent.onGetReady(ready);
     }
 
     @Override
-    public void onGameStart() {
-
-    }
-
-    @Override
-    public void onGameEnd() {
-
-    }
-
-    @Override
-    public void onChat() {
-
+    public void onChat(MsgOnChat chat) {
+        Player player = SessionHelper.curPlayer();
+        if (player == null) return;
+        Room room = player.getRoom();
+        if (room != null) {
+            //  TODO: 脏词过滤 - 客户端过滤
+            room.broadcast(chat);
+            LOG.info("chat message content. ", chat.toString());
+        }
     }
 
     @Override

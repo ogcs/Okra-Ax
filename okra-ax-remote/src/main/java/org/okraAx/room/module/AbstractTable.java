@@ -1,6 +1,5 @@
 package org.okraAx.room.module;
 
-import com.google.protobuf.Message;
 import org.ogcs.app.Session;
 import org.ogcs.event.Event;
 import org.ogcs.event.EventDispatcher;
@@ -57,6 +56,11 @@ public abstract class AbstractTable implements Room {
     }
 
     @Override
+    public void onReady(Player player, boolean ready) {
+
+    }
+
+    @Override
     public void onExit(Long uid) {
         Session remove = sessions.remove(uid);
         if (remove != null) {
@@ -67,17 +71,17 @@ public abstract class AbstractTable implements Room {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        sessions.clear();
+    }
+
     protected void dispatchEvent(Event event) {
         dispatcher.dispatchEvent(event);
     }
 
     protected void dispatchEvent(Object type, Object source) {
         dispatcher.dispatchEvent(type, this, source);
-    }
-
-    @Override
-    public void onDestroy() {
-        sessions.clear();
     }
 
     @Override

@@ -21,7 +21,6 @@ public class Facade implements LoginPublicService, LoginForRoomService {
     @Autowired
     private RoomComponent roomComponent;
 
-
     @Override
     public void onCreateRole(String openId, String name, int figure) {
         NetSession session = SessionHelper.currentSession();
@@ -70,9 +69,13 @@ public class Facade implements LoginPublicService, LoginForRoomService {
     }
 
     @Override
-    public void callbackEnterChannel(int ret) {
+    public void verifyPlayerInfo(long uid, long security) {
 
     }
 
+    @Override
+    public void callbackEnterChannel(int ret) {
+
+    }
 
 }

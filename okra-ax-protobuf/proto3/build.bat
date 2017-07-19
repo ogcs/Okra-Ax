@@ -6,6 +6,7 @@ SET PROTOC_PATH=E:\C\OkraAx\okra-ax\okra-ax-protobuf\proto3\protoc\bin\protoc.ex
 SET GPB_INCLUDE_PATH=%~dp0protoc\include\google\protobuf\
 SET ROOT_PATH=%~dp0
 SET JAVA_OUT_PATH=E:\C\OkraAx\okra-ax\okra-ax-protobuf\src\main\java\
+SET CSHARP_OUT_PATH=E:\C\OkraAx\okra-ax\okra-ax-protobuf\proto3\CHARP_OUT\
 REM SET JAVA_OUT_PATH=%ROOT_PATH%JAVA_OUT
 
 setlocal ENABLEDELAYEDEXPANSION
@@ -20,7 +21,7 @@ REM echo %%~nxi
 REM echo %PROTOC_PATH% -IPATH=%ROOT_PATH% -IPATH=%GPB_INCLUDE_PATH% --java_out=%JAVA_OUT_PATH% %%~fi
 REM echo %PROTOC_PATH% -I=./ --java_out=./JAVA_OUT %%~nxi
 REM %PROTOC_PATH% -I=./ --java_out=./JAVA_OUT %%~nxi
-%PROTOC_PATH% -I=%ROOT_PATH% --java_out=%JAVA_OUT_PATH% %%~fi
+%PROTOC_PATH% -I=%ROOT_PATH% --java_out=%JAVA_OUT_PATH% --csharp_out=%CSHARP_OUT_PATH% %%~fi
 
 REM echo 相对路径
 

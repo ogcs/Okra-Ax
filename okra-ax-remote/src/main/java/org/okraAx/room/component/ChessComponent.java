@@ -28,4 +28,8 @@ public class ChessComponent {
         }
     }
 
+    public void onPutDownw(int x, int y) {
+
+    }
+
 }

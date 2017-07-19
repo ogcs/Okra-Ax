@@ -6,12 +6,13 @@ option java_outer_classname = "ProPlayerCallback";
 //option java_generic_services = true;
 
 import "Gpc.proto";
-import "PlayerBeans.proto";
+import "BeanPlayer.proto";
 
 //  room component invoke logic service.
 service PlayerCallbackService {
 
     rpc callbackCreateRole (CallbackCreateRoleBean) returns (GpcVoid);
+    rpc callbackLogin (CallbackLoginBean) returns (GpcVoid);
     rpc callbackSyncTime (CallbackSyncTime) returns (GpcVoid);
 
 

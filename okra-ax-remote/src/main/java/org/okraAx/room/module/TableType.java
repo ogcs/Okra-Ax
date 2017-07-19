@@ -6,7 +6,17 @@ package org.okraAx.room.module;
  */
 public enum TableType {
 
+    /**
+     * 中国象棋
+     */
     CHINESE_CHESS,
+    /**
+     * 五子棋
+     */
+    FIVE_CHESS,
+    /**
+     * 乐清麻将
+     */
     MAHJONG_YUEQING;
 
 }
