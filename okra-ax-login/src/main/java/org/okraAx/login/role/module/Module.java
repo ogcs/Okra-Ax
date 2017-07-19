@@ -44,6 +44,11 @@ public interface Module {
     void loadFromDB();
 
     /**
+     * Flush data to datasource.
+     */
+    void flushToDB();
+
+    /**
      * reset module and reset initialize status.
      */
     void dispose();

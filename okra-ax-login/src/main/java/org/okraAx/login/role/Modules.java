@@ -19,7 +19,7 @@ package org.okraAx.login.role;
 import org.okraAx.login.role.module.Module;
 
 /**
- * Game Role Interface.
+ * Game Role' Module Interface.
  * The role instance comprise by many module and player's base information.
  * These modules manage role's optional data or information.
  * <pre>
