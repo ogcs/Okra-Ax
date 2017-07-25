@@ -3,7 +3,7 @@ package org.okraAx.login.role;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.service.SimpleTaskService;
-import org.okraAx.login.role.module.DelayFlushModule;
+import org.okraAx.internal.core.Changeable;
 import org.okraAx.login.role.module.Module;
 
 import java.util.Map;
@@ -53,8 +53,11 @@ public abstract class DelayFlushModules implements Modules {
 
     private void delayFlushToDB() {
         for (Map.Entry<Class<? extends Module>, Module> entry : modules.entrySet()) {
-            if (entry.getValue() instanceof DelayFlushModule
-                    && ((DelayFlushModule) entry.getValue()).isChanged()) {
+            if (entry.getValue() instanceof Changeable
+                    && ((Changeable) entry.getValue()).isChanged()) {
+                Changeable obj = (Changeable) entry.getValue();
+                if (!obj.isChanged()) return;
+                obj.setChanged(false);
                 entry.getValue().flushToDB();
             }
         }

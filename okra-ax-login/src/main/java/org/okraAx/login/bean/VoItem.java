@@ -4,7 +4,7 @@ package org.okraAx.login.bean;
  * @author TinyZ.
  * @version 2017.06.13
  */
-public class VoItem {
+public class VoItem extends ChangeableBean {
 
     private long itemId;    //  唯一ID
     private int cfgItemId;  //  配置表ID

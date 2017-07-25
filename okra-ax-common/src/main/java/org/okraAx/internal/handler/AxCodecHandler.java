@@ -28,9 +28,8 @@ import java.util.List;
 
 /**
  * @author : TinyZ.
- * @email : tinyzzh815@gmail.com
- * @date : 2016/5/23
  * @since 1.0
+ * @version  2016.05.23
  */
 @Sharable
 public class AxCodecHandler extends MessageToMessageCodec<ByteBuf, Object> {
