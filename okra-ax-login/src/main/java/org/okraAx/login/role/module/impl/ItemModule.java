@@ -3,6 +3,7 @@ package org.okraAx.login.role.module.impl;
 import org.okraAx.login.bean.VoItem;
 import org.okraAx.login.role.Modules;
 import org.okraAx.login.role.module.AbstractModule;
+import org.okraAx.login.role.module.DataSourceModule;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,18 +14,10 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author TinyZ.
  * @version 2017.05.18
  */
-public final class ItemModule extends AbstractModule {
+public final class ItemModule extends DataSourceModule<VoItem, Long> {
 
     private final Map<Long /* itemId */, VoItem> items = new ConcurrentHashMap<>();
 //    private final Map<Integer /* cfgItemId */, List<VoItem>> cfgItemMap = new ConcurrentHashMap<>();
-
-    //  插入列表
-    private Map<Long, VoItem> insertMap = new ConcurrentHashMap<>();
-    //  更新列表
-    private Map<Long, VoItem> updateMap = new ConcurrentHashMap<>();
-    //  删除列表
-    private Map<Long, VoItem> deleteMap = new ConcurrentHashMap<>();
-
 
     public ItemModule(Modules modules) {
         super(modules);
@@ -41,26 +34,18 @@ public final class ItemModule extends AbstractModule {
     }
 
     @Override
-    public void flushToDB() {
-        synchronized (this) {
-            for (Map.Entry<Long, VoItem> entry : insertMap.entrySet()) {
-                if (deleteMap.containsKey(entry.getKey())) continue;    //  已经被使用完
-                if (updateMap.containsKey(entry.getKey())) {
-                    updateMap.remove(entry.getKey());
-                }
-                //  insert
-            }
-            for (Map.Entry<Long, VoItem> entry : updateMap.entrySet()) {
-                if (deleteMap.containsKey(entry.getKey())) continue;    //  已经被使用完
-                //  update
-            }
-            for (Map.Entry<Long, VoItem> entry : deleteMap.entrySet()) {
-                //  delete
-            }
-            insertMap.clear();
-            updateMap.clear();
-            deleteMap.clear();
-        }
+    public void batchInsert(Collection<VoItem> bean) {
+
+    }
+
+    @Override
+    public void batchUpdate(Collection<VoItem> bean) {
+
+    }
+
+    @Override
+    public void batchDelete(Collection<VoItem> bean) {
+
     }
 
     @Override
@@ -104,10 +89,10 @@ public final class ItemModule extends AbstractModule {
         if (items.containsKey(voItem.getItemId())) {
             VoItem voItem1 = items.get(voItem.getItemId());
             voItem1.setAmount(voItem1.getAmount() + voItem.getAmount());
-            updateMap.put(voItem.getItemId(), voItem);
+            putUpdate(voItem);
         } else {
             items.put(voItem.getItemId(), voItem);
-            insertMap.put(voItem.getItemId(), voItem);
+            putInsert(voItem);
         }
     }
 
@@ -115,9 +100,7 @@ public final class ItemModule extends AbstractModule {
         List<VoItem> list = selectByCfgItemId(cfgItemId, onlyForever);
         if (list.size() == amount) {
             for (VoItem voItem : list) {
-                deleteMap.put(voItem.getItemId(), voItem);
-                if (updateMap.containsKey(voItem.getItemId()))
-                    updateMap.remove(voItem.getItemId());
+                putDelete(voItem);
                 items.remove(voItem.getItemId());
             }
             return true;
@@ -126,12 +109,10 @@ public final class ItemModule extends AbstractModule {
             for (VoItem voItem : list) {
                 if (usedAmount + voItem.getAmount() > amount) {
                     voItem.setAmount(voItem.getAmount() - amount + usedAmount);
-                    updateMap.put(voItem.getItemId(), voItem);
+                    putUpdate(voItem);
                 } else {
                     usedAmount += voItem.getAmount();
-                    deleteMap.put(voItem.getItemId(), voItem);
-                    if (updateMap.containsKey(voItem.getItemId()))
-                        updateMap.remove(voItem.getItemId());
+                    putDelete(voItem);
                     items.remove(voItem.getItemId());
                 }
                 if (usedAmount >= amount) {

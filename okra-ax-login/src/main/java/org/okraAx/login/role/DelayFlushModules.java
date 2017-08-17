@@ -42,7 +42,7 @@ public abstract class DelayFlushModules implements Modules {
         //  Scheduled Task
         SCHEDULED_SERVICE.scheduleWithFixedDelay(() -> {
             try {
-                if (this.task.isDone()) {
+                if (this.task == null || this.task.isDone()) {
                     this.task = WORKERS.submit(this::delayFlushToDB);
                 }
             } catch (Exception e) {
@@ -57,8 +57,8 @@ public abstract class DelayFlushModules implements Modules {
                     && ((Changeable) entry.getValue()).isChanged()) {
                 Changeable obj = (Changeable) entry.getValue();
                 if (!obj.isChanged()) return;
-                obj.setChanged(false);
                 entry.getValue().flushToDB();
+                obj.setChanged(false);
             }
         }
     }

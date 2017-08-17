@@ -1,7 +1,7 @@
 package org.okraAx.room.module.mahjong;
 
 import org.okraAx.room.fy.Player;
-import org.okraAx.room.module.AbstractTable;
+import org.okraAx.room.module.AbstractRoom;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import java.util.Map;
  * @since 2.0
  * @version  2017.02.13.
  */
-public class YueQingMahjong extends AbstractTable {
+public class YueQingMahjong extends AbstractRoom {
 
     private static final Byte[] pool = new Byte[] {
             //  条

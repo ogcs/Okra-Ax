@@ -4,7 +4,7 @@ package org.okraAx.login.bean;
  * @author TinyZ.
  * @version 2017.06.13
  */
-public class VoItem extends ChangeableBean {
+public class VoItem extends ChangeableBean<Long> {
 
     private long itemId;    //  唯一ID
     private int cfgItemId;  //  配置表ID
@@ -41,5 +41,10 @@ public class VoItem extends ChangeableBean {
 
     public void setExpire(int expire) {
         this.expire = expire;
+    }
+
+    @Override
+    public Long beanKey() {
+        return itemId;
     }
 }

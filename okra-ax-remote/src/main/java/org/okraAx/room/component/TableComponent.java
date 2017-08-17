@@ -1,6 +1,5 @@
 package org.okraAx.room.component;
 
-import org.okraAx.room.bean.BaseRoomInfo;
 import org.okraAx.room.bean.PlayerInfo;
 import org.okraAx.room.bean.RoomInfoBean;
 import org.okraAx.room.fy.Player;
@@ -49,9 +48,10 @@ public final class TableComponent {
     }
 
     /**
-     *加入房间
+     * 加入房间
+     *
      * @param roomId 指定房间
-     * @param seat 指定位置
+     * @param seat   指定位置
      */
     public void joinTable(PlayerInfo playerInfo, long roomId, int seat) {
         Room room = roomMap.get(roomId);
@@ -63,8 +63,6 @@ public final class TableComponent {
 
             }
         }
-
-
 
 
     }
@@ -81,11 +79,7 @@ public final class TableComponent {
         }
 
 
-
-
     }
-
-
 
 
     public Room getByUid(long uid) {
@@ -104,7 +98,7 @@ public final class TableComponent {
         RoomInfoBean roomInfo = new RoomInfoBean();
         //  roomId
         //
-        if (normal){
+        if (normal) {
             //  join room
         }
         return roomInfo;

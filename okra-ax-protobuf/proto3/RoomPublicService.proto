@@ -10,8 +10,21 @@ import "BeanRoomPub.proto";
 
 //  player invoke room public service.
 service RoomPublicService {
+
     //  ping-pong
     rpc ping (GpcVoid) returns (GpcVoid);
+    //  显示房间列表
+    rpc onShowRoomList (GpcVoid) returns (GpcVoid);
+    //  创建房间
+    rpc onCreateRoom (GpcVoid) returns (GpcVoid);
+    //  进入房间
+    rpc onEnterRoom (PmOnEnterRoom) returns (GpcVoid);
+    //  游戏[准备/取消准备/开始游戏]
+    rpc onReady (GpcVoid) returns (GpcVoid);
+    //  退出房间
+    rpc onExitRoom (GpcVoid) returns (GpcVoid);
+    //  聊天
+    rpc onChat (PmOnChat) returns (GpcVoid);
 
 
 }

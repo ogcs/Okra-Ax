@@ -11,4 +11,23 @@ public interface PlayerRoomCallback {
     void callbackEnterTable(int ret);
     void callbackShowRoomList();
 
+    void changeRoomStatus();
+    void changePlayerStatus();
+
+    void callbackJoinRoom(int ret, long uid, String name, int figure);
+    void callbackExitRoom(int ret, long uid);
+    void callbackChangeUserStatus(int ret, long uid);
+    void callbackChangeRoomStatus(int ret);
+
+
+
+
+
+
+
+
+
+
+
+
 }

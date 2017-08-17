@@ -46,7 +46,8 @@ public abstract class DataSourceModule<B extends ChangeableBean<K>, K>
     /**
      * Flush all data to database.
      */
-    public void flushChangedData() {
+    @Override
+    public void flushToDB() {
         if (!isChanged())
             return;
         if (insertMap.isEmpty()
@@ -56,25 +57,20 @@ public abstract class DataSourceModule<B extends ChangeableBean<K>, K>
         setChanged(false);
         synchronized (this) {
             //
-            Iterator<Map.Entry<K, B>> itInsert = insertMap.entrySet().iterator();
-            while (itInsert.hasNext()) {
-                Map.Entry<K, B> entry = itInsert.next();
-                if (deleteMap.containsKey(entry.getKey())) {
-                    itInsert.remove();
+            for (K key : insertMap.keySet()) {
+                if (deleteMap.containsKey(key)) {
+                    insertMap.remove(key);
                     continue;
                 }
-                if (updateMap.containsKey(entry.getKey())) {
-                    updateMap.remove(entry.getKey());
+                if (updateMap.containsKey(key)) {
+                    updateMap.remove(key);
                 }
             }
             batchInsert(insertMap.values());
             //
-            Iterator<Map.Entry<K, B>> itUpdate = updateMap.entrySet().iterator();
-            while (itUpdate.hasNext()) {
-                Map.Entry<K, B> entry = itUpdate.next();
-                if (deleteMap.containsKey(entry.getKey())) {
-                    itUpdate.remove();
-                    continue;
+            for (K key : updateMap.keySet()) {
+                if (deleteMap.containsKey(key)) {
+                    updateMap.remove(key);
                 }
             }
             batchUpdate(updateMap.values());

@@ -7,6 +7,7 @@ import org.ogcs.gpb.generated.PushReport;
 import org.okraAx.room.bean.RoomInfo;
 import org.okraAx.room.fy.Player;
 import org.okraAx.room.module.AbstractRoom;
+import org.okraAx.room.module.GameRule;
 import org.okraAx.room.module.Room;
 import org.okraAx.room.module.RoomFactory;
 import org.okraAx.v3.chess.beans.MsgChessMove;
@@ -45,16 +46,16 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 1.0
  * @version 2017.03.05
  */
-public final class ChineseChess extends AbstractRoom {
+public final class ChineseChessV2 extends AbstractRoom implements GameRule{
 
-    private static final Logger LOG = LogManager.getLogger(ChineseChess.class);
+    private static final Logger LOG = LogManager.getLogger(ChineseChessV2.class);
 //    private RoomManager roomManager = (RoomManager) AppContext.getBean(SpringContext.MODULE_ROOM_MANAGER);
 
     public static final RoomFactory CHINESE_CHESS = new RoomFactory() {
         @Override
         public Room newInstance(RoomInfo<?> roomInfo) {
             //  TODO: 初始化
-            return new ChineseChess(1);
+            return new ChineseChessV2(1);
         }
     };
 
@@ -76,8 +77,9 @@ public final class ChineseChess extends AbstractRoom {
 
     private Map<Long, Boolean> readys = new ConcurrentHashMap<>();
 
-    public ChineseChess(long roomId) {
-        super(roomId);
+
+    public ChineseChessV2(long roomId) {
+        this.roomId = roomId;
         this.round = 0;
     }
 

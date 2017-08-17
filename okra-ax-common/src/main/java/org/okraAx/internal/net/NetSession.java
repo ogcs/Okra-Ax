@@ -7,18 +7,22 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author TinyZ.
- * @version 2017.07.08
+ * @version 2017.08.07
  */
-public abstract class AbstractSession implements AutoCloseable {
+public class NetSession implements AutoCloseable {
 
-    protected Channel channel;
+    private volatile Channel channel;
 
-    public AbstractSession(Channel channel) {
+    public NetSession(Channel channel) {
         this.channel = channel;
     }
 
-    public boolean isOnline() {
+    public boolean isActive() {
         return channel != null && channel.isActive();
+    }
+
+    public Channel channel() {
+        return channel;
     }
 
     public void writeAndFlush(Object msg) {
@@ -26,7 +30,7 @@ public abstract class AbstractSession implements AutoCloseable {
     }
 
     public void writeAndFlush(Object message, ChannelFutureListener listener) {
-        if (!isOnline()) return;
+        if (!isActive()) return;
         if (channel.isWritable()) {
             if (listener == null) {
                 channel.writeAndFlush(message, channel.voidPromise());
@@ -41,8 +45,8 @@ public abstract class AbstractSession implements AutoCloseable {
     }
 
     @Override
-    public void close() throws Exception {
-        if (channel != null){
+    public void close() {
+        if (channel != null) {
             channel.close();
         }
     }

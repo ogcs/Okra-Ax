@@ -31,6 +31,11 @@ public interface Room {
     void init();
 
     /**
+     * Return the room's status.
+     */
+    int status();
+
+    /**
      * Is the room is fully.
      *
      * @return Return true if the player count large than the {@link #maxPlayer()}
@@ -70,19 +75,4 @@ public interface Room {
      * When the game is over. clear the game data or cache.
      */
     void onDestroy();
-
-    /**
-     * Send message to every player on table.
-     *
-     * @param msg the message send to player.
-     */
-    void broadcast(Object msg);
-
-    /**
-     * push message to special player by uid.
-     *
-     * @param uid the player's unique id.
-     * @param msg the message send to player.
-     */
-    void push(long uid, Object msg);
 }

@@ -1,14 +1,14 @@
 package org.okraAx.room.module.chess;
 
 import org.okraAx.room.fy.Player;
-import org.okraAx.room.module.AbstractTable;
+import org.okraAx.room.module.AbstractRoom;
 
 /**
  * 五子棋
  *
  * @version 2017.05.30
  */
-public final class FiveChess extends AbstractTable {
+public final class FiveChess extends AbstractRoom {
 
     private static final int WIDTH = 19;
     private static final int HEIGHT = 19;

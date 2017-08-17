@@ -6,9 +6,10 @@ option java_outer_classname = "ProPlayerRoomCallback";
 //option java_generic_services = true;
 
 import "Gpc.proto";
+import "BeanPlayer.proto";
 
 //  room callback to player.
-service PlayerRoomCallback {
+service PlayerCallbackFromRoom {
     //  ping-pong
     rpc pong (GpcVoid) returns (GpcVoid);
 

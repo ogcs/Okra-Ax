@@ -8,19 +8,17 @@ option java_multiple_files = true;
 
 //  request bean.
 
-//  创建角色
-message CallbackCreateRoleBean {
-    int32 ret = 1;
+//  玩家基础信息
+message BasePlayerInfo {
+
+    int64 uid = 1;  //  玩家唯一ID
+    string name = 2;    //  角色名
+    int32 figure = 3;   //  形象
+    //  胜率/掉线率/
+
 }
-//
-message CallbackLoginBean {
-    int32 ret = 1;
-    string openId = 2;
-}
-//  同步系统时间
-message CallbackSyncTime {
-    int64 timestamp = 1;
-}
+
+
 
 
 

@@ -5,7 +5,7 @@ option java_package = "org.okraAx.v3.beans.roomPub";
 option java_outer_classname = "GpcBnPlayerRoom";
 //option java_generic_services = true;
 option java_multiple_files = true;
-option csharp_namespace="Okra.Gpb.Generated";
+option csharp_namespace = "Okra.Gpb.Generated";
 
 //  request bean.
 import "AxAny.proto";
@@ -14,6 +14,27 @@ import "AxAny.proto";
 message Info {
     string version = 1;
 }
+//  RoomPublicService#onEnterRoom
+message PmOnEnterRoom {
+    int64 roomId = 1; //  房间ID
+    int32 index = 2; //  指定位置
+}
+//  RoomPublicService#onExitRoom
+message PmOnExitRoom {
+    int64 roomId = 1; //  房间ID
+}
+
+//  RoomPublicService#onChat
+message PmOnChat {
+    int32 channel = 1; //  聊天频道
+    int64 roomId = 2; //  房间ID
+    string message = 3; //  聊天内容
+    int64 from = 4; //  发送人
+    string fromName = 5; //  发送人名称
+    int64 to = 6; //  收信人
+    string toName = 7; //  收信人名称
+}
+
 
 
 

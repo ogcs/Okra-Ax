@@ -30,8 +30,10 @@ public final class LoginComponent {
 
     @Autowired
     private GpbMessageContext messageContext;
-    
-    private LoginClient loginClient;
+    @Autowired
+    private Facade facade;
+
+    private volatile LoginClient loginClient;
 
     @PostConstruct
     public void initialize() {
@@ -40,7 +42,7 @@ public final class LoginComponent {
         loginClient = new LoginClient();
         ClientContext context = new ClientContext();
         context.initCmdFactory(new GpbCmdFactory(messageContext))
-                .registerService(Facade.INSTANCE, RoomService.class)
+                .registerService(facade, RoomService.class)
                 .setAutoConnect(true)
                 .setChildThread(1)
                 .addNetHandler("codec", new AxCodecHandler(new AxGpbCodec(GpcCall.getDefaultInstance())))
