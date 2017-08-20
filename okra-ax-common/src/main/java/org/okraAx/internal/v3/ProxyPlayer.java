@@ -50,7 +50,8 @@ public abstract class ProxyPlayer<P> implements Connector, ServiceProxy<P> {
 
     @Override
     public void sessionActive() {
-        this.callback = newProxyInstance(new GpbInvocationHandler(session), clzOfProxy);
+        //  TODO:需要修复
+        this.callback = newProxyInstance(new GpbInvocationHandler(null), clzOfProxy);
     }
 
     @Override
