@@ -9,13 +9,6 @@ option java_multiple_files = true;
 //  request bean.
 import "AxAny.proto";
 
-//
-//  定义Gpc相关的api中转参数
-//  用于通信传输
-message Info {
-    string version = 1;
-}
-
 //  角色
 message Pb {
 

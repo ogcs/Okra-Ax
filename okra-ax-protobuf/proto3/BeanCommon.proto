@@ -9,13 +9,6 @@ option java_multiple_files = true;
 //  request bean.
 import "AxAny.proto";
 
-//   定义通用的bean
-//   用于多进程共享bean
-//   使用工具转换Gpb成JavaBean
-message Info {
-    string version = 1;
-}
-
 //   用户信息
 message UserInfo {
     int64 uid = 1; //  角色 唯一ID

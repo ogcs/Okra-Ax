@@ -1,9 +1,10 @@
-package org.okraAx.login.role.mybatis;
+package org.okraAx.login.server;
 
 import org.ogcs.app.AppContext;
 import org.ogcs.app.Connector;
-import org.ogcs.app.Session;
+import org.ogcs.app.ServiceProxy;
 import org.okraAx.common.RoomService;
+import org.okraAx.internal.net.NetSession;
 import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.login.bean.ChannelInfo;
 import org.okraAx.login.component.RoomComponent;
@@ -15,11 +16,11 @@ import java.lang.reflect.Proxy;
  * @author TinyZ.
  * @version 2017.03.29
  */
-public class RoomClient implements Connector<Session> {
+public class RoomClient implements ServiceProxy<RoomService> {
 
     private RoomComponent roomComponent = AppContext.getBean(RoomComponent.class);
     private final ChannelInfo channelInfo;
-    private volatile Session session;
+    private volatile NetSession session;
     private volatile RoomService service;
 
     public RoomClient(ChannelInfo channelInfo) {
@@ -30,18 +31,15 @@ public class RoomClient implements Connector<Session> {
         return this.service;
     }
 
-    @Override
     public boolean isOnline() {
         return session != null && session.isActive();
     }
 
-    @Override
-    public Session session() {
+    public NetSession session() {
         return session;
     }
 
-    @Override
-    public void setSession(Session session) {
+    public void setSession(NetSession session) {
         //  init proxy session.
         if (this.service == null) {
             synchronized (this) {
@@ -57,14 +55,7 @@ public class RoomClient implements Connector<Session> {
     }
 
     @Override
-    public void sessionActive() {
-
-    }
-
-    @Override
-    public void sessionInactive() {
-        this.session = null;
-        if (this.roomComponent != null)
-            this.roomComponent.unregisterChannel(channelInfo.getRoomId());
+    public RoomService proxy() {
+        return service;
     }
 }

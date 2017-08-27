@@ -1,5 +1,6 @@
 package org.okraAx.internal.v3.protobuf;
 
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +38,12 @@ public class GpbInvocationHandler implements InvocationHandler {
                 return null;
             }
             GpcCall call = this.context.pack(method, args);
-            this.session.writeAndFlush(call);
+            this.session.writeAndFlush(call, new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    LOG.info("客户端接收数据：" + future.isSuccess());
+                }
+            });
         } catch (Exception e) {
             LOG.error("[Gpb] method[" + method.getName() + "] invoke exception. ", e);
         }

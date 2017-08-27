@@ -12,12 +12,10 @@ public final class NetHelper {
     private static final ThreadLocal<NetSession> THREAD_LOCAL = new ThreadLocal<>();
 
     /**
-     * @param <T> the special session class.
      * @return return the session that call the produce.
      */
-    @SuppressWarnings("unchecked")
-    public static <T extends NetSession> T session() {
-        return (T) THREAD_LOCAL.get();
+    public static NetSession session() {
+        return THREAD_LOCAL.get();
     }
 
     public static void setSession(NetSession session) {

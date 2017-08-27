@@ -27,6 +27,10 @@ public class YueQingMahjong extends AbstractRoom {
     };
     private List<Byte> list = new ArrayList<>();
 
+    public YueQingMahjong(long roomId) {
+        super(roomId);
+    }
+
     @Override
     public int type() {
         return 0;

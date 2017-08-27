@@ -10,10 +10,6 @@ option csharp_namespace = "Okra.Gpb.Generated";
 //  request bean.
 import "AxAny.proto";
 
-//  {@link PlayerRoomCallback}
-message Info {
-    string version = 1;
-}
 //  RoomPublicService#onEnterRoom
 message PmOnEnterRoom {
     int64 roomId = 1; //  房间ID

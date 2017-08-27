@@ -10,5 +10,8 @@ public class VoLottery extends ChangeableBean {
     public volatile int energy;
 
 
-
+    @Override
+    public Object beanKey() {
+        return lotteryId;
+    }
 }

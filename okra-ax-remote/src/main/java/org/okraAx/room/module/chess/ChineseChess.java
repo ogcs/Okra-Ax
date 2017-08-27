@@ -121,11 +121,6 @@ public final class ChineseChess extends AbstractRoom {
         return -1;
     }
 
-    public void onAction(int type, Object data) {
-        if (dispatcher == null) return;
-        dispatcher.dispatchEvent(type, this, data);
-    }
-
     @Override
     public void onExit(Long uid) {
         super.onExit(uid);

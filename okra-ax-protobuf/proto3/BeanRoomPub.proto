@@ -9,10 +9,6 @@ option java_multiple_files = true;
 //  request bean.
 import "AxAny.proto";
 
-//  {@link RoomPublicService}
-message Info {
-    string version = 1;
-}
 //   Service Beans
 //  角色
 message ApiOnPlayerConnect {

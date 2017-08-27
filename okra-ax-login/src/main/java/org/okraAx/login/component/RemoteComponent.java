@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class RemoteComponent {
 
-    private static final Logger LOG = LogManager.getLogger(LoginComponent.class);
+    private static final Logger LOG = LogManager.getLogger(RemoteComponent.class);
 
     private Map<Integer, Object> channels = new ConcurrentHashMap<>();
 

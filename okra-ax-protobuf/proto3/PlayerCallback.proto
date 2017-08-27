@@ -11,9 +11,9 @@ import "BeanPlayer.proto";
 //  room component invoke logic service.
 service PlayerCallbackService {
 
-    rpc callbackCreateRole (CallbackCreateRoleBean) returns (GpcVoid);
-    rpc callbackLogin (CallbackLoginBean) returns (GpcVoid);
-    rpc callbackSyncTime (CallbackSyncTime) returns (GpcVoid);
+    rpc callbackCreateRole (RetBean) returns (GpcVoid);
+    rpc callbackLogin (RetBean) returns (GpcVoid);
+    rpc callbackSyncTime (RetBean) returns (GpcVoid);
 
 
 

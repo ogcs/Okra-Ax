@@ -14,8 +14,8 @@ import org.okraAx.internal.v3.protobuf.GpcEventDispatcher;
 import org.okraAx.room.fy.LoginClient;
 import org.okraAx.v3.GpcCall;
 import org.okraAx.v3.services.ProLoginForRoom;
+import org.okraAx.v3.services.ProPlayerRoomCallback;
 import org.okraAx.v3.services.ProRoomForLogin;
-import org.okraAx.v3.services.ProRoomPublic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +51,7 @@ public final class LoginComponent {
                 .build();
         //
         messageContext.registerGpbMsgDesc(ProLoginForRoom.getDescriptor());
-        messageContext.registerGpbMsgDesc(ProRoomPublic.getDescriptor());
+        messageContext.registerGpbMsgDesc(ProPlayerRoomCallback.getDescriptor());
         messageContext.registerGpbMsgDesc(ProRoomForLogin.getDescriptor());
         //
 

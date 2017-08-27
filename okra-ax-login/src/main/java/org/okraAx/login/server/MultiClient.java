@@ -1,4 +1,4 @@
-package org.okraAx.login.role.mybatis;
+package org.okraAx.login.server;
 
 import org.ogcs.app.MultiServiceProxy;
 import org.ogcs.app.Session;
@@ -32,7 +32,7 @@ public class MultiClient implements MultiServiceProxy {
     public void registerService(Class<?> clz, Session session) {
         Object callback = Proxy.newProxyInstance(
                 this.getClass().getClassLoader(),
-                new Class[]{clz}, new GpbInvocationHandler(session)
+                new Class[]{clz}, new GpbInvocationHandler(null) // TODO NetSession
         );
         callbacks.put(clz, callback);
     }

@@ -1,8 +1,7 @@
 package org.okraAx.room.module;
 
-import org.ogcs.event.Event;
-import org.ogcs.event.EventDispatcher;
-import org.ogcs.event.MultiListenerEventDispatcher;
+import org.okraAx.internal.events.EventDispatcher;
+import org.okraAx.internal.events.TriggeredEvent;
 import org.okraAx.room.bean.PlayerInfo;
 import org.okraAx.room.fy.Player;
 
@@ -15,7 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author TinyZ
  * @since 2.0
  */
-public abstract class AbstractRoom implements Room {
+public abstract class AbstractRoom extends EventDispatcher implements Room {
 
     /**
      * 房间唯一ID
@@ -29,10 +28,6 @@ public abstract class AbstractRoom implements Room {
      * 玩家列表
      */
     protected Map<Long/* uid */, Player> players = new ConcurrentHashMap<>();
-    /**
-     * 房间事件
-     */
-    protected EventDispatcher dispatcher = new MultiListenerEventDispatcher();
 
     public AbstractRoom(long roomId) {
         this.roomId = roomId;
@@ -138,11 +133,7 @@ public abstract class AbstractRoom implements Room {
         }
     }
 
-    public void onEvent(Event event) {
-        dispatcher.dispatchEvent(event);
-    }
-
-    public void onEvent(Object type, Object source) {
-        dispatcher.dispatchEvent(type, this, source);
+    public void onEvent(String type, Player source) {
+        super.dispatchEvent(new TriggeredEvent<Room, Player>(type, this, source));
     }
 }
