@@ -74,6 +74,10 @@ public final class User implements Modules, ServiceProxy<PlayerCallback> {
         return proxy();
     }
 
+    public boolean isActive() {
+        return session != null && session.isActive();
+    }
+
     /**
      * 玩家登录成功后加载私人数据
      */

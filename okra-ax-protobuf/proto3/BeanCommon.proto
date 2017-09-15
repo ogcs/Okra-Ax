@@ -17,7 +17,27 @@ message UserInfo {
     AxAny ext = 4; //  扩展数据 - 战绩等等
 }
 
+//  中继message
+message RelayMessageBean {
+    int64 uid = 1;
+    bytes msg = 2;
+}
 
+//  日志服务器信息bean
+message LogServerInfoBean {
+    string url = 1;
+}
+//  ReportClientLog接口
+message ReportClientLogBean {
+    repeated ClientLogMessage list = 1;
+}
+//  Client上报的日志. 用于分析客户端运行状况
+message ClientLogMessage {
+    map<string, string> context = 1;    //  携带的数据
+    int32 logLevel = 2; //  日志等级
+    string message = 3; //  附加信息
+    string throwable = 4;   //  异常信息
+}
 
 
 

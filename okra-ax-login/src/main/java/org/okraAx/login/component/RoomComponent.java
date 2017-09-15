@@ -32,7 +32,7 @@ public final class RoomComponent {
     private Map<Integer, RoomClient> maps = new ConcurrentHashMap<>();
     private Map<NetSession, RoomClient> roomSessionMap = new ConcurrentHashMap<>();
 
-    public RoomClient getBySession(NetSession session) {
+    public RoomClient getRoomBySession(NetSession session) {
         return roomSessionMap.get(session);
     }
 

@@ -7,6 +7,7 @@ option java_outer_classname = "ProLoginPublic";
 
 import "Gpc.proto";
 import "BeanPlayer.proto";
+import "BeanCommon.proto";
 
 service LoginPublicService {
 
@@ -15,6 +16,8 @@ service LoginPublicService {
     rpc onSyncTime (GpcVoid) returns (GpcVoid);
     rpc onShowChannelList (GpcVoid) returns (GpcVoid);
     rpc onEnterChannel (GpcVoid) returns (GpcVoid);
+    rpc onGetLogReportUrl (GpcVoid) returns (GpcVoid);
+    rpc onReportClientLog (ReportClientLogBean) returns (GpcVoid);
 
 
 }

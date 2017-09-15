@@ -7,6 +7,7 @@ package org.okraAx.internal.bean;
 public class ConnectionInfo {
 
     private int id; //  唯一ID
+    private int type; //  节点类型
     private String name; //  名称
     private String host;    //  目标host
     private int port;   //  目标端口
@@ -19,6 +20,14 @@ public class ConnectionInfo {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public String getName() {

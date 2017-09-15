@@ -3,7 +3,6 @@ package org.okraAx.login.server;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
-import org.okraAx.common.LoginCallback;
 import org.okraAx.common.LoginForRoomService;
 import org.okraAx.common.LoginPublicService;
 import org.okraAx.internal.handler.AxCodecHandler;
@@ -35,14 +34,13 @@ public final class LoginServer {
 
     public void start() {
 
-        ConnectionEventHandler eventHandler = new UserConnectHandler();
-
         ServerContext context = new ServerContext();
         context.initCmdFactory(new GpbCmdFactory(gpbContext))
                 .registerService(facade, LoginPublicService.class)
                 .registerService(facade, LoginForRoomService.class)
                 .addNetHandler("codec", new AxCodecHandler(new AxGpbCodec(GpcCall.getDefaultInstance())))
-                .addNetHandler("handler", new GpcEventDispatcher(context, eventHandler))
+                .addNetHandler("relay", new RelayHandler())
+                .addNetHandler("handler", new GpcEventDispatcher(context, new UserConnectHandler()))
                 .build();
 
         //  message
@@ -73,14 +71,8 @@ public final class LoginServer {
         @Override
         public void disconnected() {
             NetSession session = NetHelper.session();
-            User user = userComponent.getUserBySession(session);
-            if (user != null) {
+            if (session != null)
                 userComponent.onDisconnect(session);
-                return;
-            }
-
-
-
         }
     }
 

@@ -57,6 +57,7 @@ public class UserComponent {
             .build(new AccountCacheLoader());
 
     private Map<NetSession, User> session2userMap = new ConcurrentHashMap<>();
+    private Map<Long, User> uid2userMap = new ConcurrentHashMap<>();
 
     /**
      * 登录
@@ -68,6 +69,7 @@ public class UserComponent {
             if (user != null) {
                 NetSession session = NetHelper.session();
                 session2userMap.put(session, user);
+                uid2userMap.put(user.id(), user);
                 //  initialize
                 user.setSession(session);
                 user.lazyLoad();
@@ -119,6 +121,8 @@ public class UserComponent {
                         user.setAccountBean(bean);
                         user.setRoleBean(roleBean);
                         loginUserCache.put(openId, user);
+                        session2userMap.put(session, user);
+                        uid2userMap.put(user.id(), user);
 
                         user.userClient().callbackCreateRole(0);
                     } catch (Exception e) {
@@ -139,8 +143,13 @@ public class UserComponent {
     public void onDisconnect(NetSession session) {
         User user = session2userMap.remove(session);
         if (user != null) {
+            uid2userMap.remove(user.id());
             user.disconnect();
         }
+    }
+
+    public User getUserByUid(long uid) {
+        return uid2userMap.get(uid);
     }
 
     public User getUserBySession(NetSession session) {
