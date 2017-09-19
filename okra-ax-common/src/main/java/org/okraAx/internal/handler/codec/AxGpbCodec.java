@@ -30,9 +30,8 @@ import static io.netty.buffer.Unpooled.wrappedBuffer;
  * see {@link io.netty.handler.codec.protobuf.ProtobufDecoder} and {@link io.netty.handler.codec.protobuf.ProtobufEncoder}
  *
  * @author : TinyZ.
- * @email : tinyzzh815@gmail.com
- * @date : 2016/5/23
  * @since 1.0
+ * @version  2016.05.23
  */
 public class AxGpbCodec implements AxCodec {
 

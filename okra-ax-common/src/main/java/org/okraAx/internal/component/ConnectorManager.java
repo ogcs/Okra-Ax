@@ -39,6 +39,7 @@ import java.util.stream.Collectors;
  * @author TinyZ
  * @since 1.0.0
  */
+@Deprecated
 @Service
 public class ConnectorManager {
 

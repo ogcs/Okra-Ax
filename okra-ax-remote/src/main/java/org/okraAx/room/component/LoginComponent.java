@@ -3,6 +3,7 @@ package org.okraAx.room.component;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.ogcs.app.NetSession;
+import org.okraAx.common.LoginForRoomService;
 import org.okraAx.common.RoomService;
 import org.okraAx.internal.handler.AxCodecHandler;
 import org.okraAx.internal.handler.codec.AxGpbCodec;
@@ -13,8 +14,8 @@ import org.okraAx.internal.v3.protobuf.GpcEventDispatcher;
 import org.okraAx.room.fy.LoginClient;
 import org.okraAx.v3.GpcCall;
 import org.okraAx.v3.services.ProLoginForRoom;
+import org.okraAx.v3.services.ProPlayerRoomCallback;
 import org.okraAx.v3.services.ProRoomForLogin;
-import org.okraAx.v3.services.ProRoomPublic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,14 @@ import javax.annotation.PostConstruct;
  * @version 2017.05.22
  */
 @Service
-public class LoginComponent {
+public final class LoginComponent {
 
     @Autowired
     private GpbMessageContext messageContext;
-    
-    private LoginClient loginClient;
+    @Autowired
+    private Facade facade;
+
+    private volatile LoginClient loginClient;
 
     @PostConstruct
     public void initialize() {
@@ -39,7 +42,7 @@ public class LoginComponent {
         loginClient = new LoginClient();
         ClientContext context = new ClientContext();
         context.initCmdFactory(new GpbCmdFactory(messageContext))
-                .registerService(Facade.INSTANCE, RoomService.class)
+                .registerService(facade, RoomService.class)
                 .setAutoConnect(true)
                 .setChildThread(1)
                 .addNetHandler("codec", new AxCodecHandler(new AxGpbCodec(GpcCall.getDefaultInstance())))
@@ -48,7 +51,7 @@ public class LoginComponent {
                 .build();
         //
         messageContext.registerGpbMsgDesc(ProLoginForRoom.getDescriptor());
-        messageContext.registerGpbMsgDesc(ProRoomPublic.getDescriptor());
+        messageContext.registerGpbMsgDesc(ProPlayerRoomCallback.getDescriptor());
         messageContext.registerGpbMsgDesc(ProRoomForLogin.getDescriptor());
         //
 
@@ -56,6 +59,9 @@ public class LoginComponent {
         context.connect("127.0.0.1", 9007);
     }
 
+    public LoginForRoomService service() {
+        return loginClient.loginClient();
+    }
 
     private class ActiveEventHandler extends ChannelInboundHandlerAdapter {
         @Override

@@ -1,0 +1,67 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.beans.player";
+option java_outer_classname = "GpcBnPlayer";
+//option java_generic_services = true;
+option java_multiple_files = true;
+
+//  request bean.
+
+//  玩家基础信息
+message BasePlayerInfo {
+    int64 uid = 1;  //  玩家唯一ID
+    string name = 2;    //  角色名
+    int32 figure = 3;   //  形象
+    //  胜率/掉线率/
+
+}
+
+//  创建角色
+message CreateRoleBean {
+    string openId = 1;
+    string name = 2;
+    int32 figure = 3;
+}
+
+message LoginBean {
+    string openId = 1;
+}
+
+
+//  callback
+//  Simple callback bean
+message RetBean {
+    int32 ret = 1;
+}
+
+message CallbackCreateRoleBean {
+    string openId = 1;
+    string name = 2;
+    int32 figure = 3;
+}
+
+message CallbackLoginBean {
+    string openId = 1;
+}
+
+message CallbackSyncTime {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

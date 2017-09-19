@@ -1,11 +1,10 @@
 package org.okraAx.login.component;
 
-import org.ogcs.app.NetSession;
 import org.okraAx.common.LoginForRoomService;
 import org.okraAx.common.LoginPublicService;
-import org.okraAx.internal.v3.ProxySession;
-import org.okraAx.login.server.LoginUser;
-import org.okraAx.utilities.SessionHelper;
+import org.okraAx.internal.net.NetSession;
+import org.okraAx.login.server.User;
+import org.okraAx.utilities.NetHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,26 +16,25 @@ import org.springframework.stereotype.Service;
 public class Facade implements LoginPublicService, LoginForRoomService {
 
     @Autowired
-    private LoginComponent loginComponent;
-    @Autowired
     private RoomComponent roomComponent;
-
+    @Autowired
+    private UserComponent userComponent;
 
     @Override
     public void onCreateRole(String openId, String name, int figure) {
-        NetSession session = SessionHelper.currentSession();
-        if (session == null) return;
-        loginComponent.onCreateRole(session, openId, name, figure);
+        NetSession session = NetHelper.session();
+        if (session != null)
+            userComponent.onCreateRole(session, openId, name, figure);
     }
 
     @Override
     public void onLogin(String openId) {
-        loginComponent.onLogin(openId);
+        userComponent.onLogin(openId);
     }
 
     @Override
     public void onSyncTime() {
-        loginComponent.onSyncTime();
+        userComponent.onSyncTime();
     }
 
     @Override
@@ -46,14 +44,12 @@ public class Facade implements LoginPublicService, LoginForRoomService {
 
     @Override
     public void onEnterChannel() {
-        LoginUser player = SessionHelper.curPlayer();
-        if (player == null) return;
-        //  TODO: 校验房间信息
+        User user = userComponent.getUserBySession(NetHelper.session());
+        if (user != null) {
+            //  TODO: 校验房间信息
 
-
-        ProxySession<LoginForRoomService> session = null;
-
-        player.userClient().callbackEnterChannel(1);
+            user.proxy().callbackEnterChannel(1);
+        }
     }
 
 
@@ -70,9 +66,13 @@ public class Facade implements LoginPublicService, LoginForRoomService {
     }
 
     @Override
-    public void callbackEnterChannel(int ret) {
+    public void verifyPlayerInfo(long uid, long security) {
 
     }
 
+    @Override
+    public void callbackEnterChannel(int ret) {
+
+    }
 
 }

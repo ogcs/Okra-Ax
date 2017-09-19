@@ -36,7 +36,7 @@ message GpcVoid {
 //  Gpc relay message.
 //  GpcRelay message use to forward the message data to other target without any logic.
 message GpcRelay {
-    AxAny source = 1;   //  the forward target.
+    int64 source = 1;   //  the forward target.
     bytes data = 2;     //  the relay message.
 }
 //  Gpc Error Message.

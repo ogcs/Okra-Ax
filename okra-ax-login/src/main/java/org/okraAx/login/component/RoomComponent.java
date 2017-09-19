@@ -2,11 +2,12 @@ package org.okraAx.login.component;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ogcs.app.NetSession;
+import org.okraAx.internal.net.NetSession;
 import org.okraAx.login.bean.ChannelInfo;
-import org.okraAx.login.role.mybatis.RoomClient;
-import org.okraAx.login.role.mybatis.UserClient;
-import org.okraAx.utilities.SessionHelper;
+import org.okraAx.login.server.RoomClient;
+import org.okraAx.login.server.User;
+import org.okraAx.utilities.NetHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -16,16 +17,24 @@ import java.util.concurrent.ConcurrentHashMap;
  * 房间组件. 管理系统下全部频道房间.
  *
  * @author TinyZ.
- * @version 2017.03.26
+ * @version 2017.08.26
  */
 @Component
 public final class RoomComponent {
 
     private static final Logger LOG = LogManager.getLogger(RoomComponent.class);
+    @Autowired
+    private UserComponent userComponent;
+
     /**
      * 频道列表
      */
     private Map<Integer, RoomClient> maps = new ConcurrentHashMap<>();
+    private Map<NetSession, RoomClient> roomSessionMap = new ConcurrentHashMap<>();
+
+    public RoomClient getRoomBySession(NetSession session) {
+        return roomSessionMap.get(session);
+    }
 
     /**
      * 注册频道
@@ -36,20 +45,27 @@ public final class RoomComponent {
      * @param type     房间类型
      */
     public void registerChannel(String security, long version, int roomId, int type, String host, int port) {
-        NetSession session = SessionHelper.currentSession();
+        NetSession session = NetHelper.session();
         if (session == null || !session.isActive()) return;
         //  TODO: 验证安全码 和 版本号
         ChannelInfo channelInfo = new ChannelInfo(roomId, type, version, host, port);
         try {
             RoomClient roomClient = new RoomClient(channelInfo);
             roomClient.setSession(session);
-            session.setConnector(roomClient);  //
             //
             maps.put(roomId, roomClient);
             roomClient.roomClient().callbackRegister(0);
         } catch (Exception e) {
             session.close();
             LOG.info("[S] register channel fail. info:" + channelInfo.toString(), e);
+        }
+    }
+
+    public void roomDisconnect(NetSession session) {
+        RoomClient client = roomSessionMap.remove(session);
+        if (client != null && client.isOnline()) {
+
+            client.session().close();
         }
     }
 
@@ -61,7 +77,7 @@ public final class RoomComponent {
     }
 
     public void enterChannel(int roomId) {
-        UserClient user = SessionHelper.curPlayer();
+        User user = userComponent.getUserBySession(NetHelper.session());
         if (user == null) return;
 
         //  TODO:检查是否已经进入房间

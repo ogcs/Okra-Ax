@@ -5,8 +5,7 @@ import io.netty.channel.ChannelHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.okraAx.common.LoginForRoomService;
-import org.okraAx.internal.v3.MtdDescUtil;
-import org.okraAx.internal.v3.ProxyClient;
+import org.okraAx.internal.old.ProxyClient;
 import org.okraAx.internal.v3.ConnectionEventHandler;
 import org.okraAx.v3.GpcCall;
 

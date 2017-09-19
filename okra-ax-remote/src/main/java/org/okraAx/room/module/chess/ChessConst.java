@@ -10,7 +10,7 @@ public interface ChessConst {
     //
     int EVENT_GET_READY = 1;        //  准备
     int EVENT_CANCEL_READY = 2;     //  取消准备
-    int EVENT_INIT_COMPLETED = 3;   //  初始化完成 - 游戏开始
+    String EVENT_INIT_COMPLETED = "EventInitCompleted";   //  初始化完成 - 游戏开始
     int EVENT_GAME_END = 4;         //  游戏结束
     int EVENT_CHESS_MOVE = 5;       //  移动棋子
     int EVENT_EXIT = 6;             //  退出

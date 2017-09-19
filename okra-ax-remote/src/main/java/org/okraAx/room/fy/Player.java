@@ -2,11 +2,11 @@ package org.okraAx.room.fy;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ogcs.app.Connector;
 import org.ogcs.app.ServiceProxy;
-import org.ogcs.app.Session;
 import org.okraAx.common.PlayerRoomCallback;
+import org.okraAx.internal.net.NetSession;
 import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
+import org.okraAx.room.bean.PlayerInfo;
 import org.okraAx.room.module.Room;
 
 import java.lang.reflect.InvocationHandler;
@@ -17,7 +17,7 @@ import java.lang.reflect.Proxy;
  * @since 2.0
  * @version  2017.02.12
  */
-public final class Player implements Connector, ServiceProxy<PlayerRoomCallback> {
+public final class Player implements ServiceProxy<PlayerRoomCallback> {
 
     private static final Logger LOG = LogManager.getLogger(LogicClient.class);
 
@@ -28,42 +28,31 @@ public final class Player implements Connector, ServiceProxy<PlayerRoomCallback>
     });
 
     private long uid;
-    private volatile Session session;
+    private volatile NetSession session;
     private final PlayerRoomCallback callback;
+    private PlayerInfo info;
+
     /**
      * 玩家所在的房间.
      * 玩家只能在一个房间中
      */
     private volatile Room room;
 
-    public Player(long uid, Session session) {
+    public Player(long uid, NetSession session) {
         this.uid = uid;
         this.session = session;
         this.callback = newProxyInstance(new GpbInvocationHandler(session));
     }
 
-    @Override
     public boolean isOnline() {
         return session != null && session.isActive();
     }
 
-    @Override
-    public Session session() {
-        return session;
-    }
-
-    @Override
-    public void setSession(Session session) {
-        this.session = session;
-    }
-
-    @Override
-    public void sessionActive() {
+    public void connected() {
 
     }
 
-    @Override
-    public void sessionInactive() {
+    public void disconnected() {
         if (session != null) {
             session.close();
             this.session = null;
@@ -87,6 +76,14 @@ public final class Player implements Connector, ServiceProxy<PlayerRoomCallback>
         this.room = room;
     }
 
+    public PlayerInfo getInfo() {
+        return info;
+    }
+
+    public void setInfo(PlayerInfo info) {
+        this.info = info;
+    }
+
     /**
      *
      */
@@ -94,6 +91,10 @@ public final class Player implements Connector, ServiceProxy<PlayerRoomCallback>
         if (session == null || !session.isActive() || proxy() == null)
             return EMPTY;
         return proxy();
+    }
+
+    public NetSession session() {
+        return session;
     }
 
     @Override

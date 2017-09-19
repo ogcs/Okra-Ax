@@ -4,8 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.gpb.generated.PushChessInit;
 import org.ogcs.gpb.generated.PushReport;
+import org.okraAx.room.bean.RoomInfo;
 import org.okraAx.room.fy.Player;
-import org.okraAx.room.module.AbstractTable;
+import org.okraAx.room.module.AbstractRoom;
+import org.okraAx.room.module.Room;
+import org.okraAx.room.module.RoomFactory;
 import org.okraAx.v3.chess.beans.MsgChessMove;
 import org.okraAx.v3.room.beans.VoGetReady;
 
@@ -42,10 +45,19 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @since 1.0
  * @version 2017.03.05
  */
-public final class ChineseChess extends AbstractTable {
+public final class ChineseChess extends AbstractRoom {
 
     private static final Logger LOG = LogManager.getLogger(ChineseChess.class);
 //    private RoomManager roomManager = (RoomManager) AppContext.getBean(SpringContext.MODULE_ROOM_MANAGER);
+
+    public static final RoomFactory CHINESE_CHESS = new RoomFactory() {
+        @Override
+        public Room newInstance(RoomInfo<?> roomInfo) {
+            //  TODO: 初始化
+            return new ChineseChess(1);
+        }
+    };
+
 
     /**
      * 房间唯一ID
@@ -64,9 +76,8 @@ public final class ChineseChess extends AbstractTable {
 
     private Map<Long, Boolean> readys = new ConcurrentHashMap<>();
 
-
     public ChineseChess(long roomId) {
-        this.roomId = roomId;
+        super(roomId);
         this.round = 0;
     }
 
@@ -88,7 +99,7 @@ public final class ChineseChess extends AbstractTable {
             chessboard[x1][y2] = new Piece(ChessConst.SIZE_BLACK, x1, y2, type);
         }
         //  初始化完成
-        dispatchEvent(ChessConst.EVENT_INIT_COMPLETED, PushChessInit.getDefaultInstance());
+        onEvent(ChessConst.EVENT_INIT_COMPLETED, PushChessInit.getDefaultInstance());
     }
 
     @Override
@@ -108,11 +119,6 @@ public final class ChineseChess extends AbstractTable {
             }
         }
         return -1;
-    }
-
-    public void onAction(int type, Object data) {
-        if (dispatcher == null) return;
-        dispatcher.dispatchEvent(type, this, data);
     }
 
     @Override

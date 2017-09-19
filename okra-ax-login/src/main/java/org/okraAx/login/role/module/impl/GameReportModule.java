@@ -39,6 +39,11 @@ public final class GameReportModule extends AbstractModule {
     }
 
     @Override
+    public void flushToDB() {
+
+    }
+
+    @Override
     public void clear() {
 
     }

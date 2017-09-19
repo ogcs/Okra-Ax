@@ -1,5 +1,6 @@
 package org.okraAx.room.server;
 
+import org.ogcs.app.AppContext;
 import org.okraAx.room.component.Facade;
 import org.okraAx.room.fy.RoomManager;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -22,7 +23,8 @@ public enum Framework {
         RoomManager manager = new RoomManager();
         manager.start();
 
-        Facade.INSTANCE.initialize();
+        Facade facade = AppContext.getBean(Facade.class);
+        facade.initialize();
 
         synchronized (manager) {
             try {

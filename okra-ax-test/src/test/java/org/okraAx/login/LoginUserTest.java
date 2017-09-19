@@ -2,7 +2,6 @@ package org.okraAx.login;
 
 import com.google.protobuf.Descriptors;
 import org.junit.Test;
-import org.okraAx.login.server.LoginUser;
 import org.okraAx.v3.login.beans.ProLoginBeans;
 
 import java.util.List;
