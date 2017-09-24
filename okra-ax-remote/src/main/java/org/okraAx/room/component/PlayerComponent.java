@@ -3,7 +3,7 @@ package org.okraAx.room.component;
 import org.ogcs.app.Session;
 import org.okraAx.internal.net.NetSession;
 import org.okraAx.room.bean.RmUserInfoBean;
-import org.okraAx.room.fy.Player;
+import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.utilities.SessionHelper;
 import org.springframework.stereotype.Service;
 
@@ -23,9 +23,9 @@ public class PlayerComponent {
 
 
     private final Map<Long /* uid */, NetSession> uid2sessionMap = new ConcurrentHashMap<>();
-    private final Map<NetSession, Player> session2playerMap = new ConcurrentHashMap<>();
+    private final Map<NetSession, RemoteUser> session2playerMap = new ConcurrentHashMap<>();
 
-    public Player getPlayer(NetSession session) {
+    public RemoteUser getPlayer(NetSession session) {
         return session2playerMap.get(session);
     }
 

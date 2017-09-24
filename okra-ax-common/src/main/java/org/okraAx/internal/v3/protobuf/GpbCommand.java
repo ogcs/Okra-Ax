@@ -22,11 +22,6 @@ public class GpbCommand implements Command<NetSession, GpcCall> {
     private final Method methodImpl;
     private GpbMessageContext context;
 
-    public GpbCommand(Object instance, Method methodImpl, GpbMessageDesc methodDesc) {
-        this.instance = instance;
-        this.methodImpl = methodImpl;
-    }
-
     public GpbCommand(Object instance, Method methodImpl, GpbMessageContext context) {
         this.instance = instance;
         this.methodImpl = methodImpl;

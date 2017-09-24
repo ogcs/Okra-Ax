@@ -24,7 +24,7 @@ public enum Framework {
         manager.start();
 
         Facade facade = AppContext.getBean(Facade.class);
-        facade.initialize();
+        facade.initComponent();
 
         synchronized (manager) {
             try {

@@ -2,7 +2,6 @@ package org.okraAx.internal.v3;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.okraAx.internal.bean.ConnectionInfo;
 import org.okraAx.internal.net.NetSession;
 import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.utilities.ProxyUtil;
@@ -19,10 +18,6 @@ public class ProxyClient<T> {
      */
     private final NetSession session;
     /**
-     * 节点的连接信息
-     */
-    private final ConnectionInfo info;
-    /**
      * 缺省时的实例
      */
     private final T defaultImpl;
@@ -31,9 +26,8 @@ public class ProxyClient<T> {
      */
     private volatile T services;
 
-    public ProxyClient(NetSession session, ConnectionInfo info, T bean) {
+    public ProxyClient(NetSession session, T bean) {
         this.session = session;
-        this.info = info;
         this.defaultImpl = bean;
     }
 
@@ -50,8 +44,8 @@ public class ProxyClient<T> {
         }
     }
 
-    public ConnectionInfo getInfo() {
-        return info;
+    public boolean isActive() {
+        return session != null && session.isActive();
     }
 
     public NetSession getSession() {

@@ -1,8 +1,8 @@
 package org.okraAx.room.component;
 
-import org.okraAx.room.bean.PlayerInfo;
+import org.okraAx.room.bean.RemotePlayerInfo;
 import org.okraAx.room.bean.RoomInfoBean;
-import org.okraAx.room.fy.Player;
+import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.room.module.Room;
 import org.okraAx.room.module.chess.ChineseChess;
 import org.okraAx.utilities.SessionHelper;
@@ -43,7 +43,7 @@ public final class TableComponent {
     }
 
 
-    public void createRoom(PlayerInfo playerInfo, int type) {
+    public void createRoom(RemotePlayerInfo remotePlayerInfo, int type) {
 
     }
 
@@ -53,7 +53,7 @@ public final class TableComponent {
      * @param roomId 指定房间
      * @param seat   指定位置
      */
-    public void joinTable(PlayerInfo playerInfo, long roomId, int seat) {
+    public void joinTable(RemotePlayerInfo remotePlayerInfo, long roomId, int seat) {
         Room room = roomMap.get(roomId);
         if (room == null || room.isFully()) {
             return;
@@ -67,7 +67,7 @@ public final class TableComponent {
 
     }
 
-    public void batchJoinRoom(List<PlayerInfo> list, long roomId) {
+    public void batchJoinRoom(List<RemotePlayerInfo> list, long roomId) {
         Room room = roomMap.get(roomId);
         if (room == null || room.isFully()) {
             return;
@@ -119,42 +119,42 @@ public final class TableComponent {
     public void destroyRoom(long roomId) {
         Room room = roomMap.remove(roomId);
         if (room != null) {
-            Set<Player> players = room.players();
-            for (Player player : players) {
-                uid2RoomMap.remove(player.id());
+            Set<RemoteUser> remoteUsers = room.players();
+            for (RemoteUser remoteUser : remoteUsers) {
+                uid2RoomMap.remove(remoteUser.id());
             }
             room.onDestroy();
         }
     }
 
     public void onEnterRoom(int roomId, int seat, long uid, String name) {
-        Player player = SessionHelper.curPlayer();
-        if (player == null) return;
-        Room room = player.getRoom();
+        RemoteUser remoteUser = SessionHelper.curPlayer();
+        if (remoteUser == null) return;
+        Room room = remoteUser.getRoom();
         if (room == null) {
             room = lookupRoom(1);
             if (room == null) {
                 room = new ChineseChess(roomId);
-                playerJoin(player.id(), player.getRoom());
+                playerJoin(remoteUser.id(), remoteUser.getRoom());
             }
         }
-        room.onEnter(player);
+        room.onEnter(remoteUser);
     }
 
     public void onExitRoom() {
-        Player player = SessionHelper.curPlayer();
-        if (player == null) return;
-        Room room = player.getRoom();
+        RemoteUser remoteUser = SessionHelper.curPlayer();
+        if (remoteUser == null) return;
+        Room room = remoteUser.getRoom();
         if (room == null) return;
-        room.onExit(player.id());
+        room.onExit(remoteUser.id());
     }
 
     public void onGetReady(long uid, boolean ready) {
-        Player player = SessionHelper.curPlayer();
-        if (player == null) return;
-        Room room = player.getRoom();
+        RemoteUser remoteUser = SessionHelper.curPlayer();
+        if (remoteUser == null) return;
+        Room room = remoteUser.getRoom();
         if (room == null) return;
-        room.onReady(player, ready);
+        room.onReady(remoteUser, ready);
     }
 
 }

@@ -22,8 +22,8 @@ public class RelayHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         if (msg instanceof GpcRelay) {
             User user = userComponent.getUserByUid(((GpcRelay) msg).getSource());
-            if (user != null && user.session() != null && user.session().isActive()) {
-                user.session().writeAndFlush(((GpcRelay) msg).getData());
+            if (user != null && user.proxyClient().isActive()) {
+                user.proxyClient().getSession().writeAndFlush(((GpcRelay) msg).getData());
             }
             return;
         }

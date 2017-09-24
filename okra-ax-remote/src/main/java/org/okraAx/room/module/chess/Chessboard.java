@@ -102,9 +102,9 @@
 //            Integer y1 = ary[0];
 //            Integer x1 = ary[1];
 //            Integer type = ary[2];
-//            chessboard[x1][y1] = new Piece(ChessConst.SIZE_RED, x1, y1, type);
+//            chessboard[x1][y1] = new Piece(ChessConst.SIDE_RED, x1, y1, type);
 //            int y2 = ChessConst.BOARD_HEIGHT - y1 - 1;
-//            chessboard[x1][y2] = new Piece(ChessConst.SIZE_BLACK, x1, y2, type);
+//            chessboard[x1][y2] = new Piece(ChessConst.SIDE_BLACK, x1, y2, type);
 //        }
 //        push(PushChessInit.INIT_FIELD_NUMBER, PushChessInit.init, PushChessInit.getDefaultInstance());
 //    }
@@ -135,7 +135,7 @@
 //
 //    @Override
 //    public void onExit(Long uid) {
-//        onGameEnd(index(uid) == ChessConst.SIZE_RED ? ChessConst.SIZE_BLACK : ChessConst.SIZE_RED);
+//        onGameEnd(index(uid) == ChessConst.SIDE_RED ? ChessConst.SIDE_BLACK : ChessConst.SIDE_RED);
 //    }
 //
 //    @Override
@@ -191,7 +191,7 @@
 //                    .build();
 //            push(PushChessMove.CHESSMOVE_FIELD_NUMBER, PushChessMove.chessMove, message);
 //            if (toCell != null && toCell.getType() == ChessConst.PIECE_JIANG) {
-//                onGameEnd(toCell.getSide() == ChessConst.SIZE_RED ? ChessConst.SIZE_BLACK : ChessConst.SIZE_RED);
+//                onGameEnd(toCell.getSide() == ChessConst.SIDE_RED ? ChessConst.SIDE_BLACK : ChessConst.SIDE_RED);
 //            }
 //            return true;
 //        } else {

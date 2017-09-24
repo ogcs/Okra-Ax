@@ -22,7 +22,7 @@ public class ProxyClientTest {
             LOG.info("Empty proxy instance invoked by [{}]. args:{}", method.getName(), args);
             return null;
         });
-        ProxyClient<LogicService> bean = new ProxyClient<>(null, null, defaultBean);
+        ProxyClient<LogicService> bean = new ProxyClient<>(null, defaultBean);
         bean.initialize();
         LogicService client = bean.impl();
         System.out.println();

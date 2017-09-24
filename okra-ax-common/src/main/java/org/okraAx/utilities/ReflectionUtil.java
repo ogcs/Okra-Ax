@@ -1,7 +1,5 @@
 package org.okraAx.utilities;
 
-import org.springframework.cglib.core.ReflectUtils;
-
 import java.lang.reflect.Type;
 
 /**
@@ -12,21 +10,10 @@ public class ReflectionUtil {
 
     private ReflectionUtil() {
         //  no-op
-//        ReflectUtils.findInterfaceMethod()
-
-
-
-
-
-
-
-
-
-        System.out.println();
     }
 
     /**
-     *  <pre>
+     * <pre>
      *      1.
      *  </pre>
      */
@@ -34,15 +21,6 @@ public class ReflectionUtil {
         Type[] genericInterfaces = obj.getClass().getGenericInterfaces();
         if (genericInterfaces == null || genericInterfaces.length <= 0)
             throw new IllegalArgumentException(String.format("%s's generic interfaces count is zero.", obj.getClass()));
-        return (Class<T>)Class.forName(genericInterfaces[0].getTypeName());
+        return (Class<T>) Class.forName(genericInterfaces[0].getTypeName());
     }
-
-
-
-
-
-
-
-
-
 }

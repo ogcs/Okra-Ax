@@ -2,17 +2,15 @@ package org.okraAx.login.server;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ogcs.app.ServiceProxy;
 import org.okraAx.common.PlayerCallback;
 import org.okraAx.internal.net.NetSession;
-import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
+import org.okraAx.internal.v3.ProxyClient;
 import org.okraAx.login.bean.AccountBean;
 import org.okraAx.login.bean.RoleBean;
 import org.okraAx.login.role.Modules;
 import org.okraAx.login.role.module.Module;
+import org.okraAx.utilities.ProxyUtil;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,20 +19,17 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * @author TinyZ.
  * @version 2017.08.26
- * @since 2.0
  */
-public final class User implements Modules, ServiceProxy<PlayerCallback> {
+public final class User implements Modules {
 
     private static final Logger LOG = LogManager.getLogger(User.class);
 
-    private static final PlayerCallback EMPTY = newProxyInstance((proxy, method, args) -> {
-        //  no-op
-        LOG.info("Empty proxy instance invoked by [{}]", method.getName());
-        return null;
-    }, PlayerCallback.class);
-
-    private volatile NetSession session;
-    private volatile PlayerCallback callback;
+    private static final PlayerCallback DEFAULT_CALLBACK =
+            ProxyUtil.newProxyInstance(PlayerCallback.class, (proxy, method, args) -> {
+                //  no-op
+                LOG.info("Empty proxy instance invoked by [{}]", method.getName());
+                return null;
+            });
 
     /**
      * 账户信息
@@ -49,33 +44,29 @@ public final class User implements Modules, ServiceProxy<PlayerCallback> {
      */
     private Map<Class<? extends Module>, Module> modules = new ConcurrentHashMap<>();
 
+    private volatile ProxyClient<PlayerCallback> userClient;
+
     public User() {
     }
 
-    public User(NetSession session) {
-        setSession(session);
+    /**
+     * 初始化User
+     */
+    public void init(NetSession session) {
+        userClient = new ProxyClient<>(session, DEFAULT_CALLBACK);
+        userClient.initialize();
     }
 
     public long id() {
         return accountBean != null ? accountBean.getUid() : -1L;
     }
 
-    public void setSession(NetSession session) {
-        this.session = session;
-        this.callback = newProxyInstance(new GpbInvocationHandler(session), PlayerCallback.class);
+    public ProxyClient<PlayerCallback> proxyClient() {
+        return userClient;
     }
 
-    /**
-     *
-     */
-    public PlayerCallback userClient() {
-        if (session == null || !session.isActive())
-            return EMPTY;
-        return proxy();
-    }
-
-    public boolean isActive() {
-        return session != null && session.isActive();
+    public PlayerCallback callback() {
+        return userClient.impl();
     }
 
     /**
@@ -118,14 +109,7 @@ public final class User implements Modules, ServiceProxy<PlayerCallback> {
             return null;
         }
         Module module = modules.get(clz);
-        return clz.isAssignableFrom(module.getClass()) ? (T) module : null;
-    }
-
-    protected static <P> P newProxyInstance(InvocationHandler handler, Class<P> clzOfProxy) {
-        return (P) Proxy.newProxyInstance(
-                User.class.getClassLoader(),
-                new Class[]{clzOfProxy},
-                handler);
+        return clz.isAssignableFrom(module.getClass()) ? clz.cast(module) : null;
     }
 
     public AccountBean getAccountBean() {
@@ -142,14 +126,5 @@ public final class User implements Modules, ServiceProxy<PlayerCallback> {
 
     public void setRoleBean(RoleBean roleBean) {
         this.roleBean = roleBean;
-    }
-
-    public NetSession session() {
-        return session;
-    }
-
-    @Override
-    public PlayerCallback proxy() {
-        return callback;
     }
 }

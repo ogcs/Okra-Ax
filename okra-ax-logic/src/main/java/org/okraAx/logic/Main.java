@@ -1,7 +1,7 @@
 package org.okraAx.logic;
 
-import org.okraAx.internal.InnerFramework;
 import org.okraAx.internal.config.AxProperties;
+import org.okraAx.logic.server.LogicServer;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -9,12 +9,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @date 2016-10-21.
  */
 public class Main {
+
     public static void main(String[] args) {
         ClassPathXmlApplicationContext cpxac = new ClassPathXmlApplicationContext("classpath:spring/spring.xml");
         cpxac.registerShutdownHook();
 
-        InnerFramework framework = new InnerFramework();
-        framework.start();
+        LogicServer logicServer = new LogicServer();
+        logicServer.start();
 
         String id = String.valueOf(AxProperties.axId);
         // gate

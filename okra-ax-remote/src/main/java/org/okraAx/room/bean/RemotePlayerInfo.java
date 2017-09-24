@@ -8,13 +8,15 @@ import java.io.Serializable;
  * @author TinyZ.
  * @version 2017.06.09
  */
-public class PlayerInfo implements Serializable {
+public class RemotePlayerInfo implements Serializable {
 
     private static final long serialVersionUID = -5274794222386126070L;
     private long uid;   //  唯一ID
     private String name;    //  角色名
     private int figure;    //  形象
 //    private   //  个人战绩 [胜率, 掉线率等等信息]
+
+    public volatile boolean isReady = false;
 
     public long getUid() {
         return uid;

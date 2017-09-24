@@ -48,7 +48,7 @@ public class Facade implements LoginPublicService, LoginForRoomService {
         if (user != null) {
             //  TODO: 校验房间信息
 
-            user.proxy().callbackEnterChannel(1);
+            user.callback().callbackEnterChannel(1);
         }
     }
 
