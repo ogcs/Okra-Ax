@@ -9,25 +9,19 @@ import io.netty.channel.ChannelId;
 import io.netty.channel.SimpleChannelInboundHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ogcs.app.AppContext;
 import org.ogcs.app.Command;
 import org.ogcs.app.Executor;
-import org.ogcs.app.Session;
 import org.ogcs.concurrent.ConcurrentEvent;
 import org.ogcs.concurrent.ConcurrentEventFactory;
 import org.ogcs.concurrent.ConcurrentHandler;
-import org.ogcs.netty.handler.DisruptorAdapterBy41xHandler;
 import org.okraAx.internal.net.NetSession;
 import org.okraAx.internal.v3.ConnectionEventHandler;
-import org.okraAx.internal.v3.ServerContext;
 import org.okraAx.internal.v3.ServiceContext;
 import org.okraAx.utilities.NetHelper;
 import org.okraAx.v3.GpcCall;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 import static io.netty.channel.ChannelHandler.Sharable;
 
@@ -42,7 +36,13 @@ public class GpcEventDispatcher extends SimpleChannelInboundHandler<GpcCall> {
 
     private static final Map<ChannelId, NetSession> NET_SESSION_MAP = new ConcurrentHashMap<>();
     private static final int DEFAULT_RING_BUFFER_SIZE = 8 * 1024;
-    private static final ExecutorService CACHED_THREAD_POOL = Executors.newCachedThreadPool();
+
+    /**
+     * @see Executors#newCachedThreadPool()
+     */
+    private static final ExecutorService CACHED_THREAD_POOL = new ThreadPoolExecutor(0, 100,
+            60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+
     private static final ThreadLocal<Disruptor<ConcurrentEvent>> THREAD_LOCAL = new ThreadLocal<Disruptor<ConcurrentEvent>>() {
         @Override
         protected Disruptor<ConcurrentEvent> initialValue() {
