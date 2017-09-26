@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.okraAx.internal.mybatis.OkraAxDB;
+import org.okraAx.internal.database.OkraAxDB;
 import org.okraAx.login.bean.RoleBean;
 
 /**

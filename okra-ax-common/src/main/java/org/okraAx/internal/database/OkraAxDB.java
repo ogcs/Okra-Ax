@@ -1,4 +1,4 @@
-package org.okraAx.internal.mybatis;
+package org.okraAx.internal.database;
 
 import java.lang.annotation.*;
 
