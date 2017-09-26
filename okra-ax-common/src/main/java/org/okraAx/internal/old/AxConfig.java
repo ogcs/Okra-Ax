@@ -1,4 +1,4 @@
-package org.okraAx.internal.bean;
+package org.okraAx.internal.old;
 
 /**
  * @author TinyZ

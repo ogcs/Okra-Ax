@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.okraAx.internal.bean;
+package org.okraAx.internal.old;
 
 import org.okraAx.internal.core.AxComponent;
 import org.ogcs.utilities.math.murmur.Murmur2;

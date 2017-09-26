@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.okraAx.internal.bean;
+package org.okraAx.internal.old;
 
 /**
  * Ax Component Information.
