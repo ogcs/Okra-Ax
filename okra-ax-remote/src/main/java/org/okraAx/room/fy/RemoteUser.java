@@ -3,7 +3,7 @@ package org.okraAx.room.fy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.okraAx.common.PlayerCallback;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ProxyClient;
 import org.okraAx.room.bean.RemotePlayerInfo;
 import org.okraAx.room.module.Room;

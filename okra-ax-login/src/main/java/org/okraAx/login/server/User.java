@@ -3,7 +3,7 @@ package org.okraAx.login.server;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.okraAx.common.PlayerCallback;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ProxyClient;
 import org.okraAx.login.bean.AccountBean;
 import org.okraAx.login.bean.RoleBean;

@@ -14,7 +14,7 @@ import org.ogcs.app.Executor;
 import org.ogcs.concurrent.ConcurrentEvent;
 import org.ogcs.concurrent.ConcurrentEventFactory;
 import org.ogcs.concurrent.ConcurrentHandler;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ConnectionEventHandler;
 import org.okraAx.internal.v3.ServiceContext;
 import org.okraAx.utilities.NetHelper;

@@ -3,7 +3,7 @@ package org.okraAx.internal.v3.protobuf;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Command;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.utilities.NetHelper;
 import org.okraAx.v3.GpcCall;
 

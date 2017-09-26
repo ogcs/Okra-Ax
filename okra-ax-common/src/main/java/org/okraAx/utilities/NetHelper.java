@@ -1,7 +1,7 @@
 package org.okraAx.utilities;
 
 
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 
 /**
  * @author TinyZ.

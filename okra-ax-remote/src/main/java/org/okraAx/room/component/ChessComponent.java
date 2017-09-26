@@ -3,7 +3,8 @@ package org.okraAx.room.component;
 import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.room.module.Room;
 import org.okraAx.room.module.chess.ChineseChess;
-import org.okraAx.utilities.SessionHelper;
+import org.okraAx.utilities.NetHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,18 +14,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChessComponent {
 
+    @Autowired
+    private PlayerComponent playerComponent;
 
     /**
      * 移动棋子
      */
     public void onMoveChess(int fromX, int fromY, int toX, int toY) {
-        RemoteUser remoteUser = SessionHelper.curPlayer();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
         if (remoteUser == null) return;
         Room room = remoteUser.getRoom();
         if (room == null) return;
         if (room instanceof ChineseChess) {
             ChineseChess table = (ChineseChess) room;
-            table.onMove(fromX, fromY, toX, toY);
+            table.onMoveChess(remoteUser, fromX, fromY, toX, toY);
         }
     }
 

@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.okraAx.common.RoomPublicService;
 import org.okraAx.common.RoomService;
 import org.okraAx.common.modules.FyChessService;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.room.bean.RemotePlayerInfo;
 import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.room.module.Room;

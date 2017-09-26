@@ -8,7 +8,7 @@ import org.okraAx.common.LoginForRoomService;
 import org.okraAx.common.RoomService;
 import org.okraAx.internal.handler.AxCodecHandler;
 import org.okraAx.internal.handler.codec.AxGpbCodec;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ClientContext;
 import org.okraAx.internal.v3.ProxyClient;
 import org.okraAx.internal.v3.protobuf.GpbCmdFactory;

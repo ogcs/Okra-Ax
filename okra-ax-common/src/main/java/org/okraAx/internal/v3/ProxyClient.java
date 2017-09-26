@@ -2,7 +2,6 @@ package org.okraAx.internal.v3;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.okraAx.internal.net.NetSession;
 import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.utilities.ProxyUtil;
 import org.okraAx.utilities.ReflectionUtil;

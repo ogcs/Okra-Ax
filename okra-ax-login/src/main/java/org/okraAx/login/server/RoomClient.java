@@ -1,10 +1,9 @@
 package org.okraAx.login.server;
 
 import org.ogcs.app.AppContext;
-import org.ogcs.app.Connector;
 import org.ogcs.app.ServiceProxy;
 import org.okraAx.common.RoomService;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.login.bean.ChannelInfo;
 import org.okraAx.login.component.RoomComponent;

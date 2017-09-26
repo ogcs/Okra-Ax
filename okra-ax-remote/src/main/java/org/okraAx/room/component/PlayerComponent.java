@@ -1,7 +1,7 @@
 package org.okraAx.room.component;
 
 import org.ogcs.app.Session;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.room.bean.RmUserInfoBean;
 import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.utilities.SessionHelper;
