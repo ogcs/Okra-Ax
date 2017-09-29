@@ -6,6 +6,7 @@ import org.okraAx.common.LogicService;
 import org.okraAx.internal.bean.ConnectionInfo;
 import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ProxyClient;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.login.server.LogicClient;
 import org.okraAx.utilities.NetHelper;
 import org.okraAx.utilities.ProxyUtil;
@@ -49,7 +50,7 @@ public class NodeComponent {
 
 
         //  Logic
-        ProxyClient<LogicService> logicClient = new ProxyClient<>(session, DEFAULT_LOGIC);
+        ProxyClient<LogicService> logicClient = new ProxyClient<>(session, new GpbInvocationHandler(session), DEFAULT_LOGIC);
         logicClient.initialize();
 
     }

@@ -13,6 +13,7 @@ import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ClientContext;
 import org.okraAx.internal.v3.ProxyClient;
 import org.okraAx.internal.v3.protobuf.GpbCmdFactory;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.internal.v3.protobuf.GpbMessageContext;
 import org.okraAx.internal.v3.protobuf.GpcEventDispatcher;
 import org.okraAx.logic.client.LoginClient;
@@ -88,7 +89,9 @@ public class LoginComponent {
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
             super.channelActive(ctx);
 
-            loginClient = new ProxyClient<>(new NetSession(ctx.channel()), EMPTY);
+            NetSession session = new NetSession(ctx.channel());
+            loginClient = new ProxyClient<>(session, new GpbInvocationHandler(session), EMPTY);
+            loginClient.initialize();
             loginClient.impl().registerLogicServerNode();
 
         }

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.okraAx.common.PlayerCallback;
 import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ProxyClient;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.room.bean.RemotePlayerInfo;
 import org.okraAx.room.module.Room;
 import org.okraAx.utilities.ProxyUtil;
@@ -34,7 +35,8 @@ public final class RemoteUser {
 
     public RemoteUser(RemotePlayerInfo bean, NetSession session) {
         this.remotePlayerInfo = bean;
-        this.client = new ProxyClient<>(session, DEFAULT_CALLBACK);
+        this.client = new ProxyClient<>(session, new GpbInvocationHandler(session), DEFAULT_CALLBACK);
+        this.client.initialize();
     }
 
     public PlayerCallback callback() {

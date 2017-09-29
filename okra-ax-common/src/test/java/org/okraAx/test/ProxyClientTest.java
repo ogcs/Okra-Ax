@@ -4,7 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Test;
 import org.okraAx.common.LogicService;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ProxyClient;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.utilities.ProxyUtil;
 
 /**
@@ -22,7 +24,8 @@ public class ProxyClientTest {
             LOG.info("Empty proxy instance invoked by [{}]. args:{}", method.getName(), args);
             return null;
         });
-        ProxyClient<LogicService> bean = new ProxyClient<>(null, defaultBean);
+        NetSession session = new NetSession(null);
+        ProxyClient<LogicService> bean = new ProxyClient<>(session, new GpbInvocationHandler(session), defaultBean);
         bean.initialize();
         LogicService client = bean.impl();
         System.out.println();

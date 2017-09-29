@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.okraAx.common.PlayerCallback;
 import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ProxyClient;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.login.bean.AccountBean;
 import org.okraAx.login.bean.RoleBean;
 import org.okraAx.login.role.Modules;
@@ -53,7 +54,7 @@ public final class User implements Modules {
      * 初始化User
      */
     public void init(NetSession session) {
-        userClient = new ProxyClient<>(session, DEFAULT_CALLBACK);
+        userClient = new ProxyClient<>(session, new GpbInvocationHandler(session), DEFAULT_CALLBACK);
         userClient.initialize();
     }
 
