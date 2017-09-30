@@ -2,7 +2,7 @@ package org.okraAx.login.component;
 
 import org.okraAx.common.LoginForRoomService;
 import org.okraAx.common.LoginPublicService;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.login.server.User;
 import org.okraAx.utilities.NetHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class Facade implements LoginPublicService, LoginForRoomService {
         if (user != null) {
             //  TODO: 校验房间信息
 
-            user.proxy().callbackEnterChannel(1);
+            user.callback().callbackEnterChannel(1);
         }
     }
 

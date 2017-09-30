@@ -1,7 +1,4 @@
-
-description = ''
+description = 'okra-ax-remote'
 dependencies {
-  compile project(':okra-ax')
-  compile project(':okra-ax-protobuf')
-  compile project(':okra-ax-common')
+    compile project(':okra-ax-common')
 }

@@ -6,7 +6,7 @@ import org.ogcs.app.ServiceProxy;
 import org.okraAx.common.LogicService;
 import org.okraAx.common.LoginForRoomService;
 import org.okraAx.internal.bean.ConnectionInfo;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 
 import java.lang.reflect.InvocationHandler;

@@ -6,7 +6,7 @@ import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.login.bean.AccountBean;
 import org.okraAx.login.bean.RoleBean;
 import org.okraAx.login.role.cache.AccountCacheLoader;
@@ -42,6 +42,9 @@ public class UserComponent {
     @Autowired
     private RoleMapper roleMapper;
 
+    private final Map<NetSession, User> session2userMap = new ConcurrentHashMap<>();
+    private final Map<Long, User> uid2userMap = new ConcurrentHashMap<>();
+
     private LoadingCache<String, User> loginUserCache = CacheBuilder
             .newBuilder()
             .expireAfterAccess(1L, TimeUnit.HOURS)
@@ -49,15 +52,14 @@ public class UserComponent {
                 @Override
                 public void onRemoval(RemovalNotification<String, User> notification) {
 
-                    session2userMap.remove(notification.getValue().session());
+                    session2userMap.remove(notification.getValue().proxyClient().getSession());
 
 
                 }
             })
             .build(new AccountCacheLoader());
 
-    private Map<NetSession, User> session2userMap = new ConcurrentHashMap<>();
-    private Map<Long, User> uid2userMap = new ConcurrentHashMap<>();
+
 
     /**
      * 登录
@@ -71,9 +73,9 @@ public class UserComponent {
                 session2userMap.put(session, user);
                 uid2userMap.put(user.id(), user);
                 //  initialize
-                user.setSession(session);
+                user.init(session);
                 user.lazyLoad();
-                user.userClient().callbackLogin(0);
+                user.callback().callbackLogin(0);
             }
         } catch (ExecutionException e) {
             LOG.error(e.getMessage(), e);
@@ -94,7 +96,7 @@ public class UserComponent {
             User user = loginUserCache.get(openId);
             if (user.id() > 0L) {
                 LOG.info("[onCreateRole] the role[openId:" + openId + ", name:" + name + "] is exist. ");
-                user.userClient().callbackCreateRole(-1);
+                user.callback().callbackCreateRole(-1);
                 return;
             }
             String host = ((InetSocketAddress) session.channel().remoteAddress()).getHostString();
@@ -124,7 +126,7 @@ public class UserComponent {
                         session2userMap.put(session, user);
                         uid2userMap.put(user.id(), user);
 
-                        user.userClient().callbackCreateRole(0);
+                        user.callback().callbackCreateRole(0);
                     } catch (Exception e) {
                         transactionStatus.setRollbackOnly();
                         LOG.error("create role failed. openId:" + openId, e);
@@ -162,7 +164,7 @@ public class UserComponent {
     public void onSyncTime() {
         User user = getUserBySession(NetHelper.session());
         if (user != null) {
-            user.proxy().callbackSyncTime(System.currentTimeMillis());
+            user.callback().callbackSyncTime(System.currentTimeMillis());
         }
     }
 }

@@ -2,12 +2,12 @@ package org.okraAx.room.component;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ogcs.app.AppContext;
 import org.okraAx.common.RoomPublicService;
 import org.okraAx.common.RoomService;
 import org.okraAx.common.modules.FyChessService;
-import org.okraAx.internal.net.NetSession;
-import org.okraAx.room.fy.Player;
+import org.okraAx.internal.v3.NetSession;
+import org.okraAx.room.bean.RemotePlayerInfo;
+import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.room.module.Room;
 import org.okraAx.utilities.NetHelper;
 import org.okraAx.utilities.SessionHelper;
@@ -26,9 +26,9 @@ public final class Facade implements RoomService, RoomPublicService,
     private static final Logger LOG = LogManager.getLogger(Facade.class);
 
     @Autowired
-    private LoginComponent lc ;
+    private LoginComponent lc;
     @Autowired
-    private RoomComponent roomComponent ;
+    private RoomComponent roomComponent;
     @Autowired
     private ChessComponent chessComponent;
     @Autowired
@@ -36,15 +36,18 @@ public final class Facade implements RoomService, RoomPublicService,
 
     //  public procedure invoked by player
 
-    public void initialize() {
-
+    /**
+     *
+     */
+    public void initComponent() {
+        lc.initialize();
     }
 
     @Override
     public void ping() {
-        Player player = playerComponent.getPlayer(NetHelper.session());
-        if (player != null)
-            player.userClient().pong();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
+        if (remoteUser != null)
+            remoteUser.callback().pong();
         LOG.info("xxxxx");
     }
 
@@ -54,12 +57,15 @@ public final class Facade implements RoomService, RoomPublicService,
         if (session == null || !session.isActive()) return;
         // TODO: verify security code from login server.
         //  login通知
+        RemotePlayerInfo remotePlayerInfo = new RemotePlayerInfo();
 
-        Player player = new Player(uid, session);
+        RemoteUser remoteUser = new RemoteUser(remotePlayerInfo, session);
         //  TODO:
 
+//        playerComponent.registerUserInfo(remoteUser);
+
         //  logic校验用户信息
-        lc.service().verifyPlayerInfo(uid, security);
+        lc.loginClient().verifyPlayerInfo(uid, security);
     }
 
     public void syncInfoAfterConnect() {
@@ -67,12 +73,12 @@ public final class Facade implements RoomService, RoomPublicService,
     }
 
     public void callbackVerifyPlayerInfo(int ret) {
-        Player player = SessionHelper.curPlayer();
-        if (player == null) return;
+        RemoteUser remoteUser = SessionHelper.curPlayer();
+        if (remoteUser == null) return;
 
         //  set player info
 
-        player.userClient().pong();
+        remoteUser.callback().pong();
     }
 
     @Override
@@ -102,12 +108,14 @@ public final class Facade implements RoomService, RoomPublicService,
 
     @Override
     public void onChat(MsgOnChat chat) {
-        Player player = playerComponent.getPlayer(NetHelper.session());
-        if (player == null) return;
-        Room room = player.getRoom();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
+        if (remoteUser == null) return;
+        Room room = remoteUser.getRoom();
         if (room != null) {
             //  TODO: 脏词过滤 - 客户端过滤
-            room.broadcast(chat);
+            for (RemoteUser user : room.players()) {
+                user.callback().pong();
+            }
             LOG.info("chat message content. ", chat.toString());
         }
     }

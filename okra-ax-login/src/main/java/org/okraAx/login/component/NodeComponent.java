@@ -4,9 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.okraAx.common.LogicService;
 import org.okraAx.internal.bean.ConnectionInfo;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
+import org.okraAx.internal.v3.ProxyClient;
+import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.login.server.LogicClient;
 import org.okraAx.utilities.NetHelper;
+import org.okraAx.utilities.ProxyUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -23,9 +26,17 @@ public class NodeComponent {
 
     private static final Logger LOG = LogManager.getLogger(NodeComponent.class);
 
+    private static final LogicService DEFAULT_LOGIC =
+            ProxyUtil.newProxyInstance(LogicService.class, (proxy, method, args) -> {
+                //  no-op
+                LOG.info("[LogicService] Empty proxy instance invoked by [{}]. args:{}", method.getName(), args);
+                return null;
+            });
+
     private Map<Integer, LogicClient> logicClientMap = new ConcurrentHashMap<>();
 
     public void registerNode(ConnectionInfo info) {
+        NetSession session = NetHelper.session();
         if (info == null) {
             return;
         }
@@ -34,15 +45,13 @@ public class NodeComponent {
         //  TODO:校验通过
 
         if (info.getType() == 1) {
-            NetSession session = NetHelper.session();
             LogicClient client = new LogicClient(session, info);
-
-
         }
 
 
-        //
-
+        //  Logic
+        ProxyClient<LogicService> logicClient = new ProxyClient<>(session, new GpbInvocationHandler(session), DEFAULT_LOGIC);
+        logicClient.initialize();
 
     }
 

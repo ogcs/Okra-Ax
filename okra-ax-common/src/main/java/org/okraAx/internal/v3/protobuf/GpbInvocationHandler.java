@@ -5,7 +5,7 @@ import io.netty.channel.ChannelFutureListener;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.AppContext;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ServerContext;
 import org.okraAx.v3.GpcCall;
 

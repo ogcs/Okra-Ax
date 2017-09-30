@@ -1,6 +1,11 @@
-
-description = ''
+apply plugin: 'idea'
+description = 'Google Protocol Buffers'
 dependencies {
-    compile group: 'junit', name: 'junit', version:'4.12'
-    compile group: 'org.ogcs', name: 'okra-core', version:'2.0.0'
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.4.0'
+}
+
+idea {
+    module {
+        sourceDirs += file("${projectDir}/proto3")
+    }
 }

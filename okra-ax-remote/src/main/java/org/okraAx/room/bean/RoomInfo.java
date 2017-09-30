@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author TinyZ.
  * @version 2017.06.09
  */
-public class RoomInfo<P extends PlayerInfo> implements Serializable {
+public class RoomInfo<P extends RemotePlayerInfo> implements Serializable {
 
     private static final long serialVersionUID = -6163582521900317827L;
     public long roomId; //  房间唯一ID

@@ -19,8 +19,6 @@ public class ChessMain {
         ChineseChess chessboard = new ChineseChess(10);
         chessboard.init();
 
-        ChineseChessUtil.verifyMap(chessboard, "conf/map5.data");
-
         System.out.println("结束");
     }
 }

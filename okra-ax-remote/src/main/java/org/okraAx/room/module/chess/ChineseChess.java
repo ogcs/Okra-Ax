@@ -2,20 +2,13 @@ package org.okraAx.room.module.chess;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ogcs.gpb.generated.PushChessInit;
-import org.ogcs.gpb.generated.PushReport;
 import org.okraAx.room.bean.RoomInfo;
-import org.okraAx.room.fy.Player;
+import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.room.module.AbstractRoom;
+import org.okraAx.room.module.Consts;
 import org.okraAx.room.module.Room;
 import org.okraAx.room.module.RoomFactory;
-import org.okraAx.v3.chess.beans.MsgChessMove;
-import org.okraAx.v3.room.beans.VoGetReady;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -41,14 +34,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <br/>
  *
  * @author : TinyZ.
- * @email : ogcs_tinyz@outlook.com
- * @since 1.0
  * @version 2017.03.05
  */
 public final class ChineseChess extends AbstractRoom {
 
     private static final Logger LOG = LogManager.getLogger(ChineseChess.class);
-//    private RoomManager roomManager = (RoomManager) AppContext.getBean(SpringContext.MODULE_ROOM_MANAGER);
 
     public static final RoomFactory CHINESE_CHESS = new RoomFactory() {
         @Override
@@ -57,28 +47,30 @@ public final class ChineseChess extends AbstractRoom {
             return new ChineseChess(1);
         }
     };
-
-
     /**
-     * 房间唯一ID
+     * 棋盘
      */
-    private long roomId;
-    private Piece[][] chessboard;
+    private volatile Piece[][] chessboard;
     /**
-     * 当前回合
+     * 红棋
      */
-    private int round;
-    private AtomicInteger hand = new AtomicInteger();
-    // uid list
-    private int count = 0;
-    private Long[] uids = new Long[2];
-    private Map<String, List<Long>> gate4UidsMap = new HashMap<>();
-
-    private Map<Long, Boolean> readys = new ConcurrentHashMap<>();
+    private volatile RemoteUser red;
+    /**
+     * 黑棋
+     */
+    private volatile RemoteUser black;
+    /**
+     * 当前游戏回合(玩家操作结束即为一个游戏回合结束)
+     */
+    private volatile AtomicInteger curRound = new AtomicInteger();
+    /**
+     * 胜利者
+     */
+    public volatile RemoteUser lastWinner;
 
     public ChineseChess(long roomId) {
         super(roomId);
-        this.round = 0;
+        this.curRound.set(0);
     }
 
     @Override
@@ -88,18 +80,7 @@ public final class ChineseChess extends AbstractRoom {
 
     @Override
     public void init() {
-        //
-        chessboard = new Piece[ChessConst.BOARD_WIDTH][ChessConst.BOARD_HEIGHT];
-        for (Integer[] ary : ChessConst.LAYOUT) {
-            Integer y1 = ary[0];
-            Integer x1 = ary[1];
-            Integer type = ary[2];
-            chessboard[x1][y1] = new Piece(ChessConst.SIZE_RED, x1, y1, type);
-            int y2 = ChessConst.BOARD_HEIGHT - y1 - 1;
-            chessboard[x1][y2] = new Piece(ChessConst.SIZE_BLACK, x1, y2, type);
-        }
-        //  初始化完成
-        onEvent(ChessConst.EVENT_INIT_COMPLETED, PushChessInit.getDefaultInstance());
+
     }
 
     @Override
@@ -107,93 +88,264 @@ public final class ChineseChess extends AbstractRoom {
         return 2;
     }
 
-    public Piece[][] get() {
-        return chessboard;
+    @Override
+    public boolean onEnterWithPosition(RemoteUser user, int position) {
+        if (user.getRoom() != null) {
+            user.callback().callbackOnEnter(-1, null);
+            return false;
+        }
+        synchronized (this) {
+            if (position == 1 ? red != null : black != null) {
+                user.callback().callbackOnEnter(-2, null);
+                return false;
+            }
+            if (position == 1) {
+                red = user;
+            } else {
+                black = user;
+            }
+            players.put(user.id(), user);
+            user.setRoom(this);
+        }
+        for (RemoteUser p : players.values()) {
+            p.callback().callbackOnEnter(0, user.userInfo());   //  TODO: 进入房间
+        }
+        return true;
     }
 
-    public int index(long uid) {
-        for (int i = 0; i < uids.length; i++) {
-            Long aLong = uids[i];
-            if (uid == aLong) {
-                return i;
-            }
+    @Override
+    public void onReady(RemoteUser user, boolean ready) {
+        if (user.getRoom() == null) {
+            user.callback().callbackOnReady(-1, 0);
+            return;
         }
-        return -1;
+        if (!players.containsKey(user.id())) {  //  不在此房间内
+            user.callback().callbackOnReady(-2, 0);
+            return;
+        }
+        user.userInfo().isReady = ready;
+        for (RemoteUser user1 : players.values()) {
+            user1.callback().callbackOnReady(0, user.id());
+        }
+        if (isFully()
+                && this.status == Consts.ROOM_STATUS_WAIT
+                && red.userInfo().isReady
+                && black.userInfo().isReady) {
+            onGameStart();
+        }
+    }
+
+    public void onGameStart() {
+        chessboard = new Piece[ChessConst.BOARD_WIDTH][ChessConst.BOARD_HEIGHT];
+        for (Integer[] ary : ChessConst.LAYOUT) {
+            Integer y1 = ary[0];
+            Integer x1 = ary[1];
+            Integer type = ary[2];
+            chessboard[x1][y1] = new Piece(ChessConst.SIDE_RED, x1, y1, type);
+            int y2 = ChessConst.BOARD_HEIGHT - y1 - 1;
+            chessboard[x1][y2] = new Piece(ChessConst.SIDE_BLACK, x1, y2, type);
+        }
+        //  初始化完成
+        for (RemoteUser user : players.values()) {
+            user.callback().callbackOnGameStart();
+        }
+        this.status = Consts.ROOM_STATUS_GAMING;
     }
 
     @Override
     public void onExit(Long uid) {
-        super.onExit(uid);
+        RemoteUser remoteUser = players.remove(uid);
+        if (remoteUser != null) {
+            remoteUser.setRoom(null);
 
-        onGameEnd(index(uid) == ChessConst.SIZE_RED ? ChessConst.SIZE_BLACK : ChessConst.SIZE_RED);
-    }
-
-    public boolean isOperable(Long uid) {
-        return count == 2 && uids[(round % 2)].equals(uid);
-    }
-
-    @Override
-    public void onReady(Player player, boolean ready) {
-        final long uid = player.id();
-        if (ready) {
-            readys.put(uid, true);
-        } else if (readys.containsKey(uid)) {
-            readys.remove(uid);
+            this.status = Consts.ROOM_STATUS_END;
+            this.lastWinner = red.id() == uid ? black : red;
+            onGameEnd();
+            //  离开房间
+            for (RemoteUser p : players.values()) {
+                p.callback().callbackOnExit(uid);
+            }
         }
-        broadcast(VoGetReady.newBuilder()
-                .setUid(uid)
-                .setReady(ready)
-                .build());
-        if (readys.size() >= maxPlayer())
-            init();
     }
 
-    private String pz = "";
-
-    public String getPz() {
-        return pz;
-    }
-
-    public void setPz(String pz) {
-        this.pz = pz;
-    }
-
-    public void onGameEnd(int side) {
-        broadcast(PushReport.newBuilder()
-                .setSide(side)
-                .build());
-//        roomManager.destroy(id());
-    }
-
-    public boolean onMove(int fromX, int fromY, int toX, int toY) {
+    /**
+     * 移动棋子
+     */
+    public boolean onMoveChess(RemoteUser userInfo, int fromX, int fromY, int toX, int toY) {
+        int round = curRound.get();
+        if (round % 2 == 0 ? userInfo != red : userInfo != black) {
+            //  非玩家操作回合
+            userInfo.callback().callbackOnMoveChess(-1, fromX, fromY, toX, toY);
+            return false;
+        }
+        //  移动棋子
         Piece fromCell = chessboard[fromX][fromY];
         if (fromCell != null
-                && ChineseChessUtil.verify(chessboard, fromCell, toX, toY)
+                && isChessMovable(chessboard, fromCell, toX, toY)
                 && fromCell.getSide() == (round % 2)) {
-            if (round % 2 == 0) {
-                hand.getAndIncrement();
-            }
-            LOG.debug("[" + hand.get() + "]:" + pz + ": (" + fromX + ", " + fromY + ") => (" + toX + ", " + toY + ")");
-            round++;
-            Piece toCell = chessboard[toX][toY];
+            LOG.debug("[" + (round / 2 + 1) + "]: (" + fromX + ", " + fromY + ") => (" + toX + ", " + toY + ")");
 
+            Piece toCell = chessboard[toX][toY];
             fromCell.setX(toX);
             fromCell.setY(toY);
             chessboard[toX][toY] = fromCell;
             chessboard[fromX][fromY] = null;
             // Push
-            broadcast(MsgChessMove.newBuilder()
-                    .setFromX(fromX).setFromY(fromY)
-                    .setToX(toX).setToY(toY)
-                    .build());
-            if (toCell != null && toCell.getType() == ChessConst.PIECE_JIANG) {
-                onGameEnd(toCell.getSide() == ChessConst.SIZE_RED ? ChessConst.SIZE_BLACK : ChessConst.SIZE_RED);
+            for (RemoteUser user : players.values()) {
+                user.callback().callbackOnMoveChess(0, fromX, fromY, toX, toY);
             }
+            if (toCell != null && toCell.getType() == ChessConst.PIECE_JIANG) {
+                this.status = Consts.ROOM_STATUS_END;
+                this.lastWinner = toCell.getSide() == ChessConst.SIDE_RED ? black : red;
+                onGameEnd();
+            }
+            curRound.getAndIncrement();
             return true;
         } else {
-            LOG.info("Unknown Error : [" + hand.get() + "]:" + pz + ": (" + fromX + ", " + fromY + ") => (" + toX + ", " + toY + ")");
+            LOG.info("Unknown Error : [" + (round / 2 + 1) + "]: (" + fromX + ", " + fromY + ") => (" + toX + ", " + toY + ")");
             return false;
         }
     }
 
+    public void onGameEnd() {
+        //  TODO: 游戏结束奖励结算， 战绩统计等等
+
+        for (RemoteUser user : players.values()) {
+            user.callback().callbackOnGameEnd(lastWinner == red ? ChessConst.SIDE_RED : ChessConst.SIDE_BLACK);
+        }
+    }
+
+    public boolean isGameEnd() {
+        return status == Consts.ROOM_STATUS_END;
+    }
+
+    /**
+     * Verify is the chess movable.
+     *
+     * @param chessboard The chinese chess board
+     * @param piece      The pre-move chess
+     * @param toX        The position of X on chess board
+     * @param toY        The position of Y on chess board
+     * @return Return true if the chess can move to target position.
+     */
+    private boolean isChessMovable(Piece[][] chessboard, Piece piece, int toX, int toY) {
+        if (toX < 0 || toX >= ChessConst.BOARD_WIDTH || toY < 0 || toY >= ChessConst.BOARD_HEIGHT) {
+            return false;
+        }
+        switch (piece.getType()) {
+            case ChessConst.PIECE_BING: {
+                return !((piece.getSide() == ChessConst.SIDE_RED ? toY < piece.getY() : toY > piece.getY())
+                        && (distance(piece.getX(), piece.getY(), toX, toY) != 1));
+            }
+            case ChessConst.PIECE_PAO: {
+                if (piece.getX() == toX) {
+                    if (chessboard[toX][toY] == null) {
+                        return isClear(chessboard, true, toX, Math.min(piece.getY(), toY), Math.max(piece.getY(), toY));
+                    } else {
+                        return !isClear(chessboard, true, toX, Math.min(piece.getY(), toY), Math.max(piece.getY(), toY));
+                    }
+                } else if (piece.getY() == toY) {
+                    if (chessboard[toX][toY] == null) {
+                        return isClear(chessboard, false, toY, Math.min(piece.getX(), toX), Math.max(piece.getX(), toX));
+                    } else {
+                        return !isClear(chessboard, false, toY, Math.min(piece.getX(), toX), Math.max(piece.getX(), toX));
+                    }
+                } else {
+                    return false;
+                }
+            }
+            case ChessConst.PIECE_MA: {
+                if (distance(piece.getX(), piece.getY(), toX, toY) != 3) {
+                    return false;
+                }
+                if (piece.getX() - toX == 2) {
+                    return chessboard[piece.getX() - 1][piece.getY()] == null;
+                } else if (piece.getX() - toX == -2) {
+                    return chessboard[piece.getX() + 1][piece.getY()] == null;
+                } else if (piece.getY() - toY == 2) {
+                    return chessboard[piece.getX()][piece.getY() - 1] == null;
+                } else if (piece.getY() - toY == -2) {
+                    return chessboard[piece.getX()][piece.getY() + 1] == null;
+                }
+                break;
+            }
+            case ChessConst.PIECE_JU: {
+                if (piece.getX() == toX) {
+                    return isClear(chessboard, true, toX, Math.min(piece.getY(), toY), Math.max(piece.getY(), toY));
+                } else
+                    return piece.getY() == toY && isClear(chessboard, false, toY, Math.min(piece.getX(), toX), Math.max(piece.getX(), toX));
+            }
+            case ChessConst.PIECE_XIANG: {
+                if (distance(piece.getX(), piece.getY(), toX, toY) != 4) {
+                    return false;
+                }
+                if (piece.getSide() == ChessConst.SIDE_RED ? piece.getY() >= ChessConst.BOARD_HEIGHT / 2 : piece.getY() < ChessConst.BOARD_HEIGHT / 2) {
+                    return false;
+                }
+                if (piece.getX() > toX) {
+                    if (piece.getY() > toY) {
+                        return chessboard[piece.getX() - 1][piece.getY() - 1] == null;
+                    } else {
+                        return chessboard[piece.getX() - 1][piece.getY() + 1] == null;
+                    }
+                } else {
+                    if (piece.getY() > toY) {
+                        return chessboard[piece.getX() + 1][piece.getY() - 1] == null;
+                    } else {
+                        return chessboard[piece.getX() + 1][piece.getY() + 1] == null;
+                    }
+                }
+            }
+            case ChessConst.PIECE_SHI: {
+                if (distance(piece.getX(), piece.getY(), toX, toY) != 2) {
+                    return false;
+                }
+                int shifting = ChessConst.SIDE_RED == piece.getSide() ? 0 : 7;
+                return !(toX < 3 || toX > 5 || toY < shifting || toY > 2 + shifting);
+            }
+            case ChessConst.PIECE_JIANG: {
+                if (toX < 3 || toX > 5) {
+                    return false;
+                }
+                if (piece.getX() == toX &&
+                        piece.getSide() == ChessConst.SIDE_RED ? (toY >= 7 && toY < 10) : (toY >= 0 && toY < 3)) {
+                    int minY = piece.getSide() == ChessConst.SIDE_RED ? 0 : 7;
+                    for (int i = minY; i <= minY + 2; i++) {
+                        if (chessboard[piece.getX()][i] != null) {
+                            Piece piece1 = chessboard[piece.getX()][i];
+                            if (piece1.getType() == ChessConst.PIECE_JIANG) {
+                                if (isClear(chessboard, true, piece.getX(), Math.min(piece.getY(), piece1.getY()), Math.max(piece.getY(), piece1.getY()))) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                if (distance(piece.getX(), piece.getY(), toX, toY) != 1) {
+                    return false;
+                }
+                int shifting = ChessConst.SIDE_RED == piece.getSide() ? 0 : 7;
+                return !(toY < shifting || toY > 2 + shifting);
+            }
+            default:
+                return false;
+        }
+        return false;
+    }
+
+    private int distance(int fromX, int fromY, int toX, int toY) {
+        return Math.abs(fromX - toX) + Math.abs(fromY - toY);
+    }
+
+    private boolean isClear(Piece[][] cells, boolean isRowFixed, int value, int from, int to) {
+        boolean isClear = true;
+        for (int i = from + 1; i < to; i++) {
+            if (isRowFixed) {
+                isClear &= cells[value][i] == null;
+            } else {
+                isClear &= cells[i][value] == null;
+            }
+        }
+        return isClear;
+    }
 }

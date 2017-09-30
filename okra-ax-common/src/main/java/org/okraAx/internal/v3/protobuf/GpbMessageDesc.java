@@ -56,6 +56,8 @@ public final class GpbMessageDesc {
         List<FieldDescriptor> fields = descriptor.getFields();
         if (!fields.isEmpty() && fields.size() == args.length) {
             for (int i = 0; i < fields.size(); i++) {
+                if (args[i] == null)
+                    continue;
                 try {
                     builder.setField(fields.get(i), args[i]);
                 } catch (Exception e) {

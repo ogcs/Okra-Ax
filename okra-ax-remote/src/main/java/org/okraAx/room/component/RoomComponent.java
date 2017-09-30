@@ -1,12 +1,11 @@
 package org.okraAx.room.component;
 
 import org.okraAx.room.bean.RoomInfo;
-import org.okraAx.room.fy.Player;
+import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.room.module.Room;
 import org.okraAx.room.module.RoomFactory;
 import org.okraAx.room.module.chess.ChineseChess;
 import org.okraAx.utilities.NetHelper;
-import org.okraAx.utilities.SessionHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -82,12 +81,12 @@ public final class RoomComponent {
      * 创建房间
      */
     public void onCreateRoom(int roomType, String title, int maxPlayer, String password) {
-        Player player = playerComponent.getPlayer(NetHelper.session());
-        if (player == null) return;
-        Room currentRoom = player.getRoom();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
+        if (remoteUser == null) return;
+        Room currentRoom = remoteUser.getRoom();
         if (currentRoom != null) {
             //  退出旧房间
-            currentRoom.onExit(player.id());
+            currentRoom.onExit(remoteUser.id());
         }
         RoomInfo roomInfo = new RoomInfo();
         roomInfo.roomId = 1;    //  TODO: 生成一个roomId
@@ -107,58 +106,58 @@ public final class RoomComponent {
         }
         roomMap.put(room.id(), room);
         //
-        player.setRoom(room);
+        remoteUser.setRoom(room);
     }
 
     public void onJoinRoom(long roomId) {
-        Player player = playerComponent.getPlayer(NetHelper.session());
-        if (player == null) return;
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
+        if (remoteUser == null) return;
         Room room = roomMap.get(roomId);
-        int ret = verifyRoomRules(room, player);
+        int ret = verifyRoomRules(room, remoteUser);
         if (ret < 0) {
             //  加入房间失败
-            player.userClient().callbackJoinRoom(ret);
+            remoteUser.callback().callbackJoinRoom(ret, 0, null, 0);
             return;
         }
-        player.setRoom(room);
-        //
-        player.userClient().callbackJoinRoom(ret);
+        if (room instanceof ChineseChess) {
+            room.onEnter(remoteUser);
+        }
     }
 
     public void onEnterRoom(int roomId, int seat, long uid, String name) {
-        Player player = SessionHelper.curPlayer();
-        if (player == null) return;
-        Room room = player.getRoom();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
+        if (remoteUser == null) return;
+        Room room = remoteUser.getRoom();
         if (room == null) {
             room = lookupRoom(1);
             if (room == null) {
                 room = new ChineseChess(roomId);
-                playerJoin(player.id(), player.getRoom());
+                playerJoin(remoteUser.id(), remoteUser.getRoom());
             }
         }
-        room.onEnter(player);
+        room.onEnter(remoteUser);
     }
 
     public void onExitRoom() {
-        Player player = playerComponent.getPlayer(NetHelper.session());
-        if (player == null) return;
-        Room room = player.getRoom();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
+        if (remoteUser == null) return;
+        Room room = remoteUser.getRoom();
         if (room == null) {
             return;
         }
-        room.onExit(player.id());
+        room.onExit(remoteUser.id());
         //
-        for (Player user : room.players()) {
-            user.userClient().callbackChangeRoomStatus(0);
+        for (RemoteUser user : room.players()) {
+            user.callback().callbackChangeRoomStatus(0);
         }
     }
 
     public void onGetReady(boolean ready) {
-        Player player = SessionHelper.curPlayer();
-        if (player == null) return;
-        Room room = player.getRoom();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
+        if (remoteUser == null) return;
+        Room room = remoteUser.getRoom();
         if (room == null) return;
-        room.onReady(player, ready);
+        room.onReady(remoteUser, ready);
     }
 
     private Room newRoom(RoomInfo roomInfo) {
@@ -178,7 +177,7 @@ public final class RoomComponent {
         }
     }
 
-    public int verifyRoomRules(Room room, Player player) {
+    public int verifyRoomRules(Room room, RemoteUser remoteUser) {
         if (room == null)  {
             //  房间不存在
             return -1;
@@ -208,9 +207,9 @@ public final class RoomComponent {
     public void destroyRoom(long roomId) {
         Room room = roomMap.remove(roomId);
         if (room != null) {
-            Set<Player> players = room.players();
-            for (Player player : players) {
-                uid2RoomMap.remove(player.id());
+            Set<RemoteUser> remoteUsers = room.players();
+            for (RemoteUser remoteUser : remoteUsers) {
+                uid2RoomMap.remove(remoteUser.id());
             }
             room.onDestroy();
         }

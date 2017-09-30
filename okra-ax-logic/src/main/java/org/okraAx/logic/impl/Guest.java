@@ -2,14 +2,8 @@ package org.okraAx.logic.impl;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.ogcs.app.AppContext;
 import org.ogcs.app.Connector;
 import org.ogcs.app.Session;
-import org.okraAx.internal.inner.AxInnerClient;
-import org.okraAx.internal.component.AxInnerCoManager;
-import org.okraAx.internal.component.ConnectorManager;
-import org.okraAx.internal.SpringContext;
-import org.okraAx.v3.LogicPublicProto.ReqExitRoom;
 
 /**
  * 游客. 仅用于游客模式.

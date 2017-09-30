@@ -1,6 +1,6 @@
 package org.okraAx.room.module.mahjong;
 
-import org.okraAx.room.fy.Player;
+import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.room.module.AbstractRoom;
 
 import java.util.ArrayList;
@@ -42,7 +42,17 @@ public class YueQingMahjong extends AbstractRoom {
     }
 
     @Override
-    public void onReady(Player player, boolean ready) {
+    public void onReady(RemoteUser remoteUser, boolean ready) {
+
+    }
+
+    @Override
+    public void onGameStart() {
+
+    }
+
+    @Override
+    public void onGameEnd() {
 
     }
 

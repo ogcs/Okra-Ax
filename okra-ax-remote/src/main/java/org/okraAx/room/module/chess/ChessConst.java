@@ -17,8 +17,8 @@ public interface ChessConst {
 
 
     // 红黑双方
-    int SIZE_RED = 0;
-    int SIZE_BLACK = 1;
+    int SIDE_RED = 0;
+    int SIDE_BLACK = 1;
     //  棋盘宽高
     int BOARD_WIDTH = 9;
     int BOARD_HEIGHT = 10;

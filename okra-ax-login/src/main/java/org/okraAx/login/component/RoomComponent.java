@@ -2,7 +2,7 @@ package org.okraAx.login.component;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.okraAx.internal.net.NetSession;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.login.bean.ChannelInfo;
 import org.okraAx.login.server.RoomClient;
 import org.okraAx.login.server.User;

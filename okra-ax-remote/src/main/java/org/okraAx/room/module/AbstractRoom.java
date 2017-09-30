@@ -2,8 +2,8 @@ package org.okraAx.room.module;
 
 import org.okraAx.internal.events.EventDispatcher;
 import org.okraAx.internal.events.TriggeredEvent;
-import org.okraAx.room.bean.PlayerInfo;
-import org.okraAx.room.fy.Player;
+import org.okraAx.room.bean.RemotePlayerInfo;
+import org.okraAx.room.fy.RemoteUser;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -19,7 +19,7 @@ public abstract class AbstractRoom extends EventDispatcher implements Room {
     /**
      * 房间唯一ID
      */
-    protected volatile long roomId;
+    private final long roomId;
     /**
      * 房间状态
      */
@@ -27,7 +27,7 @@ public abstract class AbstractRoom extends EventDispatcher implements Room {
     /**
      * 玩家列表
      */
-    protected Map<Long/* uid */, Player> players = new ConcurrentHashMap<>();
+    protected final Map<Long/* uid */, RemoteUser> players = new ConcurrentHashMap<>();
 
     public AbstractRoom(long roomId) {
         this.roomId = roomId;
@@ -49,50 +49,56 @@ public abstract class AbstractRoom extends EventDispatcher implements Room {
     }
 
     @Override
-    public Set<Player> players() {
+    public Set<RemoteUser> players() {
         return new HashSet<>(players.values());
     }
 
     @Override
-    public void onEnter(Player player) {
+    public boolean onEnter(RemoteUser user) {
         if (isFully()) {
-            player.userClient().callbackEnterTable(-1);
-            return;
+            user.callback().callbackEnterTable(-1);
+            return false;
         }
         synchronized (this) {
-            if (player.getRoom() != null) {
-                player.userClient().callbackEnterTable(-2);
-                return;
+            if (user.getRoom() != null) {
+                user.callback().callbackEnterTable(-2);
+                return false;
             }
-            //
-            player.userClient().callbackEnterTable(0);
+            players.put(user.id(), user);
+            user.setRoom(this);
 
-            players.put(player.id(), player);
-            player.setRoom(this);
+            user.callback().callbackEnterTable(0);
+
             //  广播进入房间
-            PlayerInfo info = player.getInfo();
-            for (Player p : players.values()) {
-                p.userClient().callbackJoinRoom(0, info.getUid(), info.getName(), info.getFigure());
+            RemotePlayerInfo info = user.userInfo();
+            for (RemoteUser p : players.values()) {
+                p.callback().callbackJoinRoom(0, info.getUid(), info.getName(), info.getFigure());
             }
+            return true;
         }
     }
 
     @Override
-    public void onReady(Player player, boolean ready) {
+    public boolean onEnterWithPosition(RemoteUser user, int position) {
+        return false;
+    }
 
-        for (Player p : players.values()) {
-            p.userClient().callbackChangeUserStatus(0, 1);
+    @Override
+    public void onReady(RemoteUser remoteUser, boolean ready) {
+
+        for (RemoteUser p : players.values()) {
+            p.callback().callbackChangeUserStatus(0, 1);
         }
     }
 
     @Override
     public void onExit(Long uid) {
-        Player player = players.remove(uid);
-        if (player != null) {
-            player.setRoom(null);
+        RemoteUser remoteUser = players.remove(uid);
+        if (remoteUser != null) {
+            remoteUser.setRoom(null);
             //  广播离开房间
-            for (Player p : players.values()) {
-                p.userClient().callbackExitRoom(0, uid);
+            for (RemoteUser p : players.values()) {
+                p.callback().callbackExitRoom(0, uid);
             }
         }
     }
@@ -100,40 +106,14 @@ public abstract class AbstractRoom extends EventDispatcher implements Room {
     @Override
     public void onDestroy() {
         if (!players.isEmpty()) {
-            for (Player player : players.values()) {
-                player.disconnected();
+            for (RemoteUser remoteUser : players.values()) {
+                remoteUser.closeSession();
             }
             players.clear();
         }
     }
 
-    /**
-     * Send message to every player on table.
-     *
-     * @param msg the message send to player.
-     */
-    protected void broadcast(Object msg) {
-        for (Player player : players.values()) {
-            if (player.isOnline()) {
-                player.session().writeAndFlush(msg);
-            }
-        }
-    }
-
-    /**
-     * push message to special player by uid.
-     *
-     * @param uid the player's unique id.
-     * @param msg the message send to player.
-     */
-    protected void push(long uid, Object msg) {
-        Player player = players.get(uid);
-        if (player != null) {
-            player.session().writeAndFlush(msg);
-        }
-    }
-
-    public void onEvent(String type, Player source) {
-        super.dispatchEvent(new TriggeredEvent<Room, Player>(type, this, source));
+    public void onEvent(String type, RemoteUser source) {
+        super.dispatchEvent(new TriggeredEvent<Room, RemoteUser>(type, this, source));
     }
 }

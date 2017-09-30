@@ -1,7 +1,7 @@
 package org.okraAx.room.module;
 
 
-import org.okraAx.room.fy.Player;
+import org.okraAx.room.fy.RemoteUser;
 
 import java.util.Set;
 
@@ -52,24 +52,36 @@ public interface Room {
      *
      * @return Return all players.
      */
-    Set<Player> players();
+    Set<RemoteUser> players();
 
     /**
      * Player join game.
      */
-    void onEnter(Player player);
+    boolean onEnter(RemoteUser user);
+
+    /**
+     * Join room and sit in the designated position.
+     *
+     * @param user     {@link RemoteUser}
+     * @param position the designated position.
+     */
+    boolean onEnterWithPosition(RemoteUser user, int position);
 
     /**
      * Player get ready or unready.
      *
      * @param ready If true means player is get ready, otherwise false.
      */
-    void onReady(Player player, boolean ready);
+    void onReady(RemoteUser user, boolean ready);
+
+    void onGameStart();
 
     /**
      * Player exit game.
      */
     void onExit(Long uid);
+
+    void onGameEnd();
 
     /**
      * When the game is over. clear the game data or cache.
