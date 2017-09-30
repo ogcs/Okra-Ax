@@ -2,7 +2,7 @@ package org.okraAx.room.server;
 
 import org.ogcs.app.AppContext;
 import org.okraAx.room.component.Facade;
-import org.okraAx.room.fy.RoomManager;
+import org.okraAx.room.component.LoginComponent;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -20,15 +20,11 @@ public enum Framework {
         ClassPathXmlApplicationContext cpxac = new ClassPathXmlApplicationContext(springConfigPath);
         cpxac.registerShutdownHook();
         //  Bootstrap Login Server
-        RoomManager manager = new RoomManager();
-        manager.start();
+        AppContext.getBean(Facade.class).initComponent();
 
-        Facade facade = AppContext.getBean(Facade.class);
-        facade.initComponent();
-
-        synchronized (manager) {
+        synchronized (INSTANCE) {
             try {
-                manager.wait();
+                INSTANCE.wait();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
