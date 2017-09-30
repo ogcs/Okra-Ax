@@ -1,0 +1,8 @@
+
+description = ''
+dependencies {
+  compile project(':okra-ax-protobuf')
+  compile project(':okra-ax-common')
+  compile project(':okra-ax-login')
+    testCompile group: 'junit', name: 'junit', version:'4.12'
+}

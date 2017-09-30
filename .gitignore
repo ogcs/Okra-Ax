@@ -9,3 +9,9 @@ logs/*
 *.class
 out/*
 */target/*
+
+
+##############
+## Gradle
+##############
+.gradle/*
