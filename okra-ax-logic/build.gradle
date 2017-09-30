@@ -1,0 +1,7 @@
+
+description = ''
+dependencies {
+    compile group: 'org.ogcs', name: 'okra-core', version:'2.0.0'
+    compile group: 'org.mybatis', name: 'mybatis', version:'3.4.1'
+  compile project(':okra-ax-common')
+}

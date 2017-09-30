@@ -1,0 +1,14 @@
+rootProject.name = 'okra-ax'
+include ':okra-ax-remote'
+include ':okra-ax-protobuf'
+include ':okra-ax-test'
+include ':okra-ax-login'
+include ':okra-ax-logic'
+include ':okra-ax-common'
+
+project(':okra-ax-remote').projectDir = "$rootDir/okra-ax-remote" as File
+project(':okra-ax-protobuf').projectDir = "$rootDir/okra-ax-protobuf" as File
+project(':okra-ax-test').projectDir = "$rootDir/okra-ax-test" as File
+project(':okra-ax-login').projectDir = "$rootDir/okra-ax-login" as File
+project(':okra-ax-logic').projectDir = "$rootDir/okra-ax-logic" as File
+project(':okra-ax-common').projectDir = "$rootDir/okra-ax-common" as File
