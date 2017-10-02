@@ -1,16 +1,14 @@
 package org.okraAx.internal.v3.protobuf;
 
-import com.google.protobuf.ByteString;
+import com.google.protobuf.*;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FieldDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
-import com.google.protobuf.DynamicMessage;
-import com.google.protobuf.InvalidProtocolBufferException;
-import com.google.protobuf.Message;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author TinyZ
@@ -51,6 +49,59 @@ public final class GpbMessageDesc {
                 .build();
     }
 
+    public Object[] unpackWithJavaMethod(java.lang.reflect.Method method, ByteString byteString) throws InvalidProtocolBufferException {
+        Message message = unpack(byteString);
+        Object[] args = new Object[method.getParameterCount()];
+        Class<?>[] parameterTypes = method.getParameterTypes();
+        for (Map.Entry<Descriptors.FieldDescriptor, Object> entry : message.getAllFields().entrySet()) {
+            args[entry.getKey().getIndex()] = entry.getValue();
+        }
+        for (int i = 0; i < args.length; i++) {
+            if (parameterTypes[i] == Object.class)
+                continue;
+            if (args[i] == null) {  //  赋缺省值
+                if (parameterTypes[i] == int.class) {
+                    args[i] = 0;
+                } else if (parameterTypes[i] == double.class) {
+                    args[i] = 0.0D;
+                } else if (parameterTypes[i] == boolean.class) {
+                    args[i] = false;
+                } else if (parameterTypes[i] == byte.class) {
+                    args[i] = 0x00;
+                } else if (parameterTypes[i] == short.class) {
+                    args[i] = 0;
+                } else if (parameterTypes[i] == long.class) {
+                    args[i] = 0L;
+                } else if (parameterTypes[i] == float.class) {
+                    args[i] = 0.0F;
+                }
+            } else {
+                if (args[i].getClass() != parameterTypes[i]) {  //  类型不同 - 类型转换
+                    try {
+                        args[i] = parameterTypes[i].cast(args[i]);
+                    } catch (ClassCastException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return args;
+    }
+
+    /**
+     * <pre>
+     *     1. 原始类型数据int float double boolean等和null不同
+     * </pre>
+     */
+    public Object[] unpackWithParamCount(int parameterCount, ByteString byteString) throws InvalidProtocolBufferException {
+        Message message = unpack(byteString);
+        Object[] args = new Object[parameterCount];
+        for (Map.Entry<Descriptors.FieldDescriptor, Object> entry : message.getAllFields().entrySet()) {
+            args[entry.getKey().getIndex()] = entry.getValue();
+        }
+        return args;
+    }
+
     public Message pack(Object[] args) {
         DynamicMessage.Builder builder = DynamicMessage.newBuilder(descriptor);
         List<FieldDescriptor> fields = descriptor.getFields();
@@ -67,5 +118,9 @@ public final class GpbMessageDesc {
             }
         }
         return builder.build();
+    }
+
+    public Descriptor getDescriptor() {
+        return descriptor;
     }
 }
