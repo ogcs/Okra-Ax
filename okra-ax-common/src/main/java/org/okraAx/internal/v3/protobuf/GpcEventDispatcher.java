@@ -1,6 +1,6 @@
 package org.okraAx.internal.v3.protobuf;
 
-import com.lmax.disruptor.BlockingWaitStrategy;
+import com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
@@ -14,8 +14,8 @@ import org.ogcs.app.Executor;
 import org.ogcs.concurrent.ConcurrentEvent;
 import org.ogcs.concurrent.ConcurrentEventFactory;
 import org.ogcs.concurrent.ConcurrentHandler;
-import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ConnectionEventHandler;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ServiceContext;
 import org.okraAx.utilities.NetHelper;
 import org.okraAx.v3.GpcCall;
@@ -47,9 +47,13 @@ public class GpcEventDispatcher extends SimpleChannelInboundHandler<GpcCall> {
         @Override
         protected Disruptor<ConcurrentEvent> initialValue() {
             Disruptor<ConcurrentEvent> disruptor = new Disruptor<>(
-                    ConcurrentEventFactory.DEFAULT, DEFAULT_RING_BUFFER_SIZE, CACHED_THREAD_POOL, ProducerType.SINGLE, new BlockingWaitStrategy());
+                    ConcurrentEventFactory.DEFAULT,
+                    DEFAULT_RING_BUFFER_SIZE,
+                    CACHED_THREAD_POOL,
+                    ProducerType.SINGLE,
+                    new LiteTimeoutBlockingWaitStrategy(15000L, TimeUnit.MILLISECONDS));
+            disruptor.setDefaultExceptionHandler(new GpcExceptionHandler());
             disruptor.handleEventsWith(new ConcurrentHandler());
-//            disruptor.handleExceptionsWith();
             disruptor.start();
             return disruptor;
         }
