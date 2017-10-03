@@ -40,24 +40,23 @@ public class GpcEventDispatcher extends SimpleChannelInboundHandler<GpcCall> {
     /**
      * @see Executors#newCachedThreadPool()
      */
-    private static final ExecutorService CACHED_THREAD_POOL = new ThreadPoolExecutor(0, 100,
-            60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+    private static final ExecutorService CACHED_THREAD_POOL =
+            new ThreadPoolExecutor(0, 100,
+                    60L, TimeUnit.SECONDS, new SynchronousQueue<>());
 
-    private static final ThreadLocal<Disruptor<ConcurrentEvent>> THREAD_LOCAL = new ThreadLocal<Disruptor<ConcurrentEvent>>() {
-        @Override
-        protected Disruptor<ConcurrentEvent> initialValue() {
-            Disruptor<ConcurrentEvent> disruptor = new Disruptor<>(
-                    ConcurrentEventFactory.DEFAULT,
-                    DEFAULT_RING_BUFFER_SIZE,
-                    CACHED_THREAD_POOL,
-                    ProducerType.SINGLE,
-                    new LiteTimeoutBlockingWaitStrategy(15000L, TimeUnit.MILLISECONDS));
-            disruptor.setDefaultExceptionHandler(new GpcExceptionHandler());
-            disruptor.handleEventsWith(new ConcurrentHandler());
-            disruptor.start();
-            return disruptor;
-        }
-    };
+    private static final ThreadLocal<Disruptor<ConcurrentEvent>> THREAD_LOCAL =
+            ThreadLocal.withInitial(() -> {
+                Disruptor<ConcurrentEvent> disruptor = new Disruptor<>(
+                        ConcurrentEventFactory.DEFAULT,
+                        DEFAULT_RING_BUFFER_SIZE,
+                        CACHED_THREAD_POOL,
+                        ProducerType.SINGLE,
+                        new LiteTimeoutBlockingWaitStrategy(15000L, TimeUnit.MILLISECONDS));
+                disruptor.setDefaultExceptionHandler(new GpcExceptionHandler());
+                disruptor.handleEventsWith(new ConcurrentHandler());
+                disruptor.start();
+                return disruptor;
+            });
 
     private final ServiceContext context;
 

@@ -49,6 +49,12 @@ public final class GpbMessageDesc {
                 .build();
     }
 
+    /**
+     * 根据JavaMethod, 反序列化{@link Message}, 返回调用函数所需的参数.
+     *
+     * @param method     对应的Java方法
+     * @param byteString 待反序列化的数据
+     */
     public Object[] unpackWithJavaMethod(java.lang.reflect.Method method, ByteString byteString) throws InvalidProtocolBufferException {
         Message message = unpack(byteString);
         Object[] args = new Object[method.getParameterCount()];
@@ -59,7 +65,7 @@ public final class GpbMessageDesc {
         for (int i = 0; i < args.length; i++) {
             if (parameterTypes[i] == Object.class)
                 continue;
-            if (args[i] == null) {  //  赋缺省值
+            if (args[i] == null) {  //  set default value
                 if (parameterTypes[i] == int.class) {
                     args[i] = 0;
                 } else if (parameterTypes[i] == double.class) {
