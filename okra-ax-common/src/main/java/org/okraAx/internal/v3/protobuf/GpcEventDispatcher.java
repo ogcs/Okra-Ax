@@ -145,7 +145,7 @@ public class GpcEventDispatcher extends SimpleChannelInboundHandler<GpcCall> {
                 Command command = context.getMethod(msg.getMethod());
                 command.execute(session, msg);
             } catch (Exception e) {
-                LOG.info("[GpcEventDispatcher] GpcCall execute error.api:{} ", msg.getMethod(), e);
+                LOG.error("[GpcEventDispatcher] GpcCall execute error.api:{} ", msg.getMethod(), e);
             }
         }
     }
