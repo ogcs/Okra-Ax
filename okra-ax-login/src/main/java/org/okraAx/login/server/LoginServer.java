@@ -14,6 +14,7 @@ import org.okraAx.internal.v3.protobuf.GpbCmdFactory;
 import org.okraAx.internal.v3.protobuf.GpbMessageContext;
 import org.okraAx.internal.v3.protobuf.GpcEventDispatcher;
 import org.okraAx.login.component.Facade;
+import org.okraAx.login.component.RemoteComponent;
 import org.okraAx.login.component.UserComponent;
 import org.okraAx.utilities.NetHelper;
 import org.okraAx.v3.GpcCall;
@@ -39,7 +40,6 @@ public final class LoginServer {
                 .registerService(facade, LoginPublicService.class)
                 .registerService(facade, LoginForRoomService.class)
                 .addNetHandler("codec", new AxCodecHandler(new AxGpbCodec(GpcCall.getDefaultInstance())))
-                .addNetHandler("relay", new RelayHandler())
                 .addNetHandler("handler", new GpcEventDispatcher(context, new UserConnectHandler()))
                 .build();
 
@@ -57,6 +57,7 @@ public final class LoginServer {
     private class UserConnectHandler implements ConnectionEventHandler {
 
         private UserComponent userComponent = AppContext.getBean(UserComponent.class);
+        private RemoteComponent remoteComponent = AppContext.getBean(RemoteComponent.class);
 
         @Override
         public void connected() {
@@ -71,8 +72,11 @@ public final class LoginServer {
         @Override
         public void disconnected() {
             NetSession session = NetHelper.session();
-            if (session != null)
+            if (session != null) {
                 userComponent.onDisconnect(session);
+                remoteComponent.onDisconnect(session);
+            }
+
         }
     }
 
