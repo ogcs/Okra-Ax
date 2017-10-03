@@ -64,4 +64,7 @@ public class ProxyClient<T> {
         return session;
     }
 
+    public InvocationHandler getHandler() {
+        return handler;
+    }
 }
