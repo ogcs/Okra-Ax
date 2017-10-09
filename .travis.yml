@@ -11,4 +11,4 @@ before_install:
   - 'gradle --version'
   - 'chmod +x gradlew'
 install:
-  - gradle build
+  - gradle build -x test
