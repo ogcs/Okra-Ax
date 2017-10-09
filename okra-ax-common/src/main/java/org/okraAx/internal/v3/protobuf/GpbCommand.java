@@ -35,7 +35,12 @@ public class GpbCommand implements Command<NetSession, GpcCall> {
         if (context == null) throw new NullPointerException("context");
         try {
             NetHelper.setSession(session);
-            methodImpl.invoke(instance, context.unpack(call));
+            Object[] unpack = context.unpack(call);
+            if (unpack == null) {
+                LOG.error("[GpbCommand] the call[method:{}, data:{}] unpack failed.", call.getMethod(), call.getParams());
+                return;
+            }
+            methodImpl.invoke(instance, unpack);
         } catch (Exception e) {
             LOG.error("[Gpb] RPC invoke error. method :" + call.getMethod() + ", call:" + call.toString(), e);
         } finally {

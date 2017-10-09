@@ -1,6 +1,6 @@
 package org.okraAx.internal.v3.protobuf;
 
-import com.lmax.disruptor.BlockingWaitStrategy;
+import com.lmax.disruptor.LiteTimeoutBlockingWaitStrategy;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
@@ -14,8 +14,8 @@ import org.ogcs.app.Executor;
 import org.ogcs.concurrent.ConcurrentEvent;
 import org.ogcs.concurrent.ConcurrentEventFactory;
 import org.ogcs.concurrent.ConcurrentHandler;
-import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ConnectionEventHandler;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ServiceContext;
 import org.okraAx.utilities.NetHelper;
 import org.okraAx.v3.GpcCall;
@@ -40,20 +40,23 @@ public class GpcEventDispatcher extends SimpleChannelInboundHandler<GpcCall> {
     /**
      * @see Executors#newCachedThreadPool()
      */
-    private static final ExecutorService CACHED_THREAD_POOL = new ThreadPoolExecutor(0, 100,
-            60L, TimeUnit.SECONDS, new SynchronousQueue<Runnable>());
+    private static final ExecutorService CACHED_THREAD_POOL =
+            new ThreadPoolExecutor(0, 100,
+                    60L, TimeUnit.SECONDS, new SynchronousQueue<>());
 
-    private static final ThreadLocal<Disruptor<ConcurrentEvent>> THREAD_LOCAL = new ThreadLocal<Disruptor<ConcurrentEvent>>() {
-        @Override
-        protected Disruptor<ConcurrentEvent> initialValue() {
-            Disruptor<ConcurrentEvent> disruptor = new Disruptor<>(
-                    ConcurrentEventFactory.DEFAULT, DEFAULT_RING_BUFFER_SIZE, CACHED_THREAD_POOL, ProducerType.SINGLE, new BlockingWaitStrategy());
-            disruptor.handleEventsWith(new ConcurrentHandler());
-//            disruptor.handleExceptionsWith();
-            disruptor.start();
-            return disruptor;
-        }
-    };
+    private static final ThreadLocal<Disruptor<ConcurrentEvent>> THREAD_LOCAL =
+            ThreadLocal.withInitial(() -> {
+                Disruptor<ConcurrentEvent> disruptor = new Disruptor<>(
+                        ConcurrentEventFactory.DEFAULT,
+                        DEFAULT_RING_BUFFER_SIZE,
+                        CACHED_THREAD_POOL,
+                        ProducerType.SINGLE,
+                        new LiteTimeoutBlockingWaitStrategy(15000L, TimeUnit.MILLISECONDS));
+                disruptor.setDefaultExceptionHandler(new GpcExceptionHandler());
+                disruptor.handleEventsWith(new ConcurrentHandler());
+                disruptor.start();
+                return disruptor;
+            });
 
     private final ServiceContext context;
 
@@ -142,7 +145,7 @@ public class GpcEventDispatcher extends SimpleChannelInboundHandler<GpcCall> {
                 Command command = context.getMethod(msg.getMethod());
                 command.execute(session, msg);
             } catch (Exception e) {
-                LOG.info("[GpcEventDispatcher] GpcCall execute error.api:{} ", msg.getMethod(), e);
+                LOG.error("[GpcEventDispatcher] GpcCall execute error.api:{} ", msg.getMethod(), e);
             }
         }
     }

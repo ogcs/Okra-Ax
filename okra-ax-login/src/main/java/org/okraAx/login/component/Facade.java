@@ -1,10 +1,14 @@
 package org.okraAx.login.component;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.okraAx.common.LoginForRoomService;
 import org.okraAx.common.LoginPublicService;
+import org.okraAx.common.RelayService;
 import org.okraAx.internal.v3.NetSession;
 import org.okraAx.login.server.User;
 import org.okraAx.utilities.NetHelper;
+import org.okraAx.v3.GpcRelay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +17,28 @@ import org.springframework.stereotype.Service;
  * @version 2017.03.26
  */
 @Service
-public class Facade implements LoginPublicService, LoginForRoomService {
+public class Facade implements RelayService, LoginPublicService, LoginForRoomService {
+
+    private static final Logger LOG = LogManager.getLogger(Facade.class);
 
     @Autowired
     private RoomComponent roomComponent;
     @Autowired
     private UserComponent userComponent;
+    @Autowired
+    private RemoteComponent remoteComponent;
+
+    @Override
+    public void onRelay(long source, Object msg) {
+        if (msg instanceof GpcRelay) {
+            User user = userComponent.getUserByUid(((GpcRelay) msg).getSource());
+            if (user != null && user.proxyClient().isActive()) {
+                user.proxyClient().getSession().writeAndFlush(((GpcRelay) msg).getData());
+            }
+        } else {
+            LOG.error("[onRelay] msg data is wrong. msg:{}", msg == null ? "null" : msg.getClass());
+        }
+    }
 
     @Override
     public void onCreateRole(String openId, String name, int figure) {
@@ -42,13 +62,28 @@ public class Facade implements LoginPublicService, LoginForRoomService {
 
     }
 
+    /**
+     * @see #enterChannelSuccuss(long, long)
+     */
     @Override
     public void onEnterChannel() {
         User user = userComponent.getUserBySession(NetHelper.session());
         if (user != null) {
             //  TODO: 校验房间信息
 
-            user.callback().callbackEnterChannel(1);
+            remoteComponent.remoteClient(1).enterChannel();
+
+
+        }
+    }
+
+    public void enterChannelSuccuss(long uid, long secutify) {
+        if (!remoteComponent.isChannelExist(NetHelper.session())) {
+            return;
+        }
+        User user = userComponent.getUserByUid(uid);
+        if (user != null) {
+            user.callback().callbackEnterChannel(1, secutify);
         }
     }
 

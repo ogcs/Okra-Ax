@@ -1,0 +1,16 @@
+syntax = "proto3";
+package org.okraAx.v3;
+option optimize_for = SPEED;
+option java_package = "org.okraAx.v3.beans";
+option java_outer_classname = "GpcBnRelay";
+//option java_generic_services = true;
+option java_multiple_files = true;
+
+//  request bean.
+import "Gpc.proto";
+
+//
+message RpcOnRelay {
+     int64 target = 1;
+     GpcCall call = 2;
+}

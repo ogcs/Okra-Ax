@@ -1,7 +1,5 @@
 package org.okraAx.internal.events;
 
-import io.netty.util.internal.ConcurrentSet;
-
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;

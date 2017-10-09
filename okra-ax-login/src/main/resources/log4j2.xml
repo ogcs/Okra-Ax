@@ -9,7 +9,7 @@
                                  filePattern="logs/server-%d{yyyy-MM-dd}-%i.log">
             <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss,SSS}- %c{1}: %m%n"/>-->
             <!--<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line] - %msg%n" />-->
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%c{1}:%line]-[%p]: %m%n" />
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}][%p][%c{1}:%line]: %m%n" />
             <Policies>
                 <!--<TimeBasedTriggeringPolicy interval="5"/>-->
                 <!--<SizeBasedTriggeringPolicy size="10 KB"/>-->
@@ -19,7 +19,7 @@
         </RollingRandomAccessFile>
         <Console name="ConsoleAppender">
             <!--<PatternLayout pattern="%d [%p] %c %m%n"/>-->
-            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss.SSS} %level [%thread][%file:%line]: %msg%n"/>
+            <PatternLayout pattern="[%date{yyyy-MM-dd HH:mm:ss.SSS}][%level][%thread][%file:%line]: %msg%n"/>
         </Console>
     </Appenders>
     <Loggers>
@@ -30,7 +30,8 @@
             <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="DailyFileAppender"/>
         </AsyncLogger>
-        <AsyncLogger name="org.springframework" level="WARM">
+        <AsyncLogger name="org.springframework" level="INFO">
+            <AppenderRef ref="ConsoleAppender"/>
             <AppenderRef ref="DailyFileAppender"/>
         </AsyncLogger>
         <!--

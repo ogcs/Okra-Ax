@@ -13,6 +13,7 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.utilities.Pair;
+import org.okraAx.internal.handler.AutoConnectHandler;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -149,6 +150,9 @@ public class ClientContext extends ServiceContext {
         //
         cp.addLast("frame", new LengthFieldBasedFrameDecoder(this.maxFrameLength, 0, lengthFieldLength, 0, lengthFieldLength));
         cp.addLast("prepender", this.prepender);
+        if (isAutoConnect()) {
+            cp.addLast("autoConnect", new AutoConnectHandler(this));
+        }
         //  Event Handler
         if (!handlers.isEmpty()) {
             for (Pair<String, ChannelHandler> pair : handlers) {
