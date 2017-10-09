@@ -7,7 +7,5 @@ jdk:
 branches:
   only:
     - master
-    - 3
-    - 3.5
 before_install: 'gradle --version'
-install: './gradlew check'
+install: 'gradle'
