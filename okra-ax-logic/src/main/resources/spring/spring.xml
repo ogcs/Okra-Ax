@@ -9,17 +9,10 @@
     <!--<context:property-placeholder location="file:conf/conf.properties" />-->
 
     <context:annotation-config/>
-    <context:component-scan base-package="org.ogcs.ax"/>
+    <context:component-scan base-package="org.ogcs"/>
+    <context:component-scan base-package="org.okraAx"/>
 
     <bean id="appContext" class="org.ogcs.app.AppContext"/>
 
-    <!-- Register Service -->
-    <bean id="serviceManager" class="org.ogcs.ax.service.GpbServiceManager" init-method="initialize">
-        <property name="clzOfServiceList">
-            <list value-type="java.lang.Class">
-                <value>org.ogcs.ax.gpb3.LogicPublicProto</value>
-            </list>
-        </property>
-    </bean>
 
 </beans>

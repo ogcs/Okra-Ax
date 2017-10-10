@@ -135,11 +135,6 @@ public class GpcEventDispatcher extends SimpleChannelInboundHandler<GpcCall> {
         }
 
         @Override
-        public void release() {
-
-        }
-
-        @Override
         public void onExecute() {
             try {
                 Command command = context.getMethod(msg.getMethod());
@@ -147,6 +142,11 @@ public class GpcEventDispatcher extends SimpleChannelInboundHandler<GpcCall> {
             } catch (Exception e) {
                 LOG.error("[GpcEventDispatcher] GpcCall execute error.api:{} ", msg.getMethod(), e);
             }
+        }
+
+        @Override
+        public void close() throws Exception {
+
         }
     }
 }

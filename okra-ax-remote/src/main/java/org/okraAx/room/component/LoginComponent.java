@@ -1,19 +1,19 @@
 package org.okraAx.room.component;
 
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.okraAx.common.LoginForRoomService;
-import org.okraAx.common.RoomService;
+import org.okraAx.common.LoginForRemoteService;
+import org.okraAx.common.PlayerCallback;
+import org.okraAx.common.RemoteService;
+import org.okraAx.common.RoomPublicService;
+import org.okraAx.common.modules.FyChessService;
 import org.okraAx.internal.handler.AxCodecHandler;
 import org.okraAx.internal.handler.codec.AxGpbCodec;
-import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ClientContext;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ProxyClient;
-import org.okraAx.internal.v3.protobuf.GpbCmdFactory;
-import org.okraAx.internal.v3.protobuf.GpbMessageContext;
-import org.okraAx.internal.v3.protobuf.GpcEventDispatcher;
+import org.okraAx.internal.v3.protobuf.*;
+import org.okraAx.utilities.NetHelper;
 import org.okraAx.utilities.ProxyUtil;
 import org.okraAx.v3.GpcCall;
 import org.okraAx.v3.services.ProLoginForRoom;
@@ -31,18 +31,28 @@ public final class LoginComponent {
 
     private static final Logger LOG = LogManager.getLogger(LoginComponent.class);
 
-    private static final LoginForRoomService DEFAULT_LOGIN_SERVICE =
-            ProxyUtil.newProxyInstance(LoginForRoomService.class, (proxy, method, args) -> {
+    private static final LoginForRemoteService DEFAULT_LOGIN_SERVICE =
+            ProxyUtil.newProxyInstance(LoginForRemoteService.class, (proxy, method, args) -> {
                 //  no-op
-                LOG.info("[LoginForRoomService] Empty proxy instance invoked by [{}]", method.getName());
+                LOG.info("[LoginForRemoteService] Empty proxy instance invoked by [{}]", method.getName());
                 return null;
             });
+
+    private static final PlayerCallback DEFAULT_PLAYER_CALL_BACK =
+            ProxyUtil.newProxyInstance(PlayerCallback.class, (proxy, method, args) -> {
+                //  no-op
+                LOG.info("[PlayerCallback] Empty proxy instance invoked by [{}]", method.getName());
+                return null;
+            });
+
     @Autowired
     private GpbMessageContext messageContext;
     @Autowired
     private Facade facade;
 
-    private volatile ProxyClient<LoginForRoomService> client;
+    private volatile ProxyClient<LoginForRemoteService> client;
+
+    private volatile ProxyClient<PlayerCallback> playerClient;
 
     /**
      * 初始化
@@ -51,12 +61,13 @@ public final class LoginComponent {
         //  connect to login node.
         ClientContext context = new ClientContext();
         context.initCmdFactory(new GpbCmdFactory(messageContext))
-                .registerService(facade, RoomService.class)
+                .registerService(facade, RoomPublicService.class)
+                .registerService(facade, RemoteService.class)
+                .registerService(facade, FyChessService.class)
                 .setAutoConnect(true)
                 .setChildThread(1)
                 .addNetHandler("codec", new AxCodecHandler(new AxGpbCodec(GpcCall.getDefaultInstance())))
-                .addNetHandler("events", new ActiveEventHandler())
-                .addNetHandler("handler", new GpcEventDispatcher(context))
+                .addNetHandler("handler", new GpcEventDispatcher(context, new WatcherHandler()))
                 .build();
         messageContext.registerGpbMsgDesc(ProLoginForRoom.getDescriptor());
         messageContext.registerGpbMsgDesc(ProPlayerRoomCallback.getDescriptor());
@@ -65,25 +76,37 @@ public final class LoginComponent {
         context.connect("127.0.0.1", 9007);
     }
 
-    public LoginForRoomService loginClient() {
-        return client.impl();
+    public LoginForRemoteService loginClient() {
+        return client == null ? DEFAULT_LOGIN_SERVICE : client.impl();
     }
 
-    private class ActiveEventHandler extends ChannelInboundHandlerAdapter {
-        @Override
-        public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            super.channelActive(ctx);
+    public PlayerCallback playerClient(long uid) {
+        if (playerClient.getHandler() instanceof GpbRelayInvocationHandler) {
+            ((GpbRelayInvocationHandler) playerClient.getHandler()).setExtraTag(uid);
+        }
+        return playerClient == null ? DEFAULT_PLAYER_CALL_BACK : playerClient.impl();
+    }
 
-            client = new ProxyClient<>(new NetSession(ctx.channel()), DEFAULT_LOGIN_SERVICE);
-            client.initialize();
+    private class WatcherHandler implements org.okraAx.internal.v3.ConnectionEventHandler {
+
+        @Override
+        public void connected() {
+            NetSession session = NetHelper.session();
+            client = GpbProxyUtil.newProxyClient(session, DEFAULT_LOGIN_SERVICE);
+            playerClient = GpbProxyUtil.newRelayProxyClient(session, DEFAULT_PLAYER_CALL_BACK);
+
             //  注册
             client.impl().registerChannel();
         }
 
         @Override
-        public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        public void connectFailed() {
 
-            super.channelInactive(ctx);
+        }
+
+        @Override
+        public void disconnected() {
+            client = null;
         }
     }
 }

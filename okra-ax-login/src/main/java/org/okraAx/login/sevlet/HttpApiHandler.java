@@ -3,8 +3,8 @@ package org.okraAx.login.sevlet;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.handler.codec.http.FullHttpRequest;
 import org.ogcs.app.Executor;
-import org.ogcs.app.Session;
 import org.ogcs.netty.handler.DisruptorAdapterHandler;
+import org.okraAx.internal.v3.NetSession;
 
 /**
  * @author : TinyZ.
@@ -16,7 +16,7 @@ import org.ogcs.netty.handler.DisruptorAdapterHandler;
 @Sharable
 public class HttpApiHandler extends DisruptorAdapterHandler<FullHttpRequest> {
     @Override
-    protected Executor newExecutor(Session session, FullHttpRequest msg) {
+    protected Executor newExecutor(NetSession session, FullHttpRequest msg) {
         return new HttpRequestExecutor(session, msg);
     }
 }

@@ -1,7 +1,6 @@
 description = 'Common'
 dependencies {
     compile project(':okra-ax-protobuf')
-    compile project(':okra-core-2.x')
     compile group: 'io.netty', name: 'netty-all', version: '4.1.3.Final'
     compile group: 'com.lmax', name: 'disruptor', version: '3.3.7'
     compile group: 'com.google.guava', name: 'guava', version: '20.0'
@@ -14,4 +13,7 @@ dependencies {
     compile group: 'org.mybatis', name: 'mybatis-spring', version: '1.3.0'
     compile group: 'org.springframework', name: 'spring-context', version:'4.3.3.RELEASE'
     compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.3.RELEASE'
+//    flex
+    compile group: 'org.apache.flex.blazeds', name: 'flex-messaging-core', version: '4.7.2'
+    compile group: 'org.apache.flex.blazeds', name: 'flex-messaging-common', version: '4.7.2'
 }

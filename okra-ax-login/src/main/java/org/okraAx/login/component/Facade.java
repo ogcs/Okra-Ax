@@ -8,6 +8,7 @@ import org.okraAx.common.RelayService;
 import org.okraAx.internal.v3.NetSession;
 import org.okraAx.login.server.User;
 import org.okraAx.utilities.NetHelper;
+import org.okraAx.v3.GpcCall;
 import org.okraAx.v3.GpcRelay;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,12 +29,16 @@ public class Facade implements RelayService, LoginPublicService, LoginForRoomSer
     @Autowired
     private RemoteComponent remoteComponent;
 
+    public Facade() {
+        throw new NullPointerException("test");
+    }
+
     @Override
     public void onRelay(long source, Object msg) {
-        if (msg instanceof GpcRelay) {
-            User user = userComponent.getUserByUid(((GpcRelay) msg).getSource());
+        if (msg instanceof GpcCall) {
+            User user = userComponent.getUserByUid(source);
             if (user != null && user.proxyClient().isActive()) {
-                user.proxyClient().getSession().writeAndFlush(((GpcRelay) msg).getData());
+                user.proxyClient().getSession().writeAndFlush(msg);
             }
         } else {
             LOG.error("[onRelay] msg data is wrong. msg:{}", msg == null ? "null" : msg.getClass());
@@ -83,7 +88,7 @@ public class Facade implements RelayService, LoginPublicService, LoginForRoomSer
         }
         User user = userComponent.getUserByUid(uid);
         if (user != null) {
-            user.callback().callbackEnterChannel(1, secutify);
+            user.callback().callbackEnterChannel(1);
         }
     }
 

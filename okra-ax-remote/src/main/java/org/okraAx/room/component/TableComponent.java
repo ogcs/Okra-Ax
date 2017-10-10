@@ -5,7 +5,8 @@ import org.okraAx.room.bean.RoomInfoBean;
 import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.room.module.Room;
 import org.okraAx.room.module.chess.ChineseChess;
-import org.okraAx.utilities.SessionHelper;
+import org.okraAx.utilities.NetHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public final class TableComponent {
+
+    @Autowired
+    private PlayerComponent playerComponent;
 
     private final Map<Long/* roomId */, Room> roomMap = new ConcurrentHashMap<>();
     private final Map<Long/* uid */, Room> uid2RoomMap = new ConcurrentHashMap<>();
@@ -128,7 +132,7 @@ public final class TableComponent {
     }
 
     public void onEnterRoom(int roomId, int seat, long uid, String name) {
-        RemoteUser remoteUser = SessionHelper.curPlayer();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
         if (remoteUser == null) return;
         Room room = remoteUser.getRoom();
         if (room == null) {
@@ -142,7 +146,7 @@ public final class TableComponent {
     }
 
     public void onExitRoom() {
-        RemoteUser remoteUser = SessionHelper.curPlayer();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
         if (remoteUser == null) return;
         Room room = remoteUser.getRoom();
         if (room == null) return;
@@ -150,7 +154,7 @@ public final class TableComponent {
     }
 
     public void onGetReady(long uid, boolean ready) {
-        RemoteUser remoteUser = SessionHelper.curPlayer();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
         if (remoteUser == null) return;
         Room room = remoteUser.getRoom();
         if (room == null) return;

@@ -1,5 +1,7 @@
 
-## Okra-Ax分布式架构
+## Okra-Ax[![Build Status](https://www.travis-ci.org/ogcs/Okra-Ax.svg?branch=master)](https://www.travis-ci.org/ogcs/Okra-Ax)
+
+
 
 简单的分布式服务器实现方案.
 

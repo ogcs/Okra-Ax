@@ -2,15 +2,14 @@ package org.okraAx.room.component;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.okraAx.common.RemoteService;
 import org.okraAx.common.RoomPublicService;
-import org.okraAx.common.RoomService;
 import org.okraAx.common.modules.FyChessService;
 import org.okraAx.internal.v3.NetSession;
 import org.okraAx.room.bean.RemotePlayerInfo;
 import org.okraAx.room.fy.RemoteUser;
 import org.okraAx.room.module.Room;
 import org.okraAx.utilities.NetHelper;
-import org.okraAx.utilities.SessionHelper;
 import org.okraAx.v3.beans.roomPub.MsgOnChat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Service;
  * @version 2017.03.26
  */
 @Service
-public final class Facade implements RoomService, RoomPublicService,
+public final class Facade implements RemoteService, RoomPublicService,
         FyChessService {
 
     private static final Logger LOG = LogManager.getLogger(Facade.class);
@@ -40,15 +39,22 @@ public final class Facade implements RoomService, RoomPublicService,
      *
      */
     public void initComponent() {
-        lc.initialize();
+        try {
+
+        } finally {
+            lc.initialize();//  连接login， 开始服务
+        }
     }
 
     @Override
     public void ping() {
         RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
-        if (remoteUser != null)
-            remoteUser.callback().pong();
-        LOG.info("xxxxx");
+        if (remoteUser == null) {
+            NetHelper.session().close();
+            LOG.info("xxxxx");
+            return;
+        }
+        remoteUser.callback().pong();
     }
 
     @Override
@@ -73,7 +79,7 @@ public final class Facade implements RoomService, RoomPublicService,
     }
 
     public void callbackVerifyPlayerInfo(int ret) {
-        RemoteUser remoteUser = SessionHelper.curPlayer();
+        RemoteUser remoteUser = playerComponent.getPlayer(NetHelper.session());
         if (remoteUser == null) return;
 
         //  set player info
@@ -130,20 +136,15 @@ public final class Facade implements RoomService, RoomPublicService,
         chessComponent.onMoveChess(fromX, fromY, toX, toY);
     }
 
-    @Override
-    public void enterChannel() {
+    public void registerChannel() {
 
     }
 
-    @Override
-    public void callbackVerifyPlayerAuth(int ret) {
+    public void verifyPlayerInfo(long uid, long security) {
 
     }
 
-    @Override
-    public void callbackRegister(int ret) {
+    public void callbackEnterChannel(int ret) {
 
     }
-
-
 }
