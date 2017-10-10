@@ -2,11 +2,15 @@ package org.okraAx.login.component;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.okraAx.common.GameChannelService;
+import org.okraAx.common.RoomService;
 import org.okraAx.internal.v3.NetSession;
+import org.okraAx.internal.v3.ProxyClient;
+import org.okraAx.internal.v3.protobuf.GpbProxyUtil;
 import org.okraAx.login.bean.ChannelInfo;
-import org.okraAx.login.server.RoomClient;
 import org.okraAx.login.server.User;
 import org.okraAx.utilities.NetHelper;
+import org.okraAx.utilities.ProxyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,16 +27,24 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class RoomComponent {
 
     private static final Logger LOG = LogManager.getLogger(RoomComponent.class);
+
+    public static final RoomService DEFAULT_ROOM_SERVICE =
+            ProxyUtil.newProxyInstance(RoomService.class, (proxy, method, args) -> {
+                //  no-op
+                LOG.info("[RoomService] Empty proxy instance invoked by [{}]", method.getName());
+                return null;
+            });
+
     @Autowired
     private UserComponent userComponent;
 
     /**
      * 频道列表
      */
-    private Map<Integer, RoomClient> maps = new ConcurrentHashMap<>();
-    private Map<NetSession, RoomClient> roomSessionMap = new ConcurrentHashMap<>();
+    private Map<Integer, ProxyClient<RoomService>> maps = new ConcurrentHashMap<>();
+    private Map<NetSession, ProxyClient<RoomService>> roomSessionMap = new ConcurrentHashMap<>();
 
-    public RoomClient getRoomBySession(NetSession session) {
+    public ProxyClient<RoomService> getRoomBySession(NetSession session) {
         return roomSessionMap.get(session);
     }
 
@@ -50,11 +62,10 @@ public final class RoomComponent {
         //  TODO: 验证安全码 和 版本号
         ChannelInfo channelInfo = new ChannelInfo(roomId, type, version, host, port);
         try {
-            RoomClient roomClient = new RoomClient(channelInfo);
-            roomClient.setSession(session);
+            ProxyClient<RoomService> roomClient = GpbProxyUtil.newProxyClient(session, DEFAULT_ROOM_SERVICE);
             //
             maps.put(roomId, roomClient);
-            roomClient.roomClient().callbackRegister(0);
+            roomClient.impl().callbackRegister(0);
         } catch (Exception e) {
             session.close();
             LOG.info("[S] register channel fail. info:" + channelInfo.toString(), e);
@@ -62,17 +73,16 @@ public final class RoomComponent {
     }
 
     public void roomDisconnect(NetSession session) {
-        RoomClient client = roomSessionMap.remove(session);
-        if (client != null && client.isOnline()) {
-
-            client.session().close();
+        ProxyClient<RoomService> client = roomSessionMap.remove(session);
+        if (client != null && client.isActive()) {
+            client.getSession().close();
         }
     }
 
     public void unregisterChannel(int roomId) {
-        RoomClient roomClient = maps.remove(roomId);
+        ProxyClient<RoomService> roomClient = maps.remove(roomId);
         if (roomClient != null) {
-            roomClient.session().close();
+            roomClient.getSession().close();
         }
     }
 
@@ -83,11 +93,11 @@ public final class RoomComponent {
         //  TODO:检查是否已经进入房间
 
 
-        RoomClient roomClient = maps.get(roomId);
+        ProxyClient<RoomService> roomClient = maps.get(roomId);
         if (roomClient != null) {
 
             //  TODO: 申请进入频道
-            roomClient.roomClient().enterChannel();
+            roomClient.impl().enterChannel();
         }
     }
 

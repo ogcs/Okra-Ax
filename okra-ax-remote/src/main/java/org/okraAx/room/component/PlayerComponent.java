@@ -1,10 +1,9 @@
 package org.okraAx.room.component;
 
-import org.ogcs.app.Session;
 import org.okraAx.internal.v3.NetSession;
 import org.okraAx.room.bean.RmUserInfoBean;
 import org.okraAx.room.fy.RemoteUser;
-import org.okraAx.utilities.SessionHelper;
+import org.okraAx.utilities.NetHelper;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -38,7 +37,6 @@ public class PlayerComponent {
     }
 
 
-
     public NetSession getNetSession(long uid) {
         return uid2sessionMap.get(uid);
     }
@@ -50,7 +48,7 @@ public class PlayerComponent {
 
     public void checkPlayerSecurity(String security) {
         if (security.isEmpty()) return;
-        Session session = SessionHelper.currentSession();
+        NetSession session = NetHelper.session();
         if (session == null) return;
 
 

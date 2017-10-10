@@ -17,12 +17,6 @@ message UserInfo {
     AxAny ext = 4; //  扩展数据 - 战绩等等
 }
 
-//  中继message
-message RelayMessageBean {
-    int64 uid = 1;
-    bytes msg = 2;
-}
-
 //  日志服务器信息bean
 message LogServerInfoBean {
     string url = 1;

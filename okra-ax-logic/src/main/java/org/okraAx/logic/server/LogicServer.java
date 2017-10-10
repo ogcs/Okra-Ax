@@ -25,10 +25,10 @@ public class LogicServer {
 
     private static final Logger LOG = LogManager.getLogger(LogicServer.class);
 
-    private Facade facade = AppContext.getBean(Facade.class);
-    private GpbMessageContext gpbContext = AppContext.getBean(GpbMessageContext.class);
-
     public void start() {
+        Facade facade = AppContext.getBean(Facade.class);
+        GpbMessageContext gpbContext = AppContext.getBean(GpbMessageContext.class);
+
         ServerContext context = new ServerContext();
         context.initCmdFactory(new GpbCmdFactory(gpbContext))
                 .registerService(facade, LogicPublicService.class)

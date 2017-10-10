@@ -14,5 +14,5 @@ project(':okra-ax-logic').projectDir = "$rootDir/okra-ax-logic" as File
 project(':okra-ax-common').projectDir = "$rootDir/okra-ax-common" as File
 
 //  外部引用
-include ':okra-core-2.x'
-project(':okra-core-2.x').projectDir = new File('E:/C/Git@GitHub/Okra/okra-core')
+//include ':okra-core-2.x'
+//project(':okra-core-2.x').projectDir = new File('E:/C/Git@GitHub/Okra/okra-core')

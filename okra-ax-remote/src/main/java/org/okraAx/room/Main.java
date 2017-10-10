@@ -1,8 +1,6 @@
 package org.okraAx.room;
 
-import org.okraAx.room.component.Facade;
-import org.okraAx.room.fy.RoomManager;
-import org.okraAx.room.server.Framework;
+import org.okraAx.room.server.ServerManager;
 
 /**
  * @author TinyZ.
@@ -11,6 +9,6 @@ import org.okraAx.room.server.Framework;
 public class Main {
 
     public static void main(String[] args) {
-        Framework.INSTANCE.start();
+        ServerManager.INSTANCE.start();
     }
 }

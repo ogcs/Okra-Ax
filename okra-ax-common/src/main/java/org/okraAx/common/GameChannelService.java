@@ -1,12 +1,16 @@
 package org.okraAx.common;
 
 /**
- * the room module's service.
+ * remote service.
  *
- * @author TinyZ
- * @version 2017.03.12
+ * <pre>
+ *     1. 通用游戏频道服务
+ * </pre>
+ *
+ * @author TinyZ.
+ * @version 2017.09.27
  */
-public interface RoomService {
+public interface GameChannelService {
 
     //  service
 

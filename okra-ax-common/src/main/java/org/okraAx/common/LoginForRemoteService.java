@@ -5,9 +5,9 @@ package org.okraAx.common;
  *
  * @author TinyZ
  * @version 2017.03.12
- * @since 2.0
+ * @see RemoteService
  */
-public interface LoginForRoomService {
+public interface LoginForRemoteService {
 
     /**
      * 注册频道进程

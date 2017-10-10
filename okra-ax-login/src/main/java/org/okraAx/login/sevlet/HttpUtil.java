@@ -6,7 +6,7 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
-import org.ogcs.app.Session;
+import org.okraAx.internal.v3.NetSession;
 
 import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
@@ -22,7 +22,7 @@ public final class HttpUtil {
         // no-op
     }
 
-    public static void response(Session session, String msg) {
+    public static void response(NetSession session, String msg) {
         HttpResponse response;
         if (msg != null) {
             ByteBuf byteBuf = Unpooled.wrappedBuffer(msg.getBytes());
@@ -33,7 +33,7 @@ public final class HttpUtil {
         session.writeAndFlush(response, ChannelFutureListener.CLOSE);
     }
 
-    public static void status(Session session, HttpResponseStatus status) {
+    public static void status(NetSession session, HttpResponseStatus status) {
         session.writeAndFlush(new DefaultFullHttpResponse(HTTP_1_1, status), ChannelFutureListener.CLOSE);
     }
 }

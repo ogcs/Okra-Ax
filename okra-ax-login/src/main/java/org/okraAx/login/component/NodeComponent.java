@@ -7,7 +7,7 @@ import org.okraAx.internal.bean.ConnectionInfo;
 import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ProxyClient;
 import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
-import org.okraAx.login.server.LogicClient;
+import org.okraAx.internal.v3.protobuf.GpbProxyUtil;
 import org.okraAx.utilities.NetHelper;
 import org.okraAx.utilities.ProxyUtil;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class NodeComponent {
                 return null;
             });
 
-    private Map<Integer, LogicClient> logicClientMap = new ConcurrentHashMap<>();
+    private Map<Integer, ProxyClient<LogicService>> logicClientMap = new ConcurrentHashMap<>();
 
     public void registerNode(ConnectionInfo info) {
         NetSession session = NetHelper.session();
@@ -45,7 +45,7 @@ public class NodeComponent {
         //  TODO:校验通过
 
         if (info.getType() == 1) {
-            LogicClient client = new LogicClient(session, info);
+            ProxyClient<LogicService> client = GpbProxyUtil.newProxyClient(session, DEFAULT_LOGIC);
         }
 
 
@@ -57,11 +57,8 @@ public class NodeComponent {
 
     //  获取logicClient
     public LogicService logicClient(long uid) {
-        return logicClientMap.get(uid % 3).logicClient();
+        return logicClientMap.get(uid % 3).impl();
     }
-
-
-
 
 
 }

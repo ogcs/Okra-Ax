@@ -9,14 +9,13 @@ import org.okraAx.common.LoginForLogicService;
 import org.okraAx.internal.bean.ConnectionInfo;
 import org.okraAx.internal.handler.AxCodecHandler;
 import org.okraAx.internal.handler.codec.AxGpbCodec;
-import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ClientContext;
+import org.okraAx.internal.v3.NetSession;
 import org.okraAx.internal.v3.ProxyClient;
 import org.okraAx.internal.v3.protobuf.GpbCmdFactory;
 import org.okraAx.internal.v3.protobuf.GpbInvocationHandler;
 import org.okraAx.internal.v3.protobuf.GpbMessageContext;
 import org.okraAx.internal.v3.protobuf.GpcEventDispatcher;
-import org.okraAx.logic.client.LoginClient;
 import org.okraAx.utilities.ProxyUtil;
 import org.okraAx.v3.GpcCall;
 import org.okraAx.v3.services.ProLoginForRoom;
@@ -37,7 +36,7 @@ public class LoginComponent {
     private static final LoginForLogicService EMPTY =
             ProxyUtil.newProxyInstance(LoginForLogicService.class, (proxy, method, args) -> {
                 //  no-op
-                LOG.info("Empty proxy instance invoked by [{}]. args:{}", method.getName(), args);
+                LOG.info("[LoginForLogicService]Empty proxy instance invoked by [{}]. args:{}", method.getName(), args);
                 return null;
             });
 
@@ -75,10 +74,9 @@ public class LoginComponent {
     }
 
     public void registerLogin(NetSession session, ConnectionInfo info) {
-        LoginClient client = new LoginClient();
-        client.setSession(session);
 
-        client.loginClient().callbackCreateRole(1);
+//        ProxyClient<LoginCallback> client = new ProxyClient<>(session, new GpbInvocationHandler(session), LOGIN_CALL_BACK);
+//        client.impl().callbackCreateRole(1);
 
 
     }

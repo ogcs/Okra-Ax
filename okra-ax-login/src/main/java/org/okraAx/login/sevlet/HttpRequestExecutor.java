@@ -10,7 +10,7 @@ import io.netty.handler.codec.http.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.ogcs.app.Executor;
-import org.ogcs.app.Session;
+import org.okraAx.internal.v3.NetSession;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,10 +24,10 @@ public class HttpRequestExecutor implements Executor {
 
     private static final Logger LOG = LogManager.getLogger(HttpRequestExecutor.class);
 
-    protected Session session;
+    protected NetSession session;
     protected FullHttpRequest request;
 
-    public HttpRequestExecutor(Session session, FullHttpRequest request) {
+    public HttpRequestExecutor(NetSession session, FullHttpRequest request) {
         this.session = session;
         this.request = request;
     }
@@ -96,7 +96,7 @@ public class HttpRequestExecutor implements Executor {
     }
 
     @Override
-    public void release() {
+    public void close() {
         this.session = null;
         this.request = null;
     }
